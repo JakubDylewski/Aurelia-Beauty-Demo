@@ -1,0 +1,56 @@
+---
+interface Review {
+  quote: string;
+  author: string;
+}
+
+const reviews: Review[] = [
+  {
+    quote:
+      "Pierwszy raz trafiłam do miejsca, gdzie lekarka odradziła mi część zabiegów, które chciałam zrobić. Zaufanie od pierwszej wizyty.",
+    author: "Karolina M.",
+  },
+  {
+    quote:
+      "Usta wyglądają tak naturalnie, że mama zauważyła dopiero po dwóch tygodniach. Dokładnie o to mi chodziło.",
+    author: "Magdalena W.",
+  },
+  {
+    quote:
+      "Zero taśmy produkcyjnej. Konsultacja trwała pół godziny, wszystko wytłumaczone, łącznie z tym, czego się NIE opłaca robić.",
+    author: "Joanna K.",
+  },
+  {
+    quote: "Botoks robiony trzeci raz, pierwszy raz bez efektu maski. Mimika została, zmarszczki nie.",
+    author: "Anna P.",
+  },
+  {
+    quote: "Przepiękne, spokojne wnętrze i pełen profesjonalizm. Czułam się zaopiekowana od wejścia do wyjścia.",
+    author: "Natalia S.",
+  },
+  {
+    quote:
+      "HIFU po czterdziestce — owal wrócił na miejsce. Efekt narastał przez trzy miesiące, dziś nie poznaję zdjęć sprzed roku.",
+    author: "Beata R.",
+  },
+];
+---
+
+<ul class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
+  {reviews.map((review) => (
+    <li class="flex w-[85vw] shrink-0 snap-start flex-col gap-4 bg-[var(--ivory)] p-7 sm:w-auto">
+      <div class="flex gap-1" aria-hidden="true">
+        {Array.from({ length: 5 }).map(() => (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--gold)">
+            <path d="M8 0.8l2.1 4.6 5 .6-3.7 3.5.9 5-4.3-2.4-4.3 2.4.9-5L.9 6l5-.6L8 .8z" />
+          </svg>
+        ))}
+      </div>
+      <p class="flex-1 text-[16px] leading-relaxed text-[var(--ink)]">„{review.quote}"</p>
+      <div class="flex items-center justify-between text-[14px] text-[var(--ink-soft)]">
+        <span class="font-medium text-[var(--ink)]">{review.author}</span>
+        <span>opinia Google</span>
+      </div>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import type { Treatment } from "../data/treatments";
+
+interface Props {
+  treatment: Treatment;
+  class?: string;
+}
+
+const { treatment, class: className = "" } = Astro.props;
+---
+
+<a
+  href={treatment.href}
+  class={`group flex flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1 ${className}`}
+>
+  <div class="aspect-[16/10] w-full overflow-hidden bg-[var(--porcelain)]">
+    <Image
+      src={treatment.image}
+      alt={treatment.imageAlt}
+      width={800}
+      height={500}
+      loading="lazy"
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+    />
+  </div>
+  <div class="flex flex-1 flex-col gap-2 border border-t-0 border-[var(--porcelain)] p-6">
+    <h3 class="font-display text-2xl font-normal text-[var(--ink)]">{treatment.name}</h3>
+    <p class="flex-1 text-[15px] text-[var(--ink-soft)]">{treatment.description}</p>
+    <div class="mt-2 flex items-center justify-between">
+      <span class="text-[14px] font-medium text-[var(--ink)]">{treatment.price}</span>
+      <span class="text-[14px] font-medium text-[var(--gold)] transition-colors group-hover:text-[var(--ink)]">
+        {treatment.ctaLabel}
+      </span>
+    </div>
+  </div>
+</a>

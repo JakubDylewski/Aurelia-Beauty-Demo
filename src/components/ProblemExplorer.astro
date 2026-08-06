@@ -1,0 +1,110 @@
+---
+import { problems, treatments } from "../data/treatments";
+import TreatmentCard from "./TreatmentCard.astro";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="eksplorator" class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-24 lg:px-10 lg:py-32">
+  <div class="mx-auto max-w-7xl">
+    <SectionHeading overline="ZACZNIJ OD SIEBIE" heading="Od czego chcesz zacząć?" class="max-w-xl" />
+    <p class="mt-5 max-w-xl text-[17px] text-[var(--ink-soft)]">
+      Wybierz to, co Ci doskwiera — pokażemy zabiegi, które naprawdę na to działają.
+    </p>
+
+    <div class="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[55%_45%] lg:gap-10">
+      <div role="tablist" aria-label="Wybierz problem" class="grid grid-cols-1 gap-x-8 gap-y-5 self-start sm:grid-cols-2">
+        {problems.map((problem, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${problem.id}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls={`panel-${problem.id}`}
+            tabindex={i === 0 ? 0 : -1}
+            data-problem-explorer-tab
+            data-target={problem.id}
+            class="problem-tab text-left font-display text-[1.65rem] font-normal leading-snug text-[var(--ink)] transition-colors duration-200 hover:text-[var(--gold)]"
+            aria-current={i === 0 ? "true" : undefined}
+          >
+            {problem.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="grid" data-problem-explorer-panels>
+        {problems.map((problem, i) => (
+          <div
+            role="tabpanel"
+            id={`panel-${problem.id}`}
+            aria-labelledby={`tab-${problem.id}`}
+            data-panel={problem.id}
+            class="problem-panel col-start-1 row-start-1 flex flex-col gap-6 transition-opacity duration-400 ease-out"
+            style={i === 0 ? "opacity:1;" : "opacity:0; pointer-events:none;"}
+          >
+            {problem.treatmentSlugs.map((slug) => (
+              <TreatmentCard treatment={treatments[slug]} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-tab[aria-selected="true"] {
+    font-style: italic;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 8px;
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>("[data-problem-explorer-tab]");
+  const panels = document.querySelectorAll<HTMLDivElement>("[data-panel]");
+
+  function activate(targetId: string) {
+    tabs.forEach((tab) => {
+      const isMatch = tab.dataset.target === targetId;
+      tab.setAttribute("aria-selected", String(isMatch));
+      tab.tabIndex = isMatch ? 0 : -1;
+      if (isMatch) {
+        tab.setAttribute("aria-current", "true");
+      } else {
+        tab.removeAttribute("aria-current");
+      }
+    });
+    panels.forEach((panel) => {
+      const isMatch = panel.dataset.panel === targetId;
+      panel.style.opacity = isMatch ? "1" : "0";
+      panel.style.pointerEvents = isMatch ? "auto" : "none";
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      if (tab.dataset.target) activate(tab.dataset.target);
+    });
+
+    tab.addEventListener("keydown", (event) => {
+      const list = Array.from(tabs);
+      const currentIndex = list.indexOf(tab);
+      let nextIndex: number | null = null;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        nextIndex = (currentIndex + 1) % list.length;
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        nextIndex = (currentIndex - 1 + list.length) % list.length;
+      }
+
+      if (nextIndex !== null) {
+        event.preventDefault();
+        const nextTab = list[nextIndex];
+        nextTab.focus();
+        if (nextTab.dataset.target) activate(nextTab.dataset.target);
+      }
+    });
+  });
+</script>

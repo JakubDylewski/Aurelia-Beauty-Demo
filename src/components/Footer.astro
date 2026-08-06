@@ -1,0 +1,59 @@
+---
+const zabiegi = [
+  { label: "Modelowanie ust", href: "/zabiegi/modelowanie-ust" },
+  { label: "Toksyna botulinowa", href: "/zabiegi/toksyna-botulinowa" },
+  { label: "Lifting HIFU", href: "/zabiegi/lifting-hifu" },
+  { label: "Pełny cennik", href: "/cennik" },
+];
+---
+
+<footer class="border-t border-[var(--porcelain)] bg-[var(--ivory)]">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
+    <div class="flex flex-col gap-4">
+      <span class="flex items-center font-display text-2xl text-[var(--ink)]" style="letter-spacing: 0.18em;">
+        AURELIA
+      </span>
+      <p class="text-[15px] text-[var(--ink-soft)]">
+        Naturalne piękno i medyczna precyzja — zabiegi estetyczne dobrane indywidualnie, z troską o bezpieczeństwo i efekt, który wygląda jak Ty.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <span class="overline">Zabiegi</span>
+      <ul class="flex flex-col gap-2.5">
+        {zabiegi.map((item) => (
+          <li>
+            <a href={item.href} class="text-[15px] text-[var(--ink-soft)] transition-colors hover:text-[var(--gold)]">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <span class="overline">Kontakt</span>
+      <ul class="flex flex-col gap-2.5 text-[15px] text-[var(--ink-soft)]">
+        <li>ul. Mostowa 14/2, 87-100 Toruń</li>
+        <li><a href="tel:512340218" class="transition-colors hover:text-[var(--gold)]">512 340 218</a></li>
+        <li><a href="mailto:rejestracja@klinika-aurelia.pl" class="transition-colors hover:text-[var(--gold)]">rejestracja@klinika-aurelia.pl</a></li>
+        <li>Pon–Pt 9:00–19:00, Sob 9:00–14:00</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <span class="overline">Social</span>
+      <ul class="flex flex-col gap-2.5 text-[15px] text-[var(--ink-soft)]">
+        <li><a href="#" class="transition-colors hover:text-[var(--gold)]">Instagram</a></li>
+        <li><a href="#" class="transition-colors hover:text-[var(--gold)]">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--porcelain)]">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-6 py-6 text-[13px] text-[var(--ink-soft)] sm:flex-row sm:items-center sm:justify-between lg:px-10">
+      <p>© 2026 Klinika Aurelia · <a href="/polityka-prywatnosci" class="transition-colors hover:text-[var(--gold)]">Polityka prywatności</a></p>
+      <p>Strona ma charakter informacyjny i nie stanowi oferty w rozumieniu przepisów prawa.</p>
+    </div>
+  </div>
+</footer>

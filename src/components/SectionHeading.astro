@@ -1,0 +1,21 @@
+---
+import GoldArc from "./GoldArc.astro";
+
+interface Props {
+  overline: string;
+  heading: string;
+  align?: "left" | "center";
+  class?: string;
+}
+
+const { overline, heading, align = "left", class: className = "" } = Astro.props;
+const alignClass = align === "center" ? "items-center text-center mx-auto" : "items-start text-left";
+---
+
+<div class={`flex flex-col gap-3 ${alignClass} ${className}`}>
+  <div class="flex items-center gap-3">
+    <GoldArc size={24} />
+    <span class="overline">{overline}</span>
+  </div>
+  <h2 class="text-[var(--ink)]" set:html={heading} />
+</div>

@@ -1,0 +1,215 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import GoldArc from "../components/GoldArc.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ProblemExplorer from "../components/ProblemExplorer.astro";
+import TreatmentCard from "../components/TreatmentCard.astro";
+import BeforeAfter from "../components/BeforeAfter.astro";
+import Testimonials from "../components/Testimonials.astro";
+import { treatments } from "../data/treatments";
+import { Image } from "astro:assets";
+
+const trustBar = [
+  "12 lat doświadczenia",
+  "9 000+ wykonanych zabiegów",
+  "4,9/5 — 214 opinii Google",
+  "Certyfikowani lekarze medycyny estetycznej",
+];
+
+const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"], treatments["lifting-hifu"]];
+---
+
+<Base
+  title="Klinika Aurelia — Medycyna estetyczna Toruń"
+  description="Klinika medycyny estetycznej w Toruniu. Naturalne efekty, certyfikowane preparaty, zabiegi wykonuje lekarz. Umów konsultację — Klinika Aurelia."
+>
+  <section class="relative overflow-hidden">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pt-40 pb-20 lg:grid-cols-[55%_45%] lg:gap-0 lg:px-10 lg:pt-48 lg:pb-0">
+      <div class="relative flex flex-col items-start gap-7 lg:pr-16">
+        <GoldArc size={520} class="pointer-events-none absolute -left-40 -top-32 -z-10 hidden lg:block" />
+
+        <span class="overline hero-item" style="--delay: 0ms;">KLINIKA MEDYCYNY ESTETYCZNEJ · TORUŃ</span>
+
+        <h1 class="hero-item text-[var(--ink)]" style="--delay: 120ms;">
+          Naturalne piękno.<br />
+          Medyczna <em class="font-normal italic">precyzja</em>.
+        </h1>
+
+        <p class="hero-item max-w-md text-[17px] text-[var(--ink-soft)]" style="--delay: 240ms;">
+          Zabiegi dobieramy indywidualnie — tak, by podkreślić to, co w Tobie najpiękniejsze. Bez przesady, bez szablonu, ze spokojem, na jaki zasługujesz.
+        </p>
+
+        <div class="hero-item flex flex-wrap items-center gap-4" style="--delay: 360ms;">
+          <Button href="/kontakt" variant="primary">Umów konsultację</Button>
+          <Button href="#eksplorator" variant="ghost">Poznaj zabiegi</Button>
+        </div>
+      </div>
+
+      <div class="relative h-[420px] w-full sm:h-[520px] lg:h-[680px]">
+        <Image
+          src="/images/hero-main.webp"
+          alt="Kobieta o naturalnej, promiennej skórze — portret w klinice medycyny estetycznej Aurelia"
+          width={2400}
+          height={1600}
+          loading="eager"
+          class="h-full w-full object-cover lg:rounded-l-sm"
+        />
+      </div>
+    </div>
+
+    <div class="border-t border-[var(--porcelain)] bg-white">
+      <ul class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4 px-6 py-8 text-center lg:justify-between lg:px-10">
+        {trustBar.map((item, i) => (
+          <li class:list={["text-[14px] text-[var(--ink-soft)]", i !== 0 && "sm:border-l sm:border-[var(--porcelain)] sm:pl-10"]}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ProblemExplorer />
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading overline="NASZE SPECJALIZACJE" heading="Zabiegi, z których jesteśmy znani" />
+
+      <div class="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {flagship.map((treatment) => (
+          <TreatmentCard treatment={treatment} class="bg-white" />
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/cennik"
+          class="inline-flex items-center gap-2 text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
+        >
+          Zobacz pełny cennik zabiegów →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading overline="EFEKTY" heading="Zobacz zmianę na własne oczy" align="center" />
+
+      <div class="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-3">
+        <BeforeAfter
+          beforeSrc="/images/meta-usta-przed.webp"
+          afterSrc="/images/meta-usta-po.webp"
+          beforeAlt="Usta przed zabiegiem modelowania kwasem hialuronowym"
+          afterAlt="Usta po zabiegu modelowania kwasem hialuronowym"
+          label="Usta"
+        />
+        <BeforeAfter
+          beforeSrc="/images/meta-czolo-przed.webp"
+          afterSrc="/images/meta-czolo-po.webp"
+          beforeAlt="Czoło przed zabiegiem toksyny botulinowej"
+          afterAlt="Czoło po zabiegu toksyny botulinowej"
+          label="Czoło"
+        />
+        <BeforeAfter
+          beforeSrc="/images/meta-owal-przed.webp"
+          afterSrc="/images/meta-owal-po.webp"
+          beforeAlt="Owal twarzy przed zabiegiem liftingu HIFU"
+          afterAlt="Owal twarzy po zabiegu liftingu HIFU"
+          label="Owal twarzy"
+        />
+      </div>
+
+      <p class="mx-auto mt-10 max-w-2xl text-center text-[13px] text-[var(--ink-soft)]">
+        Zdjęcia opublikowane za zgodą pacjentek. Efekt zabiegu jest zawsze kwestią indywidualną i może się różnić.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
+      <div class="aspect-[3/2] w-full overflow-hidden">
+        <Image
+          src="/images/wnetrze-recepcja.webp"
+          alt="Recepcja kliniki Aurelia — jasne, minimalistyczne wnętrze z ciepłymi złotymi akcentami"
+          width={1800}
+          height={1200}
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <SectionHeading overline="POZNAJMY SIĘ" heading="Miejsce, w którym możesz odetchnąć" />
+        <p class="text-[17px] text-[var(--ink-soft)]">
+          Klinika Aurelia powstała z przekonania, że medycyna estetyczna to przede wszystkim medycyna. U nas każdy zabieg poprzedza rzetelna konsultacja lekarska, pracujemy wyłącznie na oryginalnych, certyfikowanych preparatach, a plan zabiegowy układamy pod Ciebie — nie pod promocję miesiąca.
+        </p>
+
+        <div class="flex items-start gap-4 border-l border-[var(--gold-soft)] pl-6">
+          <div class="flex flex-col gap-3">
+            <p class="font-display text-xl italic text-[var(--ink)]">
+              „Najlepszy komplement, jaki możemy usłyszeć? »Nikt nie widzi, że coś robiłam — wszyscy mówią, że świetnie wyglądam.«"
+            </p>
+            <span class="text-[14px] text-[var(--ink-soft)]">dr n. med. Aurelia Zawadzka, założycielka</span>
+          </div>
+        </div>
+
+        <a
+          href="/o-nas"
+          class="inline-flex items-center gap-2 text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
+        >
+          Poznaj nasz zespół →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading overline="ZAUFANIE" heading="Pacjentki mówią same" align="center" />
+      <div class="mt-14">
+        <Testimonials />
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 text-center lg:px-10 lg:py-32">
+    <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
+      <GoldArc size={56} />
+      <h2 class="text-[var(--ink)]">Zacznij od rozmowy</h2>
+      <p class="text-[17px] text-[var(--ink-soft)]">
+        Konsultacja lekarska kosztuje 150 zł i jest w całości odliczana od ceny zabiegu. Bez zobowiązań — czasem najlepszą rekomendacją jest „jeszcze nie teraz".
+      </p>
+      <div class="mt-2 flex flex-wrap items-center justify-center gap-6">
+        <Button href="/kontakt" variant="primary">Umów konsultację</Button>
+        <a href="tel:512340218" class="text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]">
+          lub zadzwoń: 512 340 218
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-item {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: hero-in 600ms ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes hero-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-item {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>

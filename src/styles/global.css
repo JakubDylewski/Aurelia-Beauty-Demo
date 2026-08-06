@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@import "@fontsource/cormorant-garamond/300.css";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/400-italic.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/instrument-sans/400.css";
+@import "@fontsource/instrument-sans/500.css";
+@import "@fontsource/instrument-sans/600.css";
+
+@theme {
+  --color-white: #FFFFFF;
+  --color-ivory: #FAF7F3;
+  --color-porcelain: #F4E8E4;
+  --color-gold: #B08D57;
+  --color-gold-soft: #D8C39A;
+  --color-ink: #221E1A;
+  --color-ink-soft: #6E6660;
+
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "Instrument Sans", sans-serif;
+}
+
+:root {
+  --white: #FFFFFF;
+  --ivory: #FAF7F3;
+  --porcelain: #F4E8E4;
+  --gold: #B08D57;
+  --gold-soft: #D8C39A;
+  --ink: #221E1A;
+  --ink-soft: #6E6660;
+
+  /* Strona jest zaprojektowana wyłącznie w jasnym motywie — bez tego
+     przeglądarki z aktywnym trybem ciemnym (np. wymuszony dark mode
+     w Chrome/Edge) potrafią przemalować jasne tło na ciemne mimo
+     jawnie białych kolorów w CSS. */
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.65;
+  font-size: 17px;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+a {
+  color: inherit;
+}
+
+/* Focus ring: złoty, widoczny na wszystkich elementach interaktywnych */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--ink);
+  color: var(--white);
+  padding: 0.75rem 1.25rem;
+  z-index: 100;
+  transition: top 200ms ease-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

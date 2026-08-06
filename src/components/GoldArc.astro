@@ -1,0 +1,34 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+}
+
+const { size = 120, class: className = "" } = Astro.props;
+
+// Fragment okręgu (ok. 270°), otwarty łuk - nawiązanie do "aureoli".
+const r = 48;
+const cx = 50;
+const cy = 50;
+const startAngle = -225;
+const endAngle = 45;
+const toRad = (deg: number) => (deg * Math.PI) / 180;
+const startX = cx + r * Math.cos(toRad(startAngle));
+const startY = cy + r * Math.sin(toRad(startAngle));
+const endX = cx + r * Math.cos(toRad(endAngle));
+const endY = cy + r * Math.sin(toRad(endAngle));
+const largeArcFlag = 1;
+const d = `M ${startX} ${startY} A ${r} ${r} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
+---
+
+<svg
+  class={`gold-arc ${className}`}
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={d} stroke="var(--gold-soft)" stroke-width="1" stroke-linecap="round" />
+</svg>
