@@ -1,0 +1,18 @@
+---
+import type { QuickFact } from "../data/treatments";
+
+interface Props {
+  facts: QuickFact[];
+}
+
+const { facts } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-x-10 gap-y-6 border-y border-[var(--porcelain)] py-8">
+  {facts.map((fact, i) => (
+    <li class:list={["flex flex-col gap-1.5", i !== 0 && "sm:border-l sm:border-[var(--porcelain)] sm:pl-10"]}>
+      <span class="text-[13px] text-[var(--ink-soft)]">{fact.label}</span>
+      <span class="text-[16px] font-medium text-[var(--ink)]">{fact.value}</span>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,59 @@
+<div
+  id="cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-[60] hidden border-t border-[var(--porcelain)] bg-white px-6 py-5 shadow-[0_-4px_24px_rgba(34,30,26,0.06)]"
+  role="region"
+  aria-label="Zgoda na pliki cookie"
+>
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
+    <p class="text-[14px] text-[var(--ink-soft)]">
+      Ta strona używa plików cookie w celach statystycznych i funkcjonalnych. Możesz zaakceptować wszystkie lub odrzucić opcjonalne.
+    </p>
+    <div class="flex shrink-0 items-center gap-4">
+      <button
+        type="button"
+        id="cookie-necessary"
+        class="border border-[var(--ink)]/20 px-5 py-2.5 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:text-[var(--gold)]"
+      >
+        Tylko niezbędne
+      </button>
+      <button
+        type="button"
+        id="cookie-accept"
+        class="border border-[var(--ink)] bg-[var(--porcelain)] px-5 py-2.5 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)]"
+      >
+        Akceptuję
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "aurelia-consent";
+  const banner = document.getElementById("cookie-banner");
+
+  function hasStoredConsent(): boolean {
+    try {
+      return Boolean(localStorage.getItem(STORAGE_KEY));
+    } catch {
+      // Prywatny/ściśle ograniczony tryb przeglądarki może rzucać błąd przy
+      // dostępie do localStorage — w takim wypadku pokazujemy baner mimo to.
+      return false;
+    }
+  }
+
+  if (banner && !hasStoredConsent()) {
+    banner.classList.remove("hidden");
+  }
+
+  function setConsent(value: string) {
+    try {
+      localStorage.setItem(STORAGE_KEY, value);
+    } catch {
+      // Brak dostępu do localStorage — baner i tak chowamy na tę wizytę.
+    }
+    banner?.classList.add("hidden");
+  }
+
+  document.getElementById("cookie-accept")?.addEventListener("click", () => setConsent("all"));
+  document.getElementById("cookie-necessary")?.addEventListener("click", () => setConsent("necessary"));
+</script>

@@ -1,0 +1,92 @@
+---
+import type { FaqItem } from "../data/treatments";
+
+interface Props {
+  items: FaqItem[];
+  idPrefix?: string;
+}
+
+const { items, idPrefix = "faq" } = Astro.props;
+---
+
+<div class="divide-y divide-[var(--porcelain)] border-y border-[var(--porcelain)]" data-faq-accordion>
+  {items.map((item, i) => (
+    <div>
+      <h3 class="m-0">
+        <button
+          type="button"
+          class="faq-trigger flex w-full items-center justify-between gap-6 py-6 text-left"
+          aria-expanded="false"
+          aria-controls={`${idPrefix}-panel-${i}`}
+          id={`${idPrefix}-trigger-${i}`}
+        >
+          <span class="font-display text-xl font-normal text-[var(--ink)]">{item.question}</span>
+          <svg
+            class="faq-icon shrink-0 transition-transform duration-300"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M7 1v12M1 7h12" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round" />
+          </svg>
+        </button>
+      </h3>
+      <div
+        id={`${idPrefix}-panel-${i}`}
+        role="region"
+        aria-labelledby={`${idPrefix}-trigger-${i}`}
+        class="faq-panel"
+        data-state="closed"
+      >
+        <div class="faq-panel-inner">
+          <p class="pb-6 pr-10 text-[15px] leading-relaxed text-[var(--ink-soft)]">{item.answer}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 300ms ease;
+  }
+
+  .faq-panel[data-state="open"] {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .faq-trigger[aria-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-panel {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-faq-accordion]").forEach((accordion) => {
+    const triggers = accordion.querySelectorAll<HTMLButtonElement>(".faq-trigger");
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const panelId = trigger.getAttribute("aria-controls");
+        const panel = panelId ? document.getElementById(panelId) : null;
+        if (!panel) return;
+        const isOpen = trigger.getAttribute("aria-expanded") === "true";
+        trigger.setAttribute("aria-expanded", String(!isOpen));
+        panel.dataset.state = isOpen ? "closed" : "open";
+      });
+    });
+  });
+</script>

@@ -8,7 +8,10 @@
       "Bash(node -e \"console.log\\(require.resolve\\('sharp'\\)\\)\")",
       "Bash(node \"C:\\\\Users\\\\jakdy\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-jakdy-Documents-Aurelia-Beauty-Demo\\\\62ca9850-84c5-4de3-afa5-350473b646db\\\\scratchpad\\\\gen-placeholder.mjs\")",
       "Bash(node _tmp-gen-placeholder.mjs)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(node -e ' *)",
+      "Bash(npx astro *)",
+      "Read(//tmp/**)"
     ]
   }
 }

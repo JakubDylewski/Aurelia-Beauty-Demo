@@ -1,0 +1,164 @@
+---
+const topics = ["Konsultacja", "Modelowanie ust", "Toksyna botulinowa", "Lifting HIFU", "Inny zabieg", "Pytanie"];
+---
+
+<form id="contact-form" class="flex flex-col gap-6" novalidate>
+  <input type="hidden" name="access_key" value="TODO_WEB3FORMS_KEY" />
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <div class="flex flex-col gap-2">
+    <label for="name" class="text-[14px] font-medium text-[var(--ink)]">Imię i nazwisko *</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      data-error="Podaj imię i nazwisko."
+      class="border border-[var(--ink)]/20 bg-white px-4 py-3 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+    />
+    <p class="field-error hidden text-[13px] text-[var(--error)]" role="alert"></p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="phone" class="text-[14px] font-medium text-[var(--ink)]">Telefon *</label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      required
+      data-error="Podaj numer telefonu."
+      class="border border-[var(--ink)]/20 bg-white px-4 py-3 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+    />
+    <p class="field-error hidden text-[13px] text-[var(--error)]" role="alert"></p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="email" class="text-[14px] font-medium text-[var(--ink)]">E-mail</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      data-error="Podaj poprawny adres e-mail."
+      class="border border-[var(--ink)]/20 bg-white px-4 py-3 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+    />
+    <p class="field-error hidden text-[13px] text-[var(--error)]" role="alert"></p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="topic" class="text-[14px] font-medium text-[var(--ink)]">Temat</label>
+    <select
+      id="topic"
+      name="topic"
+      class="border border-[var(--ink)]/20 bg-white px-4 py-3 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+    >
+      {topics.map((topic) => (
+        <option value={topic}>{topic}</option>
+      ))}
+    </select>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="message" class="text-[14px] font-medium text-[var(--ink)]">Wiadomość</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      class="border border-[var(--ink)]/20 bg-white px-4 py-3 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+    ></textarea>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-start gap-3">
+      <input
+        type="checkbox"
+        id="rodo"
+        name="rodo"
+        required
+        data-error="Zgoda jest wymagana, aby wysłać formularz."
+        class="mt-1 h-4 w-4 shrink-0 accent-[var(--ink)]"
+      />
+      <label for="rodo" class="text-[13px] text-[var(--ink-soft)]">
+        Wyrażam zgodę na przetwarzanie moich danych osobowych w celu obsługi zapytania, zgodnie z <a href="/polityka-prywatnosci" class="underline decoration-[var(--gold-soft)] underline-offset-2 hover:text-[var(--gold)]">Polityką prywatności</a>. *
+      </label>
+    </div>
+    <p class="field-error hidden text-[13px] text-[var(--error)]" role="alert"></p>
+  </div>
+
+  <button
+    type="submit"
+    class="mt-2 inline-flex items-center justify-center border border-[var(--ink)] bg-[var(--porcelain)] px-7 py-3.5 text-[15px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)]"
+  >
+    Wyślij zgłoszenie
+  </button>
+
+  <p id="form-status" class="text-[15px]" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  :root {
+    --error: #b3261e;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const status = document.getElementById("form-status");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!status) return;
+
+    status.textContent = "";
+    status.classList.remove("text-[var(--error)]");
+
+    let firstInvalid: HTMLElement | null = null;
+    const requiredFields = form.querySelectorAll<HTMLInputElement>("[required]");
+
+    requiredFields.forEach((field) => {
+      const errorEl = field.closest("div")?.querySelector<HTMLElement>(".field-error");
+      const isCheckbox = field.type === "checkbox";
+      const isValid = isCheckbox ? field.checked : field.value.trim() !== "";
+
+      if (!isValid) {
+        field.setAttribute("aria-invalid", "true");
+        if (errorEl) {
+          errorEl.textContent = field.dataset.error || "To pole jest wymagane.";
+          errorEl.classList.remove("hidden");
+        }
+        if (!firstInvalid) firstInvalid = field;
+      } else {
+        field.removeAttribute("aria-invalid");
+        errorEl?.classList.add("hidden");
+      }
+    });
+
+    if (firstInvalid) {
+      (firstInvalid as HTMLElement).focus();
+      return;
+    }
+
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    submitButton?.setAttribute("disabled", "true");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        status.textContent = "Dziękujemy — oddzwonimy w ciągu jednego dnia roboczego.";
+        form.reset();
+      } else {
+        throw new Error(result.message || "Wysyłka nie powiodła się.");
+      }
+    } catch {
+      status.textContent = "Nie udało się wysłać formularza. Zadzwoń: 512 340 218.";
+      status.classList.add("text-[var(--error)]");
+    } finally {
+      submitButton?.removeAttribute("disabled");
+    }
+  });
+</script>

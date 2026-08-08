@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import GoldArc from "../components/GoldArc.astro";
+---
+
+<Base
+  title="Strona nie została znaleziona — Klinika Aurelia | Medycyna estetyczna Toruń"
+  description="Strona, której szukasz, nie istnieje. Wróć na stronę główną Kliniki Aurelia."
+>
+  <section class="flex min-h-[70vh] items-center px-6 py-32 text-center lg:px-10">
+    <div class="mx-auto flex max-w-xl flex-col items-center gap-6">
+      <GoldArc size={56} />
+      <h1 class="text-[var(--ink)]">Ta strona nie istnieje — ale Twój plan na piękno może.</h1>
+      <p class="text-[17px] text-[var(--ink-soft)]">
+        Strona, której szukasz, mogła zostać przeniesiona lub usunięta. Wróć na stronę główną i zacznij od nowa.
+      </p>
+      <Button href="/" variant="primary" class="mt-2">Wróć na stronę główną</Button>
+    </div>
+  </section>
+</Base>

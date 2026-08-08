@@ -1,0 +1,86 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+
+const categories = [
+  {
+    name: "USTA",
+    rows: [
+      { label: "Modelowanie ust 0,5 ml", price: "900 zł" },
+      { label: "Modelowanie ust 1 ml", price: "1 100 zł" },
+      { label: "Korekta po innym gabinecie", price: "od 1 300 zł" },
+      { label: "Nawilżająca mezoterapia ust", price: "600 zł" },
+    ],
+  },
+  {
+    name: "ZMARSZCZKI",
+    rows: [
+      { label: "Toksyna botulinowa — 1 okolica", price: "600 zł" },
+      { label: "Toksyna botulinowa — 2 okolice", price: "1 000 zł" },
+      { label: "Toksyna botulinowa — 3 okolice", price: "1 400 zł" },
+      { label: "Bruksizm", price: "od 1 200 zł" },
+      { label: "Wypełnienie doliny łez", price: "1 200 zł" },
+    ],
+  },
+  {
+    name: "LIFTING I JĘDRNOŚĆ",
+    rows: [
+      { label: "HIFU twarz", price: "2 900 zł" },
+      { label: "HIFU twarz + podbródek", price: "3 400 zł" },
+      { label: "HIFU twarz + szyja", price: "3 900 zł" },
+      { label: "Stymulator tkankowy", price: "od 1 400 zł" },
+    ],
+  },
+  {
+    name: "SKÓRA",
+    rows: [
+      { label: "Mezoterapia igłowa twarz", price: "450 zł" },
+      { label: "Mezoterapia — pakiet 3 zabiegów", price: "1 200 zł" },
+      { label: "Peeling medyczny", price: "od 350 zł" },
+      { label: "Konsultacja lekarska", price: "150 zł (odliczana od zabiegu)" },
+    ],
+  },
+];
+---
+
+<Base
+  title="Cennik zabiegów — Klinika Aurelia | Medycyna estetyczna Toruń"
+  description="Cennik zabiegów medycyny estetycznej w Toruniu — modelowanie ust, toksyna botulinowa, lifting HIFU i więcej. Ceny bez gwiazdek. Klinika Aurelia."
+>
+  <section class="px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
+    <div class="mx-auto max-w-4xl">
+      <h1 class="text-[var(--ink)]">Cennik zabiegów</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">
+        Uczciwie i bez gwiazdek. Ceny obejmują konsultację w dniu zabiegu, preparat i wizytę kontrolną, jeśli jest wskazana. Konsultacja lekarska (150 zł) jest odliczana od ceny zabiegu.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-6 pb-16 lg:px-10">
+    <div class="mx-auto flex max-w-4xl flex-col gap-14">
+      {categories.map((category) => (
+        <div class="reveal flex flex-col gap-1">
+          <div class="flex items-center gap-4 pb-3">
+            <span class="overline shrink-0">{category.name}</span>
+            <span class="h-px w-full bg-[var(--gold-soft)]" aria-hidden="true"></span>
+          </div>
+          {category.rows.map((row) => (
+            <div class="flex items-center justify-between gap-6 border-b border-[var(--porcelain)] py-4">
+              <span class="text-[16px] text-[var(--ink)]">{row.label}</span>
+              <span class="shrink-0 text-[16px] font-medium text-[var(--ink)]">{row.price}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 text-center lg:px-10 lg:py-20">
+    <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
+      <p class="text-[15px] text-[var(--ink-soft)]">
+        Ceny mają charakter orientacyjny — ostateczny plan i wycenę ustala lekarz podczas konsultacji.
+      </p>
+      <Button href="/kontakt" variant="primary">Umów konsultację</Button>
+    </div>
+  </section>
+</Base>

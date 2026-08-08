@@ -1,0 +1,144 @@
+---
+import Base from "../../layouts/Base.astro";
+import QuickFacts from "../../components/QuickFacts.astro";
+import BeforeAfter from "../../components/BeforeAfter.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import FinalCta from "../../components/FinalCta.astro";
+import { treatmentPages } from "../../data/treatments";
+
+const data = treatmentPages["lifting-hifu"];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: data.faq.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Strona główna", item: "/" },
+    { "@type": "ListItem", position: 2, name: "Zabiegi", item: "/cennik" },
+    { "@type": "ListItem", position: 3, name: data.h1, item: `/zabiegi/${data.slug}` },
+  ],
+};
+---
+
+<Base
+  title={`${data.metaTitle} — Klinika Aurelia | Medycyna estetyczna Toruń`}
+  description={data.metaDescription}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <section class="px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
+    <div class="mx-auto max-w-4xl">
+      <nav aria-label="Ścieżka nawigacji" class="mb-8 flex flex-wrap items-center gap-2 text-[13px] text-[var(--ink-soft)]">
+        <a href="/" class="transition-colors hover:text-[var(--gold)]">Strona główna</a>
+        <span aria-hidden="true">/</span>
+        <a href="/cennik" class="transition-colors hover:text-[var(--gold)]">Zabiegi</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-[var(--ink)]">{data.h1}</span>
+      </nav>
+
+      <h1 class="text-[var(--ink)]">{data.h1}</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">{data.lead}</p>
+
+      <div class="mt-10">
+        <QuickFacts facts={data.quickFacts} />
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Na czym polega</h2>
+      <p class="mt-5 max-w-3xl text-[17px] text-[var(--ink-soft)]">{data.about}</p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Dla kogo</h2>
+      <ul class="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+        {data.indications.map((item) => (
+          <li class="flex items-center gap-2.5 text-[16px] text-[var(--ink-soft)]">
+            <span class="h-1 w-1 shrink-0 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Przebieg zabiegu</h2>
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {data.steps.map((step) => (
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-4xl font-light text-[var(--gold)]">{step.number}</span>
+            <h3 class="text-lg font-medium text-[var(--ink)]">{step.title}</h3>
+            <p class="text-[15px] text-[var(--ink-soft)]">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Efekty</h2>
+      <div class="mt-10 max-w-xs">
+        <BeforeAfter
+          beforeSrc={data.beforeAfter.beforeSrc}
+          afterSrc={data.beforeAfter.afterSrc}
+          beforeAlt={data.beforeAfter.beforeAlt}
+          afterAlt={data.beforeAfter.afterAlt}
+          label={data.beforeAfter.label}
+        />
+      </div>
+      <p class="mt-8 max-w-2xl text-[13px] text-[var(--ink-soft)]">
+        Zdjęcia opublikowane za zgodą pacjentek. Efekt zabiegu jest zawsze kwestią indywidualną i może się różnić.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Cennik</h2>
+      <div class="mt-8 flex flex-col">
+        {data.pricingTable.map((row) => (
+          <div class="flex items-center justify-between gap-6 border-b border-[var(--porcelain)] py-4">
+            <span class="text-[16px] text-[var(--ink)]">{row.label}</span>
+            <span class="shrink-0 text-[16px] font-medium text-[var(--ink)]">{row.price}</span>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-[14px] text-[var(--ink-soft)]">
+        Pełną listę przeciwwskazań omawiamy podczas konsultacji lekarskiej.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Pytania i odpowiedzi</h2>
+      <div class="mt-8">
+        <FaqAccordion items={data.faq} idPrefix={data.slug} />
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

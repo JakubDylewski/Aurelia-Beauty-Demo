@@ -1,0 +1,109 @@
+---
+import Base from "../layouts/Base.astro";
+import TeamCard from "../components/TeamCard.astro";
+import GoldArc from "../components/GoldArc.astro";
+import FinalCta from "../components/FinalCta.astro";
+import { Image } from "astro:assets";
+
+const intro = [
+  "Klinika Aurelia powstała w 2014 roku z prostego założenia: dobra medycyna estetyczna częściej mówi „nie\", niż „tak\". Nie każdemu zabiegowi, nie każdej modzie, nie każdemu oczekiwaniu — jeśli stoi za nim krzywda dla naturalnego wyglądu.",
+  "Przez dwanaście lat wykonaliśmy ponad dziewięć tysięcy zabiegów, ale największą wagę przykładamy do tych, których odradziliśmy. Zaufanie pacjentek to nasz jedyny marketing.",
+  "Pracujemy wyłącznie na oryginalnych, certyfikowanych preparatach z udokumentowanym pochodzeniem, w gabinetach spełniających standardy podmiotu leczniczego.",
+];
+
+const team = [
+  {
+    image: "/images/zespol-aurelia.webp",
+    imageAlt: "dr n. med. Aurelia Zawadzka, założycielka Kliniki Aurelia",
+    name: "dr n. med. Aurelia Zawadzka",
+    description:
+      "Założycielka kliniki. Lekarka z 12-letnim doświadczeniem w medycynie estetycznej, szkoleniowiec technik iniekcyjnych. Prowadzi zabiegi z zakresu toksyny, wypełniaczy i stymulatorów.",
+  },
+  {
+    image: "/images/zespol-maja.webp",
+    imageAlt: "dr Maja Lewandowska, lekarka medycyny estetycznej w Klinice Aurelia",
+    name: "dr Maja Lewandowska",
+    description:
+      "Lekarka medycyny estetycznej. Specjalizuje się w modelowaniu ust i okolicy oka. Znana z lekkiej ręki i obsesji na punkcie symetrii.",
+  },
+  {
+    image: "/images/zespol-julia.webp",
+    imageAlt: "mgr Julia Nowicka, kosmetolog kliniczny w Klinice Aurelia",
+    name: "mgr Julia Nowicka",
+    description:
+      "Kosmetolog kliniczny. Prowadzi zabiegi HIFU, mezoterapię i terapie skóry problematycznej. Autorka protokołów pielęgnacji pozabiegowej Aurelii.",
+  },
+];
+
+const standards = [
+  "Konsultacja lekarska przed każdym zabiegiem — bez wyjątków.",
+  "Wyłącznie oryginalne preparaty — opakowanie otwieramy przy Tobie.",
+  "Plan zamiast pojedynczego zabiegu — z kalendarzem i budżetem, który ma sens.",
+];
+---
+
+<Base
+  title="O nas — Klinika Aurelia | Medycyna estetyczna Toruń"
+  description="Poznaj zespół i standardy Kliniki Aurelia w Toruniu — lekarze medycyny estetycznej, oryginalne preparaty, konsultacja przed każdym zabiegiem."
+>
+  <section class="px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
+    <div class="mx-auto max-w-4xl">
+      <h1 class="text-[var(--ink)]">Medycyna estetyczna, która zaczyna się od słowa „nie"</h1>
+      <div class="mt-8 flex flex-col gap-5">
+        {intro.map((paragraph) => (
+          <p class="max-w-3xl text-[17px] text-[var(--ink-soft)]">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-24">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-[var(--ink)]">Zespół</h2>
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {team.map((member) => <TeamCard {...member} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-24">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Nasze standardy</h2>
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {standards.map((standard) => (
+          <div class="flex flex-col gap-4">
+            <GoldArc size={28} />
+            <p class="text-[16px] text-[var(--ink-soft)]">{standard}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-24">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="aspect-[3/2] w-full overflow-hidden">
+        <Image
+          src="/images/wnetrze-recepcja.webp"
+          alt="Recepcja kliniki Aurelia — jasne, minimalistyczne wnętrze z ciepłymi złotymi akcentami"
+          width={1800}
+          height={1200}
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div class="aspect-[3/2] w-full overflow-hidden">
+        <Image
+          src="/images/wnetrze-gabinet.webp"
+          alt="Gabinet zabiegowy kliniki Aurelia — biały fotel medyczny, duże okno, delikatne złote detale"
+          width={1800}
+          height={1200}
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>
