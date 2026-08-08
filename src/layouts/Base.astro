@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import DemoNoticeModal from "../components/DemoNoticeModal.astro";
 import "../styles/global.css";
 
 // Preload wag fontów użytych w treści widocznej bez przewijania (nagłówek hero,
@@ -52,6 +53,7 @@ const absoluteOgImage = new URL(ogImage, Astro.site);
     </main>
     <Footer />
     <CookieBanner />
+    <DemoNoticeModal />
 
     <script>
       const revealElements = document.querySelectorAll<HTMLElement>(".reveal");

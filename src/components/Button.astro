@@ -3,9 +3,11 @@ interface Props {
   href: string;
   variant?: "primary" | "ghost";
   class?: string;
+  target?: "_blank";
+  rel?: string;
 }
 
-const { href, variant = "primary", class: className = "" } = Astro.props;
+const { href, variant = "primary", class: className = "", target, rel } = Astro.props;
 
 const base =
   "inline-flex items-center gap-2 px-7 py-3.5 text-[15px] font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2";
@@ -17,6 +19,6 @@ const variants: Record<string, string> = {
 };
 ---
 
-<a href={href} class={`${base} ${variants[variant]} ${className}`}>
+<a href={href} target={target} rel={rel} class={`${base} ${variants[variant]} ${className}`}>
   <slot />
 </a>

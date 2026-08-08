@@ -1,0 +1,166 @@
+---
+import GoldArc from "./GoldArc.astro";
+import Button from "./Button.astro";
+
+const ghostBtnClass =
+  "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[15px] font-medium bg-transparent text-[var(--ink)] border border-[var(--ink)]/20 transition-colors duration-300 hover:border-[var(--gold)] hover:text-[var(--gold)] focus-visible:outline-2 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2";
+---
+
+<div id="demo-notice-overlay" class="demo-notice-overlay fixed inset-0 z-[70] hidden items-center justify-center bg-[var(--ink)]/50 px-6 py-10">
+  <div
+    id="demo-notice-modal"
+    class="demo-notice-card relative flex w-full max-w-[520px] flex-col items-center gap-5 bg-white p-8 text-center sm:p-10"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="demo-notice-heading"
+    tabindex="-1"
+  >
+    <GoldArc size={40} />
+    <h2 id="demo-notice-heading" class="text-2xl text-[var(--ink)] sm:text-3xl">To jest strona demonstracyjna</h2>
+
+    <p class="text-[15px] text-[var(--ink-soft)]">
+      Klinika Aurelia nie istnieje — to fikcyjna marka stworzona przez Connectivę, aby pokazać, jak może wyglądać profesjonalna strona dla kliniki medycyny estetycznej. Wszystkie dane, zabiegi, ceny i opinie są wymyślone.
+    </p>
+
+    <p class="bg-[var(--porcelain)] px-5 py-4 text-[15px] text-[var(--ink)]">
+      Prowadzisz klinikę, gabinet lub salon beauty? Taką stronę — wraz z systemem pozyskiwania pacjentów — zbudujemy również dla Ciebie.
+    </p>
+
+    <div class="mt-2 flex w-full flex-col gap-4 sm:flex-row sm:justify-center">
+      <Button href="https://connectiva.biz" target="_blank" rel="noopener" variant="primary">
+        Chcę taką stronę
+      </Button>
+      <button type="button" id="demo-notice-close" class={ghostBtnClass}>
+        Rozumiem, chcę zobaczyć demo
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .demo-notice-overlay {
+    opacity: 0;
+    transition: opacity 250ms ease;
+  }
+
+  .demo-notice-overlay.is-visible {
+    opacity: 1;
+  }
+
+  .demo-notice-card {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 250ms ease, transform 250ms ease;
+  }
+
+  .demo-notice-overlay.is-visible .demo-notice-card {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-notice-overlay,
+    .demo-notice-card {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = "aurelia-demo-notice";
+  const overlay = document.getElementById("demo-notice-overlay");
+  const modal = document.getElementById("demo-notice-modal");
+  const closeBtn = document.getElementById("demo-notice-close");
+
+  if (overlay && modal && closeBtn) {
+    let lastFocused: HTMLElement | null = null;
+
+    function alreadySeen(): boolean {
+      try {
+        return Boolean(sessionStorage.getItem(STORAGE_KEY));
+      } catch {
+        return false;
+      }
+    }
+
+    function markSeen() {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, "1");
+      } catch {
+        // sessionStorage niedostępny — modal po prostu pokaże się ponownie.
+      }
+    }
+
+    function getFocusable(): HTMLElement[] {
+      return Array.from(modal!.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"));
+    }
+
+    function openModal() {
+      lastFocused = document.activeElement as HTMLElement | null;
+      document.body.style.overflow = "hidden";
+      overlay!.classList.remove("hidden");
+      overlay!.classList.add("flex");
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay!.classList.add("is-visible");
+        });
+      });
+
+      closeBtn!.focus();
+      document.addEventListener("keydown", onKeydown);
+    }
+
+    function closeModal() {
+      markSeen();
+      overlay!.classList.remove("is-visible");
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeydown);
+
+      window.setTimeout(() => {
+        overlay!.classList.add("hidden");
+        overlay!.classList.remove("flex");
+      }, 250);
+
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      }
+    }
+
+    function onKeydown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeModal();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const focusable = getFocusable();
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) {
+        closeModal();
+      }
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+
+    if (!alreadySeen()) {
+      openModal();
+    }
+  }
+</script>

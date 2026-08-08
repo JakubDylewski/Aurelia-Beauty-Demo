@@ -376,3 +376,30 @@ Wygeneruj i zapisz do `public/images/` DOKŁADNIE pod tymi nazwami. Styl spójny
 ---
 
 *Specyfikacja: Connectiva / Jakub. Demo fikcyjne — nazwa, osoby, adres i opinie wymyślone na potrzeby prezentacji produktu.*
+
+
+---
+
+## 14. POPUP DEMO (baner informacyjny przy wejściu)
+
+Cel: każdy, kto wejdzie na stronę, od razu wie, że to demonstracja umiejętności Connectivy, a nie prawdziwa klinika. Zabezpiecza markę i jednocześnie działa jako haczyk sprzedażowy (CTA do Connectivy).
+
+**Zachowanie:**
+- Pokazuje się RAZ NA SESJĘ przeglądarki, przy pierwszym wejściu na dowolną stronę. Po zamknięciu zapisujemy wybór w `sessionStorage` pod kluczem `aurelia-demo-notice` — dzięki temu przy klikaniu po podstronach popup NIE wraca, ale wraca po zamknięciu i ponownym otwarciu przeglądarki (nowa sesja).
+- Modal na środku ekranu (nie pasek), z półprzezroczystym ciemnym tłem (overlay) przyciemniającym stronę pod spodem.
+- Wejście: delikatny fade + scale (250ms). Zamknięcie: fade out.
+- Zamknięcie przez: przycisk "Rozumiem", klawisz Escape, albo kliknięcie w tło overlay.
+- Blokada scrolla strony, gdy popup otwarty (`overflow: hidden` na body).
+- `prefers-reduced-motion`: bez animacji, tylko pojawienie/zniknięcie.
+- Pełne ARIA: `role="dialog"`, `aria-modal="true"`, `aria-labelledby` (nagłówek), focus trap wewnątrz modala, focus wraca na stronę po zamknięciu.
+
+**Styl:** spójny z resztą — biała karta, złoty łuk (GoldArc) nad nagłówkiem, nagłówek Cormorant, treść Instrument Sans. Przycisk główny w stylu primary (pastelowy z ciemną ramką), przycisk drugorzędny ghost. Maksymalna szerokość karty ~520px, wyśrodkowana, z marginesem na mobile.
+
+**Treść (dokładnie):**
+- Nagłówek (H2): `To jest strona demonstracyjna`
+- Akapit 1: `Klinika Aurelia nie istnieje — to fikcyjna marka stworzona przez Connectivę, aby pokazać, jak może wyglądać profesjonalna strona dla kliniki medycyny estetycznej. Wszystkie dane, zabiegi, ceny i opinie są wymyślone.`
+- Akapit 2 (wyróżniony, np. lekki pastelowy blok): `Prowadzisz klinikę, gabinet lub salon beauty? Taką stronę — wraz z systemem pozyskiwania pacjentów — zbudujemy również dla Ciebie.`
+- Przycisk 1 (primary): `Chcę taką stronę` → link do `https://connectiva.biz` (otwiera w nowej karcie, `target="_blank" rel="noopener"`)
+- Przycisk 2 (ghost): `Rozumiem, chcę zobaczyć demo` → zamyka popup
+
+**Komponent:** `DemoNoticeModal.astro`, podpięty globalnie w `Base.astro` (pojawia się na każdej podstronie, ale logika sessionStorage pokazuje go raz na sesję).
