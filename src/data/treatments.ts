@@ -227,7 +227,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     slug: "toksyna-botulinowa",
     metaTitle: "Toksyna botulinowa",
     metaDescription:
-      "Toksyna botulinowa w Toruniu — wygładzenie zmarszczek mimicznych bez efektu maski. Zabieg wykonuje lekarz, bezpłatna kontrola po 14 dniach. Umów konsultację — Klinika Aurelia.",
+      "Toksyna botulinowa w Toruniu — wygładzenie zmarszczek mimicznych bez efektu maski. Zabieg wykonuje lekarz. Umów konsultację — Klinika Aurelia.",
     h1: "Toksyna botulinowa — wygładzenie zmarszczek mimicznych",
     lead: "Lwia zmarszczka, poprzeczne linie czoła, kurze łapki — to ślady mimiki, nie wieku. Toksyna botulinowa rozluźnia wybrane mięśnie, wygładzając skórę i zachowując naturalny wyraz twarzy.",
     quickFacts: [
@@ -314,7 +314,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     slug: "lifting-hifu",
     metaTitle: "Lifting HIFU",
     metaDescription:
-      "Lifting HIFU w Toruniu — ujędrnienie owalu twarzy bez skalpela i rekonwalescencji. Zabieg na certyfikowanym sprzęcie medycznym. Umów konsultację — Klinika Aurelia.",
+      "Lifting HIFU w Toruniu — ujędrnienie owalu twarzy bez skalpela i rekonwalescencji. Umów konsultację — Klinika Aurelia.",
     h1: "Lifting HIFU — ujędrnienie bez skalpela",
     lead: "Skoncentrowane ultradźwięki docierają tam, gdzie pracuje chirurg — tylko bez cięcia. HIFU przebudowuje włókna kolagenowe od środka, unosząc owal twarzy i napinając skórę na miesiące.",
     quickFacts: [

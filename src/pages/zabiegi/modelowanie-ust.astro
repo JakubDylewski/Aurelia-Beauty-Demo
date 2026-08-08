@@ -25,9 +25,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Strona główna", item: "/" },
-    { "@type": "ListItem", position: 2, name: "Zabiegi", item: "/cennik" },
-    { "@type": "ListItem", position: 3, name: data.h1, item: `/zabiegi/${data.slug}` },
+    { "@type": "ListItem", position: 1, name: "Strona główna", item: new URL("/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name: "Zabiegi", item: new URL("/cennik", Astro.site).toString() },
+    { "@type": "ListItem", position: 3, name: data.h1, item: new URL(`/zabiegi/${data.slug}`, Astro.site).toString() },
   ],
 };
 ---

@@ -4,6 +4,11 @@ import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import "../styles/global.css";
 
+// Preload wag fontów użytych w treści widocznej bez przewijania (nagłówek hero,
+// tekst podstawowy) — skraca czas do pierwszego renderu tekstu docelowego.
+import cormorantDisplayFont from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-ext-300-normal.woff2?url";
+import instrumentBodyFont from "@fontsource/instrument-sans/files/instrument-sans-latin-ext-400-normal.woff2?url";
+
 interface Props {
   title: string;
   description: string;
@@ -11,7 +16,8 @@ interface Props {
 }
 
 const { title, description, ogImage = "/images/og-cover.webp" } = Astro.props;
-const canonicalURL = Astro.url.pathname;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteOgImage = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -20,6 +26,8 @@ const canonicalURL = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
+    <link rel="preload" href={cormorantDisplayFont} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={instrumentBodyFont} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
@@ -30,7 +38,7 @@ const canonicalURL = Astro.url.pathname;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={absoluteOgImage} />
     <meta property="og:locale" content="pl_PL" />
     <meta name="twitter:card" content="summary_large_image" />
 

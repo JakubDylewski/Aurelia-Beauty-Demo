@@ -11,7 +11,11 @@
       "Bash(npm run *)",
       "Bash(node -e ' *)",
       "Bash(npx astro *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(timeout 90 npx --yes lighthouse http://localhost:4321/ --output=json --output-path=/tmp/lh.json --quiet --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,seo,best-practices --form-factor=mobile --screenEmulation.mobile)",
+      "Bash(cygpath -w /tmp/lh.json)",
+      "Bash(timeout 90 npx --yes lighthouse http://localhost:4322/ --output=json --output-path=/tmp/lh2.json --quiet --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,seo,best-practices --form-factor=mobile --screenEmulation.mobile)",
+      "Bash(node *)"
     ]
   }
 }

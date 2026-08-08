@@ -18,6 +18,43 @@ const trustBar = [
   "Certyfikowani lekarze medycyny estetycznej",
 ];
 
+const medicalClinicSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: "Klinika Aurelia",
+  url: Astro.site?.toString(),
+  image: new URL("/images/og-cover.webp", Astro.site).toString(),
+  telephone: "+48512340218",
+  email: "rejestracja@klinika-aurelia.pl",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "ul. Mostowa 14/2",
+    addressLocality: "Toruń",
+    postalCode: "87-100",
+    addressCountry: "PL",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 53.0138,
+    longitude: 18.6058,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "19:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Saturday"],
+      opens: "09:00",
+      closes: "14:00",
+    },
+  ],
+};
+
 const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"], treatments["lifting-hifu"]];
 ---
 
@@ -25,6 +62,10 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
   title="Klinika Aurelia — Medycyna estetyczna Toruń"
   description="Klinika medycyny estetycznej w Toruniu. Naturalne efekty, certyfikowane preparaty, zabiegi wykonuje lekarz. Umów konsultację — Klinika Aurelia."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(medicalClinicSchema)} />
+  </Fragment>
+
   <section class="relative overflow-hidden">
     <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pt-40 pb-20 lg:grid-cols-[55%_45%] lg:gap-0 lg:px-10 lg:pt-48 lg:pb-0">
       <div class="relative flex flex-col items-start gap-7 lg:pr-16">
