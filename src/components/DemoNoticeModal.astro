@@ -6,10 +6,10 @@ const ghostBtnClass =
   "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[15px] font-medium bg-transparent text-[var(--ink)] border border-[var(--ink)]/20 transition-colors duration-300 hover:border-[var(--gold)] hover:text-[var(--gold)] focus-visible:outline-2 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2";
 ---
 
-<div id="demo-notice-overlay" class="demo-notice-overlay fixed inset-0 z-[70] hidden items-center justify-center bg-[var(--ink)]/50 px-6 py-10">
+<div id="demo-notice-overlay" class="demo-notice-overlay fixed inset-0 z-[70] hidden items-center justify-center overflow-y-auto bg-[var(--ink)]/50 px-6 py-10">
   <div
     id="demo-notice-modal"
-    class="demo-notice-card relative flex w-full max-w-[520px] flex-col items-center gap-5 bg-white p-8 text-center sm:p-10"
+    class="demo-notice-card relative my-auto flex w-full max-w-[520px] flex-col items-center gap-5 bg-white p-8 text-center sm:p-10"
     role="dialog"
     aria-modal="true"
     aria-labelledby="demo-notice-heading"

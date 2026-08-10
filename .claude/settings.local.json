@@ -16,7 +16,15 @@
       "Bash(cygpath -w /tmp/lh.json)",
       "Bash(timeout 90 npx --yes lighthouse http://localhost:4322/ --output=json --output-path=/tmp/lh2.json --quiet --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,seo,best-practices --form-factor=mobile --screenEmulation.mobile)",
       "Bash(node *)",
-      "Bash(cp *)"
+      "Bash(cp *)",
+      "Bash(npx --yes serve dist -l 4322)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(jobs)",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --preset=perf --form-factor=mobile --screenEmulation.mobile --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=simulate --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,best-practices,seo)",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --preset=perf --form-factor=mobile --screenEmulation.mobile --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=simulate --output=json --output-path=./lighthouse-report2.json --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,best-practices,seo)",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --preset=perf --form-factor=mobile --screenEmulation.mobile --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=devtools --output=json --output-path=./lighthouse-report3.json --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill *)"
     ]
   }
 }
