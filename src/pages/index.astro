@@ -9,6 +9,7 @@ import BeforeAfter from "../components/BeforeAfter.astro";
 import Testimonials from "../components/Testimonials.astro";
 import FinalCta from "../components/FinalCta.astro";
 import { treatments } from "../data/treatments";
+import { cityNavLinks } from "../data/cities";
 import { Image } from "astro:assets";
 
 const trustBar = [
@@ -211,6 +212,24 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
       <SectionHeading overline="ZAUFANIE" heading="Pacjentki mówią same" align="center" />
       <div class="mt-14">
         <Testimonials />
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading overline="OBSŁUGUJEMY OKOLICĘ" heading="Docieramy do pacjentek w całym regionie" align="center" />
+
+      <div class="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cityNavLinks.map((item) => (
+          <a
+            href={item.href}
+            class="group flex items-center justify-between gap-4 border border-[var(--porcelain)] bg-white px-6 py-5 transition-colors hover:border-[var(--gold-soft)]"
+          >
+            <span class="text-[16px] font-medium text-[var(--ink)]">{item.label}</span>
+            <span class="text-[15px] text-[var(--gold)] transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        ))}
       </div>
     </div>
   </section>

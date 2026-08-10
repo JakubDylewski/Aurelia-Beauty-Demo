@@ -403,3 +403,126 @@ Cel: każdy, kto wejdzie na stronę, od razu wie, że to demonstracja umiejętno
 - Przycisk 2 (ghost): `Rozumiem, chcę zobaczyć demo` → zamyka popup
 
 **Komponent:** `DemoNoticeModal.astro`, podpięty globalnie w `Base.astro` (pojawia się na każdej podstronie, ale logika sessionStorage pokazuje go raz na sesję).
+
+
+
+
+---
+
+## 15. WARSTWA SYSTEMU POZYSKIWANIA PACJENTÓW + AUDYT MOBILNY
+
+> Cel tej warstwy: strona ma OD RAZU, na własne oczy, pokazywać kompletny system pozyskiwania pacjentów — nie opisywać go, tylko pokazywać działające mechanizmy. Klient wchodzący na stronę widzi, za co płaci: działające podstrony pod miasta, strony pod zabiegi, oraz realistyczne makiety wizytówki Google, analityki i reklam. Wszystko musi działać perfekcyjnie na telefonie.
+>
+> WAŻNE — uczciwość: elementy symulowane (statystyki, wizytówka Google, reklamy) MUSZĄ być wyraźnie oznaczone jako przykładowe/demonstracyjne. Nie wolno prezentować zmyślonych danych jako prawdziwych. Każda makieta dostaje widoczną etykietę „PRZYKŁAD" / „Tak będzie wyglądać u Ciebie".
+
+---
+
+### 15.1 PODSTRONY POD MIEJSCOWOŚCI (w pełni działające — to serce systemu)
+
+Tworzymy 5 realnych, klikalnych podstron pod miasta w okolicy (fikcyjnego) Torunia. Każda ma WŁASNĄ, różniącą się treść — NIE kopie z podmienioną nazwą miasta (Google karze za duplikaty/doorway pages, a klient ma zobaczyć, że robimy to porządnie).
+
+**Ścieżki i miasta:**
+- `/medycyna-estetyczna-torun`
+- `/medycyna-estetyczna-ciechocinek`
+- `/medycyna-estetyczna-chelmza`
+- `/medycyna-estetyczna-aleksandrow-kujawski`
+- `/medycyna-estetyczna-torun-podgorz` (dzielnica — pokazuje, że schodzimy nawet niżej)
+
+**Wspólny szablon podstrony miejscowości** (ale treść w każdej inna):
+1. **H1 z frazą lokalną:** wzór `Medycyna estetyczna [Miasto] — Klinika Aurelia` (np. „Medycyna estetyczna Ciechocinek")
+2. **Lead z lokalnym kontekstem** (2-3 zdania, ROŻNE dla każdego miasta): nawiązanie do dojazdu z tego miasta, odległości, tego że pacjentki z [Miasto] wybierają Aurelię. Przykłady:
+   - Ciechocinek: `Do Kliniki Aurelia w Toruniu dojedziesz z Ciechocinka w niecałe 30 minut. Pacjentki z uzdrowiska wybierają nas ze względu na lekarską konsultację przed każdym zabiegiem i naturalne efekty.`
+   - Chełmża: `Mieszkasz w Chełmży? Klinika Aurelia jest oddalona o ok. 20 km — a różnicę w jakości zabiegu poczujesz od pierwszej wizyty.`
+   - Aleksandrów Kujawski: `Z Aleksandrowa Kujawskiego do naszej kliniki to krótka trasa. Coraz więcej pacjentek z okolicy wybiera medycynę estetyczną prowadzoną wyłącznie przez lekarzy.`
+   (Podgórz i Toruń analogicznie — każde INNE.)
+3. **Sekcja „Zabiegi dla pacjentek z [Miasto]”** — te same 3 flagowe zabiegi (usta, botoks, HIFU) linkujące do stron zabiegowych, z jednozdaniowym wprowadzeniem lokalnym.
+4. **Mapa** z trasą/dojazdem (osadzona Google Maps wycentrowana na Toruń, z podpisem „Dojazd z [Miasto]”).
+5. **Blok „Dlaczego pacjentki z [Miasto] wybierają Aurelię”** — 3 punkty (lekarska konsultacja, certyfikowane preparaty, naturalne efekty).
+6. **CTA:** „Umów konsultację” + telefon.
+7. **SEO:** unikalny title (`Medycyna estetyczna [Miasto] | Klinika Aurelia`) i meta description z frazą lokalną; JSON-LD `MedicalClinic` z areaServed = miasto.
+
+**Sekcja „Obsługujemy okolicę” na stronie głównej i w stopce:** lista linków do wszystkich podstron miejscowości (to pokazuje klientowi mechanizm „łapiemy całą okolicę w Google”).
+
+---
+
+### 15.2 STRONA „SYSTEM” — `/jak-pozyskujemy-pacjentow`
+
+Osobna podstrona, dostępna z głównego menu (pozycja: „Jak to działa” albo „System”). To jest MANIFEST sprzedażowy — pokazuje wszystkie mechanizmy zebrane, część działające, część jako makiety. Układ: sekcje jedna pod drugą, każda z krótkim wyjaśnieniem + wizualnym dowodem.
+
+**Nagłówek strony:**
+- Overline: `KOMPLETNY SYSTEM`
+- H1: `Nie budujemy stron. Budujemy system, który przyprowadza pacjentów.`
+- Lead: `Strona to dopiero początek. Poniżej pokazujemy dokładnie, jak zamieniamy osoby szukające w Google w umówione wizyty w Twojej klinice.`
+
+**Sekcja A — Strony pod każdy zabieg (DZIAŁAJĄCE):**
+- Tekst: `Każdy zabieg dostaje własną, dopracowaną stronę zoptymalizowaną pod wyszukiwania Google — z opisem, cenami, efektami i pytaniami pacjentek.`
+- Dowód: 3 klikalne karty prowadzące do stron zabiegowych (usta, botoks, HIFU). Podpis: „Kliknij — to prawdziwe, działające strony”.
+
+**Sekcja B — Podstrony pod miejscowości (DZIAŁAJĄCE):**
+- Tekst: `Tworzymy osobne strony pod okoliczne miasta, żebyś pojawiał się w Google, gdy pacjentka z Ciechocinka, Chełmży czy Aleksandrowa szuka zabiegu u siebie.`
+- Dowód: klikalne linki do 5 podstron miejscowości. Podpis: „Kliknij dowolne miasto — każde ma własną stronę”.
+
+**Sekcja C — Wizytówka Google (MAKIETA — oznaczona):**
+- Tekst: `Optymalizujemy Twój profil Google i wdrażamy system zbierania opinii, żebyś był pierwszym wyborem na mapie.`
+- Dowód: zbudowana z kodu (HTML/CSS) MAKIETA panelu Google Business — nazwa „Klinika Aurelia”, ocena 4,9 ★ (214 opinii), godziny, przykładowe opinie, przycisk „Wyznacz trasę”. U góry makiety WYRAŹNA etykieta: `PRZYKŁAD — tak wygląda zoptymalizowana wizytówka`. Nie osadzać prawdziwego Google — zbudować wizualnie w kodzie.
+
+**Sekcja D — Panel z wynikami / analityka (MAKIETA — oznaczona):**
+- Tekst: `Co miesiąc dostajesz prosty raport: ile osób weszło, ile zadzwoniło, ile wypełniło formularz. Wiesz dokładnie, za co płacisz.`
+- Dowód: zbudowany z kodu MAKIETA dashboardu — kafelki: „1 247 wejść”, „89 kliknięć w telefon”, „47 wysłanych formularzy”, prosty wykres słupkowy (czysty CSS/SVG, bez bibliotek). Źródła ruchu: Google, Instagram, bezpośrednie. U góry etykieta: `PRZYKŁADOWY RAPORT — dane demonstracyjne`.
+
+**Sekcja E — Reklamy Google (MAKIETA — oznaczona):**
+- Tekst: `W razie potrzeby uruchamiamy precyzyjne reklamy Google, które pokazują Twoją klinikę dokładnie wtedy, gdy ktoś szuka Twojego zabiegu.`
+- Dowód: MAKIETA wyniku reklamowego Google (nagłówek reklamy „Klinika Aurelia — Medycyna estetyczna Toruń”, opis, „Sponsorowane”). Etykieta: `PRZYKŁAD reklamy`.
+
+**Sekcja F — Podsumowanie / CTA:**
+- H2: `Tyle pracuje dla Ciebie, zanim pacjentka do Ciebie zadzwoni.`
+- Tekst krótkie zestawienie warstw (strona premium, strony zabiegów, podstrony miast, wizytówka Google, analityka, reklamy, opieka).
+- CTA: „Chcę taki system” → `/kontakt`.
+
+**Styl:** spójny z resztą (biel, złoty łuk, Cormorant/Instrument Sans). Makiety mają wyglądać realistycznie, ale KAŻDA z widoczną etykietą „PRZYKŁAD”. Etykieta: mały pill, tło `--porcelain`, tekst `--ink-soft`, uppercase 11px.
+
+---
+
+### 15.3 NAWIGACJA — dodać do menu i stopki
+
+- Do głównego menu dodać pozycję: `Jak to działa` → `/jak-pozyskujemy-pacjentow` (umieścić między „Metamorfozy” a „O nas”).
+- Do stopki dodać kolumnę/sekcję „Obsługujemy okolicę” z linkami do 5 podstron miejscowości.
+- Dropdown „Zabiegi” bez zmian.
+
+---
+
+### 15.4 AUDYT MOBILNY — TWARDY WYMÓG (całą stronę, każda podstrona)
+
+To jest wymóg krytyczny — pacjentki wchodzą głównie z telefonu. Po zbudowaniu warstwy 15.1-15.3, Claude Code przechodzi CAŁĄ stronę (stara + nowe podstrony) w widoku mobilnym (szerokość 360px, 390px, 414px) i sprawdza + naprawia:
+
+- [ ] Żadne zdjęcie nie jest ucięte w złym miejscu ani zniekształcone — na mobile obrazy skalują się i kadrują sensownie (`object-fit: cover` z sensownym `object-position`, twarze/produkt widoczne).
+- [ ] Żaden tekst nie wychodzi poza ekran, nie ma poziomego przewijania (`overflow-x: hidden` gdzie trzeba, ale najpierw naprawić przyczynę).
+- [ ] Nagłówki (duże Cormorant) nie łamią się brzydko ani nie wystają — `clamp()` skaluje je w dół na mobile.
+- [ ] Hero na telefonie: tekst czytelny, zdjęcie nie zasłania tekstu, CTA klikalne i widoczne bez scrolla (lub tuż pod).
+- [ ] Menu mobilne (hamburger) zawiera WSZYSTKIE nowe pozycje (Jak to działa, podstrony przez „Zabiegi”/stopkę), działa, zamyka się.
+- [ ] Eksplorator problemów działa dotykiem na telefonie (tap zamiast hover).
+- [ ] Suwaki przed/po działają dotykiem (drag palcem), etykiety PRZED/PO widoczne.
+- [ ] Makiety (wizytówka Google, dashboard, reklama) skalują się na telefon — nie wychodzą poza ekran, wykres i kafelki układają się w pion.
+- [ ] Formularze: pola pełnej szerokości, wygodne do tapnięcia, klawiatura nie psuje układu.
+- [ ] Przyciski i linki mają min. 44px wysokości dotykowej (standard mobilny).
+- [ ] Tabele cennika na mobile: czytelne, nie wychodzą poza ekran (jeśli trzeba — układ kartowy zamiast tabeli).
+- [ ] Stopka na mobile: kolumny układają się w pion, wszystko czytelne.
+- [ ] Popup „to demonstracja” na mobile: mieści się w ekranie, przyciski dostępne, da się zamknąć.
+- [ ] Odstępy (padding sekcji) zmniejszone na mobile, żeby nie było za luźno.
+- [ ] Lighthouse mobile po zmianach: Performance ≥90, Accessibility ≥95.
+
+Dla każdego znalezionego problemu — naprawić u źródła (Tailwind: użyć responsywnych prefiksów `sm:` `md:` `lg:`, mobile-first). Na koniec wypisać listę tego, co było zepsute i co naprawione.
+
+---
+
+### 15.5 ETAPY BUDOWY (dla Claude Code)
+
+**ETAP 6 — Podstrony miejscowości:** zbuduj 5 podstron wg 15.1, każda z UNIKALNĄ treścią lokalną, JSON-LD z areaServed, dodaj sekcję „Obsługujemy okolicę” na stronie głównej i w stopce. Build, podsumuj, STOP.
+
+**ETAP 7 — Strona System:** zbuduj `/jak-pozyskujemy-pacjentow` wg 15.2 z sekcjami A-F, w tym makiety (wizytówka Google, dashboard, reklama) zbudowane z kodu i oznaczone etykietą „PRZYKŁAD”. Dodaj „Jak to działa” do menu. Build, podsumuj, STOP.
+
+**ETAP 8 — Audyt mobilny:** przejdź całą stronę wg checklisty 15.4, napraw wszystkie problemy responsywności (stare i nowe strony), ze szczególną uwagą na zdjęcia i makiety. Build, Lighthouse mobile, wypisz co naprawione. STOP.
+
+---
+
+*Sekcja 15 — rozszerzenie specyfikacji Aurelia o system pozyskiwania pacjentów. Elementy symulowane oznaczone jako przykładowe. Demo fikcyjne.*

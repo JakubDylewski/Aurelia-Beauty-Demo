@@ -1,0 +1,121 @@
+---
+import Base from "../layouts/Base.astro";
+import SectionHeading from "./SectionHeading.astro";
+import TreatmentCard from "./TreatmentCard.astro";
+import FinalCta from "./FinalCta.astro";
+import GoldArc from "./GoldArc.astro";
+import { treatments } from "../data/treatments";
+import type { CityPageData } from "../data/cities";
+
+interface Props {
+  city: CityPageData;
+}
+
+const { city } = Astro.props;
+
+const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"], treatments["lifting-hifu"]];
+
+const medicalClinicSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: "Klinika Aurelia",
+  url: Astro.site?.toString(),
+  image: new URL("/images/og-cover.webp", Astro.site).toString(),
+  telephone: "+48512340218",
+  email: "rejestracja@klinika-aurelia.pl",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "ul. Mostowa 14/2",
+    addressLocality: "Toruń",
+    postalCode: "87-100",
+    addressCountry: "PL",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 53.0138,
+    longitude: 18.6058,
+  },
+  areaServed: {
+    "@type": "City",
+    name: city.areaServed,
+  },
+};
+---
+
+<Base
+  title={`${city.metaTitle} — Klinika Aurelia | Medycyna estetyczna Toruń`}
+  description={city.metaDescription}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(medicalClinicSchema)} />
+  </Fragment>
+
+  <section class="px-6 pt-32 pb-16 lg:px-10 lg:pt-40">
+    <div class="mx-auto max-w-4xl">
+      <nav aria-label="Ścieżka nawigacji" class="mb-8 flex flex-wrap items-center gap-2 text-[13px] text-[var(--ink-soft)]">
+        <a href="/" class="transition-colors hover:text-[var(--gold)]">Strona główna</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-[var(--ink)]">{city.cityName}</span>
+      </nav>
+
+      <h1 class="text-[var(--ink)]">{city.h1}</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">{city.lead}</p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="ZABIEGI" heading={`Zabiegi dla pacjentek z ${city.cityName}`} />
+      <p class="mt-5 max-w-2xl text-[16px] text-[var(--ink-soft)]">{city.treatmentsIntro}</p>
+
+      <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {flagship.map((treatment) => (
+          <TreatmentCard treatment={treatment} class="bg-white" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+      <div class="aspect-[4/3] w-full overflow-hidden border border-[var(--porcelain)]">
+        <iframe
+          src="https://www.google.com/maps?q=Toru%C5%84,+Polska&output=embed"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Mapa dojazdu — ${city.cityName}`}
+        ></iframe>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <span class="overline">{city.mapCaption}</span>
+        <p class="font-display text-2xl font-light text-[var(--ink)]">Klinika Aurelia</p>
+        <p class="text-[16px] text-[var(--ink-soft)]">ul. Mostowa 14/2, 87-100 Toruń</p>
+        <a href="tel:512340218" class="text-[16px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]">
+          512 340 218
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-5xl">
+      <SectionHeading overline="ZAUFANIE" heading={city.whyHeading} />
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {city.whyPoints.map((point) => (
+          <div class="flex flex-col gap-3">
+            <GoldArc size={28} />
+            <h3 class="text-lg font-medium text-[var(--ink)]">{point.title}</h3>
+            <p class="text-[15px] text-[var(--ink-soft)]">{point.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

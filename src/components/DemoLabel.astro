@@ -1,0 +1,14 @@
+---
+interface Props {
+  text?: string;
+  class?: string;
+}
+
+const { text = "PRZYKŁAD", class: className = "" } = Astro.props;
+---
+
+<span
+  class={`inline-flex w-fit items-center bg-[var(--porcelain)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-soft)] ${className}`}
+>
+  {text}
+</span>

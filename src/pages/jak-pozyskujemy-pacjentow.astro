@@ -1,0 +1,244 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import GoldArc from "../components/GoldArc.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import TreatmentCard from "../components/TreatmentCard.astro";
+import DemoLabel from "../components/DemoLabel.astro";
+import { treatments } from "../data/treatments";
+import { cityNavLinks } from "../data/cities";
+
+const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"], treatments["lifting-hifu"]];
+
+const trafficSources = [
+  { label: "Google", value: 62 },
+  { label: "Instagram", value: 24 },
+  { label: "Bezpośrednie", value: 14 },
+];
+
+const starPath = "M8 0.8l2.1 4.6 5 .6-3.7 3.5.9 5-4.3-2.4-4.3 2.4.9-5L.9 6l5-.6L8 .8z";
+
+const systemLayers = [
+  "Strona premium, która buduje zaufanie od pierwszego kliknięcia",
+  "Strony pod każdy zabieg",
+  "Podstrony pod okoliczne miejscowości",
+  "Zoptymalizowana wizytówka Google",
+  "Prosty raport z wynikami co miesiąc",
+  "Precyzyjne reklamy Google, gdy potrzeba",
+  "Opieka i wsparcie po wdrożeniu",
+];
+---
+
+<Base
+  title="Jak pozyskujemy pacjentów — Klinika Aurelia | Medycyna estetyczna Toruń"
+  description="Zobacz cały system pozyskiwania pacjentów Kliniki Aurelia: strony pod zabiegi, podstrony pod okoliczne miasta, wizytówka Google, raporty i reklamy."
+>
+  <section class="px-6 pt-32 pb-16 lg:px-10 lg:pt-40 lg:pb-20">
+    <div class="mx-auto max-w-4xl">
+      <span class="overline">KOMPLETNY SYSTEM</span>
+      <h1 class="mt-4 text-[var(--ink)]">Nie budujemy stron. Budujemy system, który przyprowadza pacjentów.</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">
+        Strona to dopiero początek. Poniżej pokazujemy dokładnie, jak zamieniamy osoby szukające w Google w umówione wizyty w Twojej klinice.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="WARSTWA 1 · DZIAŁA" heading="Strony pod każdy zabieg" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        Każdy zabieg dostaje własną, dopracowaną stronę zoptymalizowaną pod wyszukiwania Google — z opisem, cenami, efektami i pytaniami pacjentek.
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {flagship.map((treatment) => (
+          <TreatmentCard treatment={treatment} class="bg-white" />
+        ))}
+      </div>
+
+      <p class="mt-6 text-[13px] text-[var(--ink-soft)]">Kliknij — to prawdziwe, działające strony.</p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="WARSTWA 2 · DZIAŁA" heading="Podstrony pod okoliczne miejscowości" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        Tworzymy osobne strony pod okoliczne miasta, żebyś pojawiał się w Google, gdy pacjentka z Ciechocinka, Chełmży czy Aleksandrowa szuka zabiegu u siebie.
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cityNavLinks.map((item) => (
+          <a
+            href={item.href}
+            class="group flex items-center justify-between gap-4 border border-[var(--porcelain)] bg-white px-6 py-5 transition-colors hover:border-[var(--gold-soft)]"
+          >
+            <span class="text-[16px] font-medium text-[var(--ink)]">{item.label}</span>
+            <span class="text-[15px] text-[var(--gold)] transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="mt-6 text-[13px] text-[var(--ink-soft)]">Kliknij dowolne miasto — każde ma własną stronę.</p>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="WARSTWA 3 · MAKIETA" heading="Wizytówka Google" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        Optymalizujemy Twój profil Google i wdrażamy system zbierania opinii, żebyś był pierwszym wyborem na mapie.
+      </p>
+
+      <div class="mt-10 flex flex-col gap-4">
+        <DemoLabel text="PRZYKŁAD — tak wygląda zoptymalizowana wizytówka" />
+
+        <div class="border border-[var(--porcelain)] bg-white p-6 sm:p-8">
+          <div class="flex flex-col gap-1">
+            <span class="font-display text-2xl font-normal text-[var(--ink)]">Klinika Aurelia</span>
+            <span class="text-[14px] text-[var(--ink-soft)]">Klinika medycyny estetycznej</span>
+          </div>
+
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            <span class="text-[16px] font-medium text-[var(--ink)]">4,9</span>
+            <div class="flex gap-0.5" aria-hidden="true">
+              {Array.from({ length: 5 }).map(() => (
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="var(--gold)"><path d={starPath} /></svg>
+              ))}
+            </div>
+            <span class="text-[14px] text-[var(--ink-soft)]">(214 opinii)</span>
+          </div>
+
+          <div class="mt-4 flex flex-col gap-1.5 text-[14px] text-[var(--ink-soft)]">
+            <span>ul. Mostowa 14/2, 87-100 Toruń</span>
+            <span>Otwarte teraz · zamyka o 19:00</span>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span class="inline-flex items-center border border-[var(--ink)] px-5 py-2.5 text-[13px] font-medium text-[var(--ink)]">
+              Wyznacz trasę
+            </span>
+            <span class="inline-flex items-center border border-[var(--porcelain)] px-5 py-2.5 text-[13px] font-medium text-[var(--ink-soft)]">
+              Strona internetowa
+            </span>
+            <span class="inline-flex items-center border border-[var(--porcelain)] px-5 py-2.5 text-[13px] font-medium text-[var(--ink-soft)]">
+              Zadzwoń
+            </span>
+          </div>
+
+          <div class="mt-8 grid grid-cols-1 gap-6 border-t border-[var(--porcelain)] pt-6 sm:grid-cols-2">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex gap-0.5" aria-hidden="true">
+                {Array.from({ length: 5 }).map(() => (
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="var(--gold)"><path d={starPath} /></svg>
+                ))}
+              </div>
+              <p class="text-[14px] text-[var(--ink)]">„Lekarska konsultacja, zero naciągania na dodatkowe zabiegi. Polecam.”</p>
+              <span class="text-[13px] text-[var(--ink-soft)]">Katarzyna, 2 tyg. temu</span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex gap-0.5" aria-hidden="true">
+                {Array.from({ length: 5 }).map(() => (
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="var(--gold)"><path d={starPath} /></svg>
+                ))}
+              </div>
+              <p class="text-[14px] text-[var(--ink)]">„Najbardziej profesjonalne miejsce w Toruniu, w jakim byłam.”</p>
+              <span class="text-[13px] text-[var(--ink-soft)]">Agnieszka, miesiąc temu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="WARSTWA 4 · MAKIETA" heading="Panel z wynikami" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        Co miesiąc dostajesz prosty raport: ile osób weszło, ile zadzwoniło, ile wypełniło formularz. Wiesz dokładnie, za co płacisz.
+      </p>
+
+      <div class="mt-10 flex flex-col gap-4">
+        <DemoLabel text="PRZYKŁADOWY RAPORT — dane demonstracyjne" />
+
+        <div class="border border-[var(--porcelain)] bg-white p-6 sm:p-8">
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div class="flex flex-col gap-1 border-b border-[var(--porcelain)] pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-6">
+              <span class="font-display text-4xl font-light text-[var(--ink)]">1 247</span>
+              <span class="text-[13px] text-[var(--ink-soft)]">wejść na stronę (30 dni)</span>
+            </div>
+            <div class="flex flex-col gap-1 border-b border-[var(--porcelain)] pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:px-6">
+              <span class="font-display text-4xl font-light text-[var(--ink)]">89</span>
+              <span class="text-[13px] text-[var(--ink-soft)]">kliknięć w numer telefonu</span>
+            </div>
+            <div class="flex flex-col gap-1 sm:pl-6">
+              <span class="font-display text-4xl font-light text-[var(--ink)]">47</span>
+              <span class="text-[13px] text-[var(--ink-soft)]">wysłanych formularzy</span>
+            </div>
+          </div>
+
+          <div class="mt-10 border-t border-[var(--porcelain)] pt-8">
+            <span class="text-[13px] font-medium uppercase tracking-[0.1em] text-[var(--ink-soft)]">Źródła ruchu</span>
+            <div class="mt-5 flex flex-col gap-4">
+              {trafficSources.map((source) => (
+                <div class="flex items-center gap-4">
+                  <span class="w-24 shrink-0 text-[14px] text-[var(--ink)]">{source.label}</span>
+                  <div class="h-2 flex-1 bg-[var(--ivory)]">
+                    <div class="h-full bg-[var(--gold)]" style={`width: ${source.value}%`}></div>
+                  </div>
+                  <span class="w-10 shrink-0 text-right text-[14px] text-[var(--ink-soft)]">{source.value}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="WARSTWA 5 · MAKIETA" heading="Reklamy Google" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        W razie potrzeby uruchamiamy precyzyjne reklamy Google, które pokazują Twoją klinikę dokładnie wtedy, gdy ktoś szuka Twojego zabiegu.
+      </p>
+
+      <div class="mt-10 flex flex-col gap-4">
+        <DemoLabel text="PRZYKŁAD reklamy" />
+
+        <div class="max-w-xl border border-[var(--porcelain)] bg-white p-6 sm:p-7">
+          <span class="inline-flex items-center border border-[var(--ink-soft)]/40 px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--ink-soft)]">
+            Sponsorowane
+          </span>
+          <p class="mt-3 text-[13px] text-[var(--ink-soft)]">klinika-aurelia.pl</p>
+          <p class="mt-1 text-[18px] font-medium text-[var(--gold)]">Klinika Aurelia — Medycyna estetyczna Toruń</p>
+          <p class="mt-2 text-[14px] text-[var(--ink-soft)]">
+            Modelowanie ust, botoks, lifting HIFU. Zabiegi wykonuje lekarz. Konsultacja lekarska przed każdym zabiegiem. Umów wizytę online.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-[var(--porcelain)] pt-4 text-[13px] text-[var(--gold)]">
+            <span>Cennik zabiegów</span>
+            <span>Umów konsultację</span>
+            <span>Modelowanie ust</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-24 text-center lg:px-10 lg:py-32">
+    <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
+      <GoldArc size={56} />
+      <h2 class="text-[var(--ink)]">Tyle pracuje dla Ciebie, zanim pacjentka do Ciebie zadzwoni.</h2>
+
+      <ul class="mt-2 flex flex-col gap-2 text-[16px] text-[var(--ink-soft)]">
+        {systemLayers.map((layer) => (
+          <li>{layer}</li>
+        ))}
+      </ul>
+
+      <div class="mt-4">
+        <Button href="/kontakt" variant="primary">Chcę taki system</Button>
+      </div>
+    </div>
+  </section>
+</Base>
