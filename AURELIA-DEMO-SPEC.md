@@ -399,7 +399,7 @@ Cel: każdy, kto wejdzie na stronę, od razu wie, że to demonstracja umiejętno
 - Nagłówek (H2): `To jest strona demonstracyjna`
 - Akapit 1: `Klinika Aurelia nie istnieje — to fikcyjna marka stworzona przez Connectivę, aby pokazać, jak może wyglądać profesjonalna strona dla kliniki medycyny estetycznej. Wszystkie dane, zabiegi, ceny i opinie są wymyślone.`
 - Akapit 2 (wyróżniony, np. lekki pastelowy blok): `Prowadzisz klinikę, gabinet lub salon beauty? Taką stronę — wraz z systemem pozyskiwania pacjentów — zbudujemy również dla Ciebie.`
-- Przycisk 1 (primary): `Chcę taką stronę` → link do `https://connectiva.biz` (otwiera w nowej karcie, `target="_blank" rel="noopener"`)
+- Przycisk 1 (primary): `Chcę taką stronę` → link do `https://connectiva-website.pages.dev` (otwiera w nowej karcie, `target="_blank" rel="noopener"`)
 - Przycisk 2 (ghost): `Rozumiem, chcę zobaczyć demo` → zamyka popup
 
 **Komponent:** `DemoNoticeModal.astro`, podpięty globalnie w `Base.astro` (pojawia się na każdej podstronie, ale logika sessionStorage pokazuje go raz na sesję).
