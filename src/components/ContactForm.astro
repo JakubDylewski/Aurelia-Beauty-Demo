@@ -1,10 +1,16 @@
 ---
-const topics = ["Konsultacja", "Modelowanie ust", "Toksyna botulinowa", "Lifting HIFU", "Inny zabieg", "Pytanie"];
+const topics = ["Konsultacja lekarska", "Zapis na zabieg", "Inny zabieg", "Pytanie"];
 ---
 
 <form id="contact-form" class="flex flex-col gap-6" novalidate>
   <input type="hidden" name="access_key" value="TODO_WEB3FORMS_KEY" />
   <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+  <input type="hidden" name="zabieg" id="field-zabieg" value="" />
+  <input type="hidden" name="problem" id="field-problem" value="" />
+
+  <div id="treatment-context-block" class="hidden border border-[var(--porcelain)] bg-[var(--ivory)] px-4 py-3 text-[14px] text-[var(--ink)]">
+    Zabieg: <span id="treatment-context-value" class="font-medium"></span>
+  </div>
 
   <div class="flex flex-col gap-2">
     <label for="name" class="text-[14px] font-medium text-[var(--ink)]">Imię i nazwisko *</label>
@@ -103,6 +109,36 @@ const topics = ["Konsultacja", "Modelowanie ust", "Toksyna botulinowa", "Lifting
 <script>
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
   const status = document.getElementById("form-status");
+
+  // Prewypełnianie kontekstem ze ścieżki: sekcja decyzji na stronach zabiegowych
+  // (?cel=konsultacja|zapis&zabieg=...) oraz moduł "Dobierz zabieg" (?problem=...).
+  const params = new URLSearchParams(window.location.search);
+  const cel = params.get("cel");
+  const zabieg = params.get("zabieg");
+  const problem = params.get("problem");
+
+  const topicSelect = document.getElementById("topic") as HTMLSelectElement | null;
+  if (topicSelect) {
+    if (cel === "konsultacja") {
+      topicSelect.value = "Konsultacja lekarska";
+    } else if (cel === "zapis") {
+      topicSelect.value = "Zapis na zabieg";
+    }
+  }
+
+  if (zabieg) {
+    const block = document.getElementById("treatment-context-block");
+    const valueEl = document.getElementById("treatment-context-value");
+    const field = document.getElementById("field-zabieg") as HTMLInputElement | null;
+    if (valueEl) valueEl.textContent = zabieg;
+    if (field) field.value = zabieg;
+    block?.classList.remove("hidden");
+  }
+
+  if (problem) {
+    const field = document.getElementById("field-problem") as HTMLInputElement | null;
+    if (field) field.value = problem;
+  }
 
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();

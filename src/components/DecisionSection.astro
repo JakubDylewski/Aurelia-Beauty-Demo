@@ -1,0 +1,77 @@
+---
+import GoldArc from "./GoldArc.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  treatmentName: string;
+}
+
+const { treatmentName } = Astro.props;
+const encodedName = encodeURIComponent(treatmentName);
+---
+
+<section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+  <div class="mx-auto max-w-4xl">
+    <div class="flex flex-col items-center gap-3 text-center">
+      <GoldArc size={24} />
+      <span class="overline">GOTOWA NA KOLEJNY KROK?</span>
+      <h2 class="text-[var(--ink)]">Wybierz, co teraz</h2>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="flex flex-col gap-4 border border-[var(--porcelain)] bg-white p-8">
+        <h3 class="font-display text-2xl font-normal text-[var(--ink)]">Chcę porozmawiać z lekarzem</h3>
+        <p class="flex-1 text-[15px] text-[var(--ink-soft)]">
+          Nie masz pewności, czy to zabieg dla Ciebie? Umów konsultację — lekarz oceni Twoją skórę, odpowie na
+          pytania i zaproponuje plan. Koszt 150 zł, odliczany od ceny zabiegu.
+        </p>
+        <Button
+          id="decision-consult-link"
+          href={`/kontakt?cel=konsultacja&zabieg=${encodedName}`}
+          variant="primary"
+          class="self-start"
+        >
+          Umów konsultację lekarską
+        </Button>
+      </div>
+
+      <div class="flex flex-col gap-4 border border-[var(--porcelain)] bg-white p-8">
+        <h3 class="font-display text-2xl font-normal text-[var(--ink)]">Wiem, czego chcę</h3>
+        <p class="flex-1 text-[15px] text-[var(--ink-soft)]">
+          Znasz już ten zabieg i chcesz się zapisać? Zostaw kontakt — rejestracja oddzwoni, żeby dobrać termin.
+        </p>
+        <Button
+          id="decision-book-link"
+          href={`/kontakt?cel=zapis&zabieg=${encodedName}`}
+          variant="primary"
+          class="self-start"
+        >
+          Zapisz się na ten zabieg
+        </Button>
+      </div>
+    </div>
+
+    <p class="mt-8 text-center text-[14px] text-[var(--ink-soft)]">
+      lub zadzwoń:
+      <a href="tel:512340218" class="font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]">
+        512 340 218
+      </a>
+      (Pon–Pt 9:00–19:00)
+    </p>
+  </div>
+</section>
+
+<script>
+  const problemId = new URLSearchParams(window.location.search).get("problem");
+
+  if (problemId) {
+    ["decision-consult-link", "decision-book-link"].forEach((id) => {
+      const link = document.getElementById(id);
+      if (link instanceof HTMLAnchorElement) {
+        const url = new URL(link.href);
+        url.searchParams.set("problem", problemId);
+        link.href = url.toString();
+      }
+    });
+  }
+</script>

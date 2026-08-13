@@ -10,8 +10,8 @@ import ContactForm from "../components/ContactForm.astro";
   <section class="px-6 pt-32 pb-24 lg:px-10 lg:pt-40 lg:pb-32">
     <div class="mx-auto max-w-6xl">
       <div class="max-w-2xl">
-        <h1 class="text-[var(--ink)]">Umów konsultację</h1>
-        <p class="mt-6 text-[18px] text-[var(--ink-soft)]">
+        <h1 id="contact-heading" class="text-[var(--ink)]">Umów konsultację</h1>
+        <p id="contact-lead" class="mt-6 text-[18px] text-[var(--ink-soft)]">
           Zostaw kontakt — rejestracja oddzwoni w ciągu jednego dnia roboczego, żeby dobrać termin i odpowiedzieć na pytania.
         </p>
       </div>
@@ -48,4 +48,15 @@ import ContactForm from "../components/ContactForm.astro";
       </div>
     </div>
   </section>
+
+  <script>
+    const cel = new URLSearchParams(window.location.search).get("cel");
+
+    if (cel === "zapis") {
+      const heading = document.getElementById("contact-heading");
+      const lead = document.getElementById("contact-lead");
+      if (heading) heading.textContent = "Zapisz się na zabieg";
+      if (lead) lead.textContent = "Zostaw kontakt — rejestracja oddzwoni, żeby dobrać termin zabiegu.";
+    }
+  </script>
 </Base>

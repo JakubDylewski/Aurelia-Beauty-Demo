@@ -3,10 +3,12 @@ import Base from "../../layouts/Base.astro";
 import QuickFacts from "../../components/QuickFacts.astro";
 import BeforeAfter from "../../components/BeforeAfter.astro";
 import FaqAccordion from "../../components/FaqAccordion.astro";
+import DecisionSection from "../../components/DecisionSection.astro";
 import FinalCta from "../../components/FinalCta.astro";
-import { treatmentPages } from "../../data/treatments";
+import { treatmentPages, treatments } from "../../data/treatments";
 
 const data = treatmentPages["modelowanie-ust"];
+const treatmentName = treatments["modelowanie-ust"]?.name ?? data.h1;
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -139,6 +141,8 @@ const breadcrumbSchema = {
       </div>
     </div>
   </section>
+
+  <DecisionSection treatmentName={treatmentName} />
 
   <FinalCta />
 </Base>
