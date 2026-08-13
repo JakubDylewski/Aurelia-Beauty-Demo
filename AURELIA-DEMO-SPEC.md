@@ -526,3 +526,200 @@ Dla każdego znalezionego problemu — naprawić u źródła (Tailwind: użyć r
 ---
 
 *Sekcja 15 — rozszerzenie specyfikacji Aurelia o system pozyskiwania pacjentów. Elementy symulowane oznaczone jako przykładowe. Demo fikcyjne.*
+
+
+---
+
+## 16. ŚCIEŻKA PACJENTKI — SYSTEM KONSULTACJI ONLINE
+
+> **Zasada nadrzędna:** pacjentka nigdy nie zapisuje się na zabieg, którego nie rozumie. Ścieżka prowadzi ją: problem → dopasowane zabiegi → PEŁNA STRONA ZABIEGU (konsultacja online) → dopiero stąd decyzja: konsultacja lekarska albo zapis na zabieg.
+>
+> **Zasada merytoryczna:** wszystkie dopasowania problem → zabieg oraz treści medyczne muszą być zgodne z rzeczywistymi wskazaniami medycyny estetycznej. Właściciel kliniki wychwyci błąd w sekundę.
+>
+> **Standard jakości:** wszystkie 12 stron zabiegowych w JEDNYM, wysokim standardzie. Żadna nie może być „gorsza” — pacjentka może trafić na każdą z nich jako pierwszą.
+
+---
+
+### 16.1 PRZEPŁYW ŚCIEŻKI (4 etapy)
+
+**ETAP A — Rozpoznanie problemu** (moduł „Dobierz zabieg”, `/dobierz-zabieg`)
+Pacjentka nie zna nazw zabiegów — zna swój problem. Tu go wybiera.
+
+**ETAP B — Dopasowanie** (krok 2 modułu)
+Widzi 1–3 zabiegi dopasowane do jej problemu, z krótką informacją. **Karta NIE prowadzi do formularza — prowadzi na stronę zabiegu.** Przycisk: `Poznaj ten zabieg →`.
+
+**ETAP C — Konsultacja online** (pełna strona zabiegowa)
+Tu pacjentka dowiaduje się wszystkiego: na czym polega, dla kogo, jak przebiega, czy boli, ile trwa, kiedy efekt, jak długo się utrzyma, ile kosztuje, przeciwwskazania, przed/po, FAQ. **To jest miejsce, gdzie podejmuje decyzję.**
+
+**ETAP D — Decyzja** (dół każdej strony zabiegowej, dwie równorzędne drogi)
+- `Umów konsultację lekarską` → dla niezdecydowanych: lekarz potwierdzi lub odradzi (150 zł, odliczane od zabiegu)
+- `Zapisz się na ten zabieg` → dla zdecydowanych: formularz z już wybranym zabiegiem
+
+Obie drogi prowadzą do formularza, który **przenosi ze sobą kontekst** (nazwę zabiegu, a jeśli pacjentka przyszła z modułu — także jej problem).
+
+---
+
+### 16.2 MODUŁ „DOBIERZ ZABIEG” (`/dobierz-zabieg`)
+
+**Nazwa handlowa:** `Dobierz zabieg` · podtytuł `Wstępna konsultacja online`
+**Wejścia:** menu główne, zajawka na stronie głównej, CTA na stronach zabiegowych („nie ten zabieg? dobierz inny”), wymieniony jako warstwa systemu na `/jak-pozyskujemy-pacjentow`.
+
+**KROK 1 — Co Cię niepokoi?**
+- Nagłówek: H1 `Dobierz zabieg dla siebie` · lead `Nie musisz znać nazw zabiegów. Zaznacz, co Ci przeszkadza — pokażemy, co realnie na to działa, i wytłumaczymy, jak przebiega.`
+- Pole wyszukiwania (sticky na górze listy): placeholder `Wpisz, co Cię niepokoi — np. obwisła skóra, wąskie usta, cienie pod oczami…`
+- **Filtr na żywo:** wpisywanie natychmiast zawęża listę; dopasowanie po nazwie problemu ORAZ po ukrytych synonimach (16.3). Puste pole → pełny katalog. Brak trafień → `Nie znaleźliśmy dopasowania — ale to nie znaczy, że nie pomożemy.` + przycisk `Umów konsultację lekarską`.
+- Katalog 30 problemów w 6 kategoriach (akordeony, pierwsza otwarta). Problemy **zaznaczalne** (można kilka).
+- Sticky pasek dolny: licznik + `Zobacz dopasowane zabiegi (N)`.
+
+**KROK 2 — Dopasowane zabiegi**
+- Dla każdego zaznaczonego problemu: nagłówek problemu, pod nim 1–3 karty zabiegów.
+- **Karta zabiegu:** zdjęcie, nazwa, jedno zdanie opisu, `czas: X` · `cena od: Y zł`, oraz JEDEN przycisk: `Poznaj ten zabieg →` prowadzący na pełną stronę zabiegu (z parametrem kontekstu, np. `?problem=opadajacy-owal`, żeby strona zabiegu mogła wyświetlić: „Trafiłaś tu, szukając rozwiązania na: opadający owal twarzy”).
+- Zabieg powtarzający się przy kilku problemach — pokazany raz, z adnotacją `działa też na: [inny problem]`.
+- Pod listą adnotacja: `To wstępne dopasowanie na podstawie Twojego zgłoszenia. Ostateczny plan zawsze ustala lekarz podczas konsultacji.`
+- **Brak formularza na tym kroku.** Jedyne wyjście dalej to strona zabiegu albo `Umów konsultację lekarską`, jeśli pacjentka nie chce czytać.
+
+---
+
+### 16.3 KATALOG PROBLEMÓW (`src/data/concerns.ts`)
+
+6 kategorii, 30 problemów. Każdy ma: nazwę, ukryte synonimy (filtr), listę dopasowanych zabiegów. Dopasowania zgodne z rzeczywistymi wskazaniami — nie zmieniać.
+
+**ZMARSZCZKI I MIMIKA**
+1. Zmarszczki poprzeczne czoła — *czoło, bruzdy czoła, linie na czole* → Toksyna botulinowa
+2. Lwia zmarszczka — *lwia, gniewna, między brwiami, glabella* → Toksyna botulinowa
+3. Kurze łapki — *kurze łapki, zmarszczki wokół oczu, od uśmiechu* → Toksyna botulinowa
+4. Zmarszczki palacza nad wargą — *kod kreskowy, nad wargą, papierosowe* → Mezoterapia igłowa; Wypełniacz HA
+5. Bruzdy nosowo-wargowe — *bruzdy, fałdy, nosowo-wargowe* → Wypełniacz HA; Stymulator tkankowy
+
+**OWAL TWARZY I JĘDRNOŚĆ**
+6. Opadający owal twarzy — *owal, obwisła skóra, chomiki, opadające policzki, wiotka twarz* → Lifting HIFU; Stymulator tkankowy
+7. Wiotka skóra policzków — *policzki, obwisłe, luźna skóra, zwiotczenie* → Lifting HIFU; Stymulator tkankowy
+8. Drugi podbródek — *podbródek, podwójny, tłuszcz pod brodą* → Lipoliza iniekcyjna; Lifting HIFU
+9. Wiotka skóra szyi i dekoltu — *szyja, dekolt, pierścienie Wenus* → Lifting HIFU; Mezoterapia igłowa
+10. Utrata konturu żuchwy — *żuchwa, linia szczęki, kontur twarzy* → Lifting HIFU; Wypełniacz HA
+
+**USTA**
+11. Zbyt wąskie usta — *wąskie, cienkie, małe usta, powiększenie* → Modelowanie ust
+12. Asymetria warg — *asymetria, krzywe, nierówne usta* → Modelowanie ust
+13. Opadające kąciki ust — *kąciki, smutna mina* → Modelowanie ust; Toksyna botulinowa
+14. Suche, pomarszczone usta — *suche, spierzchnięte, odwodnione* → Nawilżająca mezoterapia ust
+15. Nieudany efekt z innego gabinetu — *poprawka, korekta, kaczy dziób, źle zrobione* → Korekta ust z hialuronidazą
+
+**OKOLICA OCZU**
+16. Cienie pod oczami — *cienie, sińce, worki, zmęczone spojrzenie* → Wypełnienie doliny łez; Mezoterapia igłowa
+17. Dolina łez — *dolina łez, zapadnięte oczy, wgłębienie* → Wypełnienie doliny łez
+18. Opadająca powieka górna — *powieka, opadające oko, nawis* → Lifting HIFU (okolica oczu); Konsultacja lekarska
+19. Drobne zmarszczki wokół oczu — *drobne zmarszczki, okolica oka* → Mezoterapia igłowa; Toksyna botulinowa
+
+**SKÓRA I KOLORYT**
+20. Przebarwienia i plamy — *przebarwienia, plamy, melasma, ostuda* → Peeling medyczny; Mezoterapia igłowa
+21. Szara, zmęczona cera — *szara, zmęczona, bez blasku, matowa* → Mezoterapia igłowa; Peeling medyczny
+22. Odwodniona skóra — *sucha, odwodniona, ściągnięta* → Mezoterapia igłowa
+23. Rozszerzone pory — *pory, nierówna skóra* → Peeling medyczny; Mezoterapia igłowa
+24. Blizny potrądzikowe — *blizny, ślady po trądziku, nierówności* → Peeling medyczny; Mezoterapia igłowa
+25. Trądzik i niedoskonałości — *trądzik, wypryski, zaskórniki* → Peeling medyczny; Konsultacja lekarska
+26. Utrata gęstości i sprężystości — *cienka skóra, brak jędrności, kolagen* → Stymulator tkankowy; Mezoterapia igłowa
+
+**PROFILAKTYKA I POZOSTAŁE**
+27. Profilaktyka starzenia (po 30 r.ż.) — *profilaktyka, zapobieganie, prewencja* → Mezoterapia igłowa; Toksyna botulinowa
+28. Bruksizm / napięcie żuchwy — *bruksizm, zgrzytanie zębami, napięcie szczęki* → Toksyna botulinowa (bruksizm)
+29. Nadpotliwość — *pocenie, nadpotliwość* → Toksyna botulinowa (nadpotliwość)
+30. Nie wiem, od czego zacząć — *nie wiem, pomoc, pierwszy raz, doradztwo* → Konsultacja lekarska (zawsze pierwsza)
+
+---
+
+### 16.4 STRONY ZABIEGOWE — 12 SZTUK W JEDNYM STANDARDZIE
+
+**Istniejące (3):** modelowanie ust, toksyna botulinowa, lifting HIFU — ZOSTAJĄ, ale dostają nową sekcję decyzji (16.5) i blok kontekstu (16.6).
+
+**Do zbudowania (9):**
+1. `/zabiegi/mezoterapia-iglowa`
+2. `/zabiegi/stymulator-tkankowy`
+3. `/zabiegi/wypelnienie-doliny-lez`
+4. `/zabiegi/wypelniacz-kwas-hialuronowy`
+5. `/zabiegi/peeling-medyczny`
+6. `/zabiegi/nawilzajaca-mezoterapia-ust`
+7. `/zabiegi/korekta-ust-hialuronidaza`
+8. `/zabiegi/lipoliza-iniekcyjna`
+9. `/zabiegi/konsultacja-lekarska`
+
+**OBOWIĄZKOWY SZABLON każdej strony zabiegowej** (ten sam dla wszystkich 12):
+
+1. **Breadcrumb** — `Strona główna / Zabiegi / [nazwa]`
+2. **Blok kontekstu** (jeśli pacjentka przyszła z modułu) — pasek: `Szukałaś rozwiązania na: [problem]. Ten zabieg jest jedną z opcji.`
+3. **H1 + lead** — nazwa zabiegu językiem pacjentki + 2–3 zdania obietnicy
+4. **QuickFacts** (pasek 6 faktów): czas zabiegu · znieczulenie · powrót do aktywności · pierwsze efekty · pełny efekt · cena od
+5. **Na czym polega** — mechanizm działania, prostym językiem, 1–2 akapity, merytorycznie prawdziwe
+6. **Dla kogo** — lista wskazań (5–6 pozycji)
+7. **Przebieg zabiegu** — kroki 01–04 (konsultacja → przygotowanie → wykonanie → zalecenia)
+8. **Czego się spodziewać** — NOWA SEKCJA, kluczowa dla decyzji. Trzy bloki: `Czy to boli?` · `Ile trwa rekonwalescencja?` · `Kiedy zobaczę efekt i jak długo się utrzyma?` — konkretne, uczciwe odpowiedzi
+9. **Efekty** — suwak przed/po (tam gdzie sensowne) + adnotacja o indywidualności efektu
+10. **Cennik zabiegu** — mini-tabela wariantów
+11. **Przeciwwskazania** — lista + zdanie `Pełną listę omawiamy podczas konsultacji lekarskiej.`
+12. **FAQ** — 5 pytań akordeon (najczęstsze obiekcje pacjentek)
+13. **SEKCJA DECYZJI** (16.5)
+14. **Powiązane zabiegi** — 2–3 karty („często łączone z…”) + link `Nie ten zabieg? Dobierz inny →` do `/dobierz-zabieg`
+
+**Zasady treści:** język pacjentki, nie medyczny żargon. Zero „gwarantujemy”, „najlepszy”, „100% bezpieczny”. Efekty zawsze z zastrzeżeniem indywidualnym. Uczciwie o bólu i rekonwalescencji — to buduje zaufanie mocniej niż obietnice.
+
+---
+
+### 16.5 SEKCJA DECYZJI (na dole KAŻDEJ strony zabiegowej)
+
+To jest moment konwersji. Dwie równorzędne drogi, wizualnie równoważne (nie jedna dominująca):
+
+- Overline: `GOTOWA NA KOLEJNY KROK?`
+- H2: `Wybierz, co teraz`
+- **Karta 1 — „Chcę porozmawiać z lekarzem”**: tekst `Nie masz pewności, czy to zabieg dla Ciebie? Umów konsultację — lekarz oceni Twoją skórę, odpowie na pytania i zaproponuje plan. Koszt 150 zł, odliczany od ceny zabiegu.` · przycisk `Umów konsultację lekarską` → `/kontakt?cel=konsultacja&zabieg=[nazwa]`
+- **Karta 2 — „Wiem, czego chcę”**: tekst `Znasz już ten zabieg i chcesz się zapisać? Zostaw kontakt — rejestracja oddzwoni, żeby dobrać termin.` · przycisk `Zapisz się na ten zabieg` → `/kontakt?cel=zapis&zabieg=[nazwa]`
+- Pod kartami, mniejszym drukiem: `lub zadzwoń: 512 340 218 (Pon–Pt 9:00–19:00)`
+
+**Formularz kontaktowy (`/kontakt`) — rozszerzenie:** czyta parametry z adresu i **prewypełnia się kontekstem**:
+- gdy `cel=konsultacja` → temat ustawiony na „Konsultacja lekarska”, nagłówek `Umów konsultację`
+- gdy `cel=zapis` → temat „Zapis na zabieg”, nagłówek `Zapisz się na zabieg`
+- gdy `zabieg=X` → widoczny (nieedytowalny) blok `Zabieg: [nazwa]` nad formularzem + ukryte pole wysyłane w zgłoszeniu
+- gdy pacjentka przyszła ze ścieżki modułu → dodatkowo ukryte pole `problem`
+
+**Dzięki temu klinika dostaje maila:** kto, telefon, czy chce konsultację czy zapis, na jaki zabieg, z jakim problemem przyszła. To jest gotowy lead, nie „ktoś napisał”.
+
+---
+
+### 16.6 PRZEBUDOWA UKŁADU STRONY GŁÓWNEJ
+
+**A. Zagęszczenie:** zmniejsz pionowy padding sekcji o ok. 30–40% (desktop) i 25% (mobile). Obecnie treść „pływa” w pustce — ma być zwarta. Zlikwiduj puste obszary między elementami wewnątrz sekcji.
+
+**B. Naprzemienne tła** (rytm wizualny, rozdzielenie sekcji): hero `--white` → pasek zaufania `--ivory` → zajawka „Dobierz zabieg” `--white` → zabiegi flagowe `--ivory` → metamorfozy `--white` → o klinice `--ivory` → opinie `--white` → CTA końcowe `--ivory`.
+
+**C. Zamiana eksploratora na zajawkę modułu:** usuń stary eksplorator (dublował sekcję zabiegów). W jego miejsce: overline `TWOJA ŚCIEŻKA`, H2 `Nie wiesz, jaki zabieg wybrać?`, tekst `Zaznacz, co Ci przeszkadza — pokażemy dopasowane zabiegi i wytłumaczymy dokładnie, jak każdy z nich przebiega. Decyzję podejmiesz, gdy będziesz wiedzieć wszystko.`, 4 przykładowe „pigułki” problemów (klikalne, prowadzą do modułu z zaznaczonym problemem), przycisk `Dobierz zabieg dla siebie →`.
+
+**D. Usuń sekcję „Obsługujemy okolicę”** ze strony głównej ORAZ kolumnę miejscowości ze stopki. Podstrony miejscowości zostają pod adresami i w sitemapie (SEO), ale nie są linkowane z nawigacji.
+
+**E. Menu główne:** dodaj `Dobierz zabieg` między „Zabiegi” a „Metamorfozy”. Dropdown „Zabiegi” rozszerz o wszystkie 12 zabiegów pogrupowanych (Twarz / Usta / Skóra) + `Pełny cennik`.
+
+---
+
+### 16.7 WPIĘCIE W OFERTĘ (`/jak-pozyskujemy-pacjentow`)
+
+Nowa warstwa (jako pierwsza po sekcji A):
+- Overline `WARSTWA · DZIAŁA` · Nagłówek `System konsultacji online`
+- Tekst: `Pacjentka rzadko wie, jak nazywa się zabieg, którego potrzebuje — wie tylko, co jej przeszkadza. Nasz system zamienia jej problem w konkretny zabieg, tłumaczy dokładnie jak przebiega, ile kosztuje i czego się spodziewać — a dopiero potem pozwala się zapisać. Do Waszej rejestracji trafia zgłoszenie z pełnym kontekstem: kto, z jakim problemem i na jaki zabieg.`
+- Dowód: przycisk `Zobacz, jak działa →` → `/dobierz-zabieg`, podpis `Kliknij — to prawdziwe, działające narzędzie`
+- W sekcji F dopisz: `System konsultacji online — prowadzi pacjentkę od problemu do zapisanej wizyty`
+
+---
+
+### 16.8 ETAPY BUDOWY
+
+**ETAP 9 — Katalog i moduł:** `concerns.ts` (30 problemów wg 16.3) + strona `/dobierz-zabieg` (kroki 1–2 wg 16.2, filtr na żywo, wielokrotny wybór, karty prowadzące na strony zabiegów z parametrem kontekstu). Bez formularza w module. Build, podsumuj, STOP.
+
+**ETAP 10 — Dziewięć nowych stron zabiegowych:** zbuduj wszystkie 9 brakujących stron wg pełnego szablonu 16.4, z prawdziwą merytoryką medyczną. Każda w tym samym standardzie co istniejące. Build, podsumuj, STOP.
+
+**ETAP 11 — Sekcja decyzji + kontekstowy formularz:** dodaj sekcję decyzji (16.5) na WSZYSTKICH 12 stronach zabiegowych, rozszerz `/kontakt` o czytanie parametrów `cel`, `zabieg`, `problem` i prewypełnianie + ukryte pola w zgłoszeniu. Build, podsumuj, STOP.
+
+**ETAP 12 — Przebudowa układu:** zmiany A–E z 16.6 (zagęszczenie, naprzemienne tła, zajawka modułu, usunięcie miejscowości, rozbudowa menu). Build, podsumuj, STOP.
+
+**ETAP 13 — Wpięcie w ofertę + audyt końcowy:** warstwa wg 16.7, potem pełny audyt desktop + mobile (360/390/414px) całej strony ze szczególnym naciskiem na moduł i nowe strony zabiegowe. Build, Lighthouse mobile, raport. STOP.
+
+---
+
+*Sekcja 16 v2 — system konsultacji online. Pacjentka nigdy nie zapisuje się na zabieg, którego nie rozumie. Merytoryka zgodna z rzeczywistymi wskazaniami medycyny estetycznej.*

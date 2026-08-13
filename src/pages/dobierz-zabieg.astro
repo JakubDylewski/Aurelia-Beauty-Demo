@@ -1,0 +1,400 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import GoldArc from "../components/GoldArc.astro";
+import { concernCategories } from "../data/concerns";
+import { treatments } from "../data/treatments";
+
+const title = "Dobierz zabieg — Klinika Aurelia | Medycyna estetyczna Toruń";
+const description =
+  "Nie znasz nazw zabiegów medycyny estetycznej? Zaznacz, co Cię niepokoi — pokażemy dopasowane zabiegi i wytłumaczymy, jak przebiegają. Klinika Aurelia, Toruń.";
+---
+
+<Base title={title} description={description}>
+  <section class="px-6 pt-32 pb-10 lg:px-10 lg:pt-40">
+    <div class="mx-auto max-w-4xl">
+      <div class="flex items-center gap-3">
+        <GoldArc size={24} />
+        <span class="overline">WSTĘPNA KONSULTACJA ONLINE</span>
+      </div>
+      <h1 class="mt-4 text-[var(--ink)]">Dobierz zabieg dla siebie</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">
+        Nie musisz znać nazw zabiegów. Zaznacz, co Ci przeszkadza — pokażemy, co realnie na to działa, i
+        wytłumaczymy, jak przebiega.
+      </p>
+    </div>
+  </section>
+
+  <section id="krok-1" class="border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 pb-32 pt-8 lg:px-10">
+    <div class="mx-auto max-w-4xl">
+      <div class="sticky top-20 z-30 -mx-6 bg-[var(--ivory)]/95 px-6 py-4 backdrop-blur-sm lg:top-24 lg:-mx-10 lg:px-10">
+        <label for="concern-search" class="sr-only">Wpisz, co Cię niepokoi</label>
+        <input
+          type="search"
+          id="concern-search"
+          placeholder="Wpisz, co Cię niepokoi — np. obwisła skóra, wąskie usta, cienie pod oczami…"
+          autocomplete="off"
+          class="w-full border border-[var(--ink)]/20 bg-white px-5 py-3.5 text-[16px] text-[var(--ink)] transition-colors focus:border-[var(--gold)] focus:outline-none"
+        />
+      </div>
+
+      <div
+        id="no-results"
+        class="mt-8 hidden flex-col items-start gap-5 border border-[var(--porcelain)] bg-white p-8"
+      >
+        <p class="text-[17px] text-[var(--ink)]">
+          Nie znaleźliśmy dopasowania — ale to nie znaczy, że nie pomożemy.
+        </p>
+        <Button href="/kontakt" variant="primary">Umów konsultację lekarską</Button>
+      </div>
+
+      <div id="concern-categories" class="mt-6 flex flex-col divide-y divide-[var(--porcelain)] border-y border-[var(--porcelain)] bg-white">
+        {concernCategories.map((category, ci) => (
+          <div class="concern-category" data-category-id={category.id}>
+            <h2 class="m-0">
+              <button
+                type="button"
+                class="category-trigger flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
+                aria-expanded={ci === 0 ? "true" : "false"}
+                aria-controls={`cat-panel-${category.id}`}
+                id={`cat-trigger-${category.id}`}
+              >
+                <span class="font-display text-2xl font-normal text-[var(--ink)]">{category.name}</span>
+                <svg
+                  class="category-icon shrink-0 transition-transform duration-300"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M7 1v12M1 7h12" stroke="var(--gold)" stroke-width="1.3" stroke-linecap="round" />
+                </svg>
+              </button>
+            </h2>
+            <div
+              id={`cat-panel-${category.id}`}
+              role="region"
+              aria-labelledby={`cat-trigger-${category.id}`}
+              class="category-panel"
+              data-state={ci === 0 ? "open" : "closed"}
+            >
+              <div class="category-panel-inner">
+                <ul class="flex flex-col gap-0.5 px-6 pb-6">
+                  {category.concerns.map((concern) => (
+                    <li
+                      class="concern-row"
+                      data-concern-id={concern.id}
+                      data-search={[concern.name, ...concern.synonyms].join(" | ").toLowerCase()}
+                    >
+                      <label class="flex min-h-11 cursor-pointer items-center gap-3 py-2.5 text-[16px] text-[var(--ink)] transition-colors hover:text-[var(--gold)]">
+                        <input type="checkbox" class="concern-checkbox h-4 w-4 shrink-0 accent-[var(--ink)]" value={concern.id} />
+                        {concern.name}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="krok-2" class="hidden border-t border-[var(--porcelain)] bg-white px-6 py-16 pb-32 lg:px-10 lg:py-20" aria-live="polite">
+    <div class="mx-auto max-w-5xl">
+      <div class="flex items-center gap-3">
+        <GoldArc size={24} />
+        <span class="overline">DOPASOWANIE</span>
+      </div>
+      <h2 class="mt-3 text-[var(--ink)]">Zabiegi dopasowane do Ciebie</h2>
+      <p class="mt-4 max-w-2xl text-[16px] text-[var(--ink-soft)]">
+        Kliknij zabieg, żeby przeczytać, na czym dokładnie polega, jak przebiega i czego się spodziewać.
+      </p>
+      <button
+        type="button"
+        id="back-to-step1"
+        class="mt-6 text-[14px] font-medium text-[var(--gold)] transition-colors hover:text-[var(--ink)]"
+      >
+        ← Zmień wybór
+      </button>
+
+      <div id="krok2-content" class="mt-8 flex flex-col gap-12"></div>
+
+      <p class="mt-14 max-w-2xl text-[14px] text-[var(--ink-soft)]">
+        To wstępne dopasowanie na podstawie Twojego zgłoszenia. Ostateczny plan zawsze ustala lekarz podczas
+        konsultacji.
+      </p>
+      <div class="mt-6">
+        <Button href="/kontakt" variant="ghost">Umów konsultację lekarską</Button>
+      </div>
+    </div>
+  </section>
+
+  <div id="sticky-bar" class="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--porcelain)] bg-white/95 backdrop-blur-sm">
+    <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-6 py-3.5 lg:px-10">
+      <span id="selection-count" class="text-[14px] text-[var(--ink-soft)]" aria-live="polite">
+        Nie zaznaczono żadnego problemu
+      </span>
+      <button
+        type="button"
+        id="show-results-btn"
+        disabled
+        class="inline-flex min-h-11 shrink-0 items-center justify-center border border-[var(--ink)] bg-[var(--porcelain)] px-6 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--ink)] disabled:hover:bg-[var(--porcelain)] disabled:hover:text-[var(--ink)]"
+      >
+        Zobacz dopasowane zabiegi (0)
+      </button>
+    </div>
+  </div>
+
+  <script type="application/json" id="concerns-data" set:html={JSON.stringify(concernCategories)} />
+  <script type="application/json" id="treatments-data" set:html={JSON.stringify(treatments)} />
+
+  <script>
+    interface TreatmentData {
+      slug: string;
+      name: string;
+      description: string;
+      price: string;
+      duration: string;
+      image: string;
+      imageAlt: string;
+    }
+
+    interface ConcernData {
+      id: string;
+      name: string;
+      synonyms: string[];
+      treatmentSlugs: string[];
+    }
+
+    interface ConcernCategoryData {
+      id: string;
+      name: string;
+      concerns: ConcernData[];
+    }
+
+    const concernCategories: ConcernCategoryData[] = JSON.parse(
+      document.getElementById("concerns-data")?.textContent || "[]",
+    );
+    const treatmentsData: Record<string, TreatmentData> = JSON.parse(
+      document.getElementById("treatments-data")?.textContent || "{}",
+    );
+    const allConcerns: ConcernData[] = concernCategories.flatMap((category) => category.concerns);
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const scrollToEl = (el: HTMLElement) => {
+      el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    };
+
+    const escapeHtml = (str: string) =>
+      str.replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m] as string);
+
+    // --- Filtr na żywo ---
+    const searchInput = document.getElementById("concern-search") as HTMLInputElement;
+    const noResults = document.getElementById("no-results") as HTMLElement;
+    const categoriesContainer = document.getElementById("concern-categories") as HTMLElement;
+    const categoryEls = Array.from(document.querySelectorAll<HTMLElement>(".concern-category"));
+
+    const setCategoryState = (el: HTMLElement, open: boolean) => {
+      const trigger = el.querySelector<HTMLButtonElement>(".category-trigger");
+      const panel = el.querySelector<HTMLElement>(".category-panel");
+      trigger?.setAttribute("aria-expanded", String(open));
+      if (panel) panel.dataset.state = open ? "open" : "closed";
+    };
+
+    const resetToDefault = () => {
+      categoryEls.forEach((el, i) => {
+        el.style.display = "";
+        setCategoryState(el, i === 0);
+      });
+      document.querySelectorAll<HTMLElement>(".concern-row").forEach((row) => {
+        row.style.display = "";
+      });
+      noResults.classList.add("hidden");
+      noResults.classList.remove("flex");
+      categoriesContainer.classList.remove("hidden");
+    };
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        resetToDefault();
+        return;
+      }
+
+      let totalVisible = 0;
+      categoryEls.forEach((catEl) => {
+        let visibleInCat = 0;
+        catEl.querySelectorAll<HTMLElement>(".concern-row").forEach((row) => {
+          const match = (row.dataset.search || "").includes(query);
+          row.style.display = match ? "" : "none";
+          if (match) visibleInCat++;
+        });
+        catEl.style.display = visibleInCat > 0 ? "" : "none";
+        if (visibleInCat > 0) setCategoryState(catEl, true);
+        totalVisible += visibleInCat;
+      });
+
+      if (totalVisible === 0) {
+        categoriesContainer.classList.add("hidden");
+        noResults.classList.remove("hidden");
+        noResults.classList.add("flex");
+      } else {
+        categoriesContainer.classList.remove("hidden");
+        noResults.classList.add("hidden");
+        noResults.classList.remove("flex");
+      }
+    });
+
+    categoryEls.forEach((catEl) => {
+      const trigger = catEl.querySelector<HTMLButtonElement>(".category-trigger");
+      trigger?.addEventListener("click", () => {
+        const isOpen = trigger.getAttribute("aria-expanded") === "true";
+        setCategoryState(catEl, !isOpen);
+      });
+    });
+
+    // --- Wielokrotny wybór + krok 2 ---
+    const checkboxes = Array.from(document.querySelectorAll<HTMLInputElement>(".concern-checkbox"));
+    const selectionCountEl = document.getElementById("selection-count") as HTMLElement;
+    const showResultsBtn = document.getElementById("show-results-btn") as HTMLButtonElement;
+    const krok1Section = document.getElementById("krok-1") as HTMLElement;
+    const krok2Section = document.getElementById("krok-2") as HTMLElement;
+    const krok2Content = document.getElementById("krok2-content") as HTMLElement;
+
+    interface ShownRecord {
+      cardEl: HTMLElement;
+      extraLabels: string[];
+    }
+
+    const buildCard = (treatment: TreatmentData, problemId: string): HTMLElement => {
+      const a = document.createElement("a");
+      a.href = `/zabiegi/${treatment.slug}?problem=${encodeURIComponent(problemId)}`;
+      a.className =
+        "group flex flex-col overflow-hidden border border-[var(--porcelain)] bg-white transition-transform duration-300 hover:-translate-y-1";
+      a.innerHTML = `
+        <div class="aspect-[16/10] w-full overflow-hidden bg-[var(--porcelain)]">
+          <img src="${treatment.image}" alt="${escapeHtml(treatment.imageAlt)}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+        </div>
+        <div class="flex flex-1 flex-col gap-2 p-6">
+          <h4 class="font-display text-xl font-normal text-[var(--ink)]">${escapeHtml(treatment.name)}</h4>
+          <p class="flex-1 text-[15px] text-[var(--ink-soft)]">${escapeHtml(treatment.description)}</p>
+          <p class="text-[13px] text-[var(--ink-soft)]">czas: ${escapeHtml(treatment.duration)} · cena: ${escapeHtml(treatment.price)}</p>
+          <p class="hidden text-[13px] italic text-[var(--gold)]" data-annotation></p>
+          <span class="mt-2 text-[14px] font-medium text-[var(--gold)] transition-colors group-hover:text-[var(--ink)]">Poznaj ten zabieg →</span>
+        </div>
+      `;
+      return a;
+    };
+
+    const updateAnnotation = (rec: ShownRecord) => {
+      const el = rec.cardEl.querySelector<HTMLElement>("[data-annotation]");
+      if (!el) return;
+      el.textContent = `działa też na: ${rec.extraLabels.join(", ")}`;
+      el.classList.remove("hidden");
+    };
+
+    const renderResults = () => {
+      const selectedIds = new Set(checkboxes.filter((cb) => cb.checked).map((cb) => cb.value));
+      const orderedSelected = allConcerns.filter((c) => selectedIds.has(c.id));
+
+      krok2Content.innerHTML = "";
+      const shownMap = new Map<string, ShownRecord>();
+
+      orderedSelected.forEach((concern) => {
+        const block = document.createElement("div");
+
+        const heading = document.createElement("h3");
+        heading.className = "flex items-center gap-2 font-display text-2xl font-normal text-[var(--ink)]";
+        heading.textContent = concern.name;
+        block.appendChild(heading);
+
+        const grid = document.createElement("div");
+        grid.className = "mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3";
+        let newCardsCount = 0;
+
+        concern.treatmentSlugs.forEach((slug) => {
+          const treatment = treatmentsData[slug];
+          if (!treatment) return;
+
+          const existing = shownMap.get(slug);
+          if (existing) {
+            existing.extraLabels.push(concern.name);
+            updateAnnotation(existing);
+            return;
+          }
+
+          const card = buildCard(treatment, concern.id);
+          shownMap.set(slug, { cardEl: card, extraLabels: [] });
+          grid.appendChild(card);
+          newCardsCount++;
+        });
+
+        if (newCardsCount > 0) {
+          block.appendChild(grid);
+        } else {
+          const note = document.createElement("p");
+          note.className = "mt-3 text-[14px] text-[var(--ink-soft)]";
+          note.textContent = "Dopasowane zabiegi na ten problem zobaczysz wyżej.";
+          block.appendChild(note);
+        }
+
+        krok2Content.appendChild(block);
+      });
+    };
+
+    const updateCount = () => {
+      const n = checkboxes.filter((cb) => cb.checked).length;
+      selectionCountEl.textContent = n === 0 ? "Nie zaznaczono żadnego problemu" : `Zaznaczono: ${n}`;
+      showResultsBtn.textContent = `Zobacz dopasowane zabiegi (${n})`;
+      showResultsBtn.disabled = n === 0;
+
+      if (!krok2Section.classList.contains("hidden")) {
+        renderResults();
+      }
+    };
+
+    checkboxes.forEach((cb) => cb.addEventListener("change", updateCount));
+
+    showResultsBtn.addEventListener("click", () => {
+      if (showResultsBtn.disabled) return;
+      renderResults();
+      krok2Section.classList.remove("hidden");
+      scrollToEl(krok2Section);
+    });
+
+    document.getElementById("back-to-step1")?.addEventListener("click", () => {
+      scrollToEl(krok1Section);
+    });
+  </script>
+
+  <style>
+    .category-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 300ms ease;
+    }
+
+    .category-panel[data-state="open"] {
+      grid-template-rows: 1fr;
+    }
+
+    .category-panel-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .category-trigger[aria-expanded="true"] .category-icon {
+      transform: rotate(45deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .category-panel {
+        transition: none;
+      }
+    }
+  </style>
+</Base>
