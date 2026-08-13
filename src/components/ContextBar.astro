@@ -1,0 +1,35 @@
+---
+import { allConcerns } from "../data/concerns";
+
+const concernNames: Record<string, string> = Object.fromEntries(allConcerns.map((c) => [c.id, c.name]));
+---
+
+<div
+  id="context-bar"
+  class="mb-6 hidden items-center gap-2.5 border border-[var(--porcelain)] bg-[var(--porcelain)]/50 px-5 py-3 text-[14px] text-[var(--ink)]"
+>
+  <span class="h-1 w-1 shrink-0 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+  <span id="context-bar-text"></span>
+</div>
+
+<script type="application/json" id="context-bar-data" set:html={JSON.stringify(concernNames)} />
+
+<script>
+  interface ConcernNames {
+    [id: string]: string;
+  }
+
+  const data: ConcernNames = JSON.parse(document.getElementById("context-bar-data")?.textContent || "{}");
+  const problemId = new URLSearchParams(window.location.search).get("problem");
+  const name = problemId ? data[problemId] : null;
+
+  if (name) {
+    const bar = document.getElementById("context-bar");
+    const text = document.getElementById("context-bar-text");
+    if (bar && text) {
+      text.textContent = `Szukałaś rozwiązania na: ${name}. Ten zabieg jest jedną z opcji.`;
+      bar.classList.remove("hidden");
+      bar.classList.add("flex");
+    }
+  }
+</script>

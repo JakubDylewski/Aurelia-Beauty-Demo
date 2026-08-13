@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import TreatmentPageTemplate from "../../components/TreatmentPageTemplate.astro";
+import { treatmentPages } from "../../data/treatments";
+
+const data = treatmentPages["konsultacja-lekarska"];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: data.faq.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Strona główna", item: new URL("/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name: "Zabiegi", item: new URL("/cennik", Astro.site).toString() },
+    { "@type": "ListItem", position: 3, name: data.h1, item: new URL(`/zabiegi/${data.slug}`, Astro.site).toString() },
+  ],
+};
+---
+
+<Base title={`${data.metaTitle} — Klinika Aurelia | Medycyna estetyczna Toruń`} description={data.metaDescription}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <TreatmentPageTemplate data={data} />
+</Base>
