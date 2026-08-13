@@ -1,14 +1,42 @@
 ---
 import GoldArc from "./GoldArc.astro";
 
-const zabiegi = [
-  { label: "Modelowanie ust", href: "/zabiegi/modelowanie-ust" },
-  { label: "Toksyna botulinowa", href: "/zabiegi/toksyna-botulinowa" },
-  { label: "Lifting HIFU", href: "/zabiegi/lifting-hifu" },
+const zabiegiCategories = [
+  {
+    label: "Twarz",
+    items: [
+      { label: "Toksyna botulinowa", href: "/zabiegi/toksyna-botulinowa" },
+      { label: "Lifting HIFU", href: "/zabiegi/lifting-hifu" },
+      { label: "Stymulator tkankowy", href: "/zabiegi/stymulator-tkankowy" },
+      { label: "Wypełniacz kwasem hialuronowym", href: "/zabiegi/wypelniacz-kwas-hialuronowy" },
+      { label: "Wypełnienie doliny łez", href: "/zabiegi/wypelnienie-doliny-lez" },
+      { label: "Lipoliza iniekcyjna", href: "/zabiegi/lipoliza-iniekcyjna" },
+    ],
+  },
+  {
+    label: "Usta",
+    items: [
+      { label: "Modelowanie ust", href: "/zabiegi/modelowanie-ust" },
+      { label: "Nawilżająca mezoterapia ust", href: "/zabiegi/nawilzajaca-mezoterapia-ust" },
+      { label: "Korekta ust z hialuronidazą", href: "/zabiegi/korekta-ust-hialuronidaza" },
+    ],
+  },
+  {
+    label: "Skóra",
+    items: [
+      { label: "Mezoterapia igłowa", href: "/zabiegi/mezoterapia-iglowa" },
+      { label: "Peeling medyczny", href: "/zabiegi/peeling-medyczny" },
+    ],
+  },
+];
+
+const zabiegiUtility = [
+  { label: "Konsultacja lekarska", href: "/zabiegi/konsultacja-lekarska" },
   { label: "Pełny cennik", href: "/cennik" },
 ];
 
 const navLinks = [
+  { label: "Dobierz zabieg", href: "/dobierz-zabieg" },
   { label: "Metamorfozy", href: "/#metamorfozy" },
   { label: "Jak to działa", href: "/jak-pozyskujemy-pacjentow" },
   { label: "O nas", href: "/o-nas" },
@@ -47,16 +75,46 @@ const navLinks = [
         </button>
         <div
           id="zabiegi-menu"
-          class="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 translate-y-1 rounded-sm border border-[var(--porcelain)] bg-white p-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+          class="invisible absolute left-0 top-full w-[560px] translate-y-1 rounded-sm border border-[var(--porcelain)] bg-white p-5 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
         >
-          {zabiegi.map((item) => (
-            <a
-              href={item.href}
-              class="block rounded-sm px-4 py-2.5 text-[15px] text-[var(--ink)] transition-colors hover:bg-[var(--ivory)] hover:text-[var(--gold)]"
-            >
-              {item.label}
-            </a>
-          ))}
+          <a
+            href="/dobierz-zabieg"
+            class="flex items-center justify-between gap-4 rounded-sm border border-[var(--gold-soft)] bg-[var(--porcelain)]/40 px-4 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors hover:border-[var(--gold)] hover:text-[var(--gold)]"
+          >
+            Nie wiesz, co wybrać? <span class="font-semibold">Dobierz zabieg dla siebie</span>
+            <span aria-hidden="true">→</span>
+          </a>
+
+          <div class="mt-4 grid grid-cols-3 gap-6">
+            {zabiegiCategories.map((category) => (
+              <div class="flex flex-col gap-2.5">
+                <span class="overline text-[11px]">{category.label}</span>
+                <ul class="flex flex-col gap-0.5">
+                  {category.items.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        class="block rounded-sm px-2 py-1.5 text-[14px] leading-snug text-[var(--ink)] transition-colors hover:bg-[var(--ivory)] hover:text-[var(--gold)]"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-4 flex items-center justify-between border-t border-[var(--porcelain)] pt-4">
+            {zabiegiUtility.map((item) => (
+              <a
+                href={item.href}
+                class="text-[14px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -93,16 +151,34 @@ const navLinks = [
 
   <div
     id="mobile-menu"
-    class="invisible fixed inset-0 top-0 z-40 flex h-dvh flex-col justify-center gap-8 bg-white px-8 opacity-0 transition-opacity duration-300 lg:hidden"
+    class="invisible fixed inset-0 top-0 z-40 flex h-dvh flex-col gap-8 overflow-y-auto bg-white px-8 pt-28 pb-12 opacity-0 transition-opacity duration-300 lg:hidden"
   >
     <nav class="flex flex-col gap-6" aria-label="Nawigacja mobilna">
-      <span class="overline">Zabiegi</span>
-      {zabiegi.map((item) => (
-        <a href={item.href} class="font-display text-3xl font-light text-[var(--ink)]">
-          {item.label}
-        </a>
-      ))}
-      <div class="my-2 h-px w-12 bg-[var(--gold-soft)]"></div>
+      <div class="flex flex-col gap-5">
+        <span class="overline">Zabiegi</span>
+        {zabiegiCategories.map((category) => (
+          <div class="flex flex-col gap-0.5">
+            <span class="text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--ink-soft)]">
+              {category.label}
+            </span>
+            {category.items.map((item) => (
+              <a href={item.href} class="block py-3 text-[18px] text-[var(--ink)]">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        ))}
+        <div class="flex flex-col gap-0.5 pt-1">
+          {zabiegiUtility.map((item) => (
+            <a href={item.href} class="block py-3 text-[18px] font-medium text-[var(--ink)]">
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="h-px w-12 bg-[var(--gold-soft)]"></div>
+
       {navLinks.map((link) => (
         <a href={link.href} class="font-display text-3xl font-light text-[var(--ink)]">
           {link.label}

@@ -3,13 +3,11 @@ import Base from "../layouts/Base.astro";
 import Button from "../components/Button.astro";
 import GoldArc from "../components/GoldArc.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import ProblemExplorer from "../components/ProblemExplorer.astro";
 import TreatmentCard from "../components/TreatmentCard.astro";
 import BeforeAfter from "../components/BeforeAfter.astro";
 import Testimonials from "../components/Testimonials.astro";
 import FinalCta from "../components/FinalCta.astro";
 import { treatments } from "../data/treatments";
-import { cityNavLinks } from "../data/cities";
 import { Image } from "astro:assets";
 
 const trustBar = [
@@ -17,6 +15,13 @@ const trustBar = [
   "9 000+ wykonanych zabiegów",
   "4,9/5 — 214 opinii Google",
   "Certyfikowani lekarze medycyny estetycznej",
+];
+
+const pathPills = [
+  { id: "opadajacy-owal-twarzy", label: "Opadający owal twarzy" },
+  { id: "zbyt-waskie-usta", label: "Zbyt wąskie usta" },
+  { id: "zmarszczki-poprzeczne-czola", label: "Zmarszczki poprzeczne czoła" },
+  { id: "cienie-pod-oczami", label: "Cienie pod oczami" },
 ];
 
 const medicalClinicSchema = {
@@ -68,8 +73,8 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
   </Fragment>
 
   <section class="relative overflow-hidden">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pt-40 pb-20 lg:grid-cols-[55%_45%] lg:gap-0 lg:px-10 lg:pt-48 lg:pb-0">
-      <div class="relative flex flex-col items-start gap-7 lg:pr-16">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 pt-40 pb-14 lg:grid-cols-[55%_45%] lg:gap-0 lg:px-10 lg:pt-48 lg:pb-0">
+      <div class="relative flex flex-col items-start gap-6 lg:pr-16">
         <GoldArc size={520} class="pointer-events-none absolute -left-40 -top-32 -z-10 hidden lg:block" />
 
         <span class="overline hero-item" style="--delay: 0ms;">KLINIKA MEDYCYNY ESTETYCZNEJ · TORUŃ</span>
@@ -85,7 +90,7 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
 
         <div class="hero-item flex flex-wrap items-center gap-4" style="--delay: 360ms;">
           <Button href="/kontakt" variant="primary">Umów konsultację</Button>
-          <Button href="#eksplorator" variant="ghost">Poznaj zabiegi</Button>
+          <Button href="#dobierz-zabieg-teaser" variant="ghost">Poznaj zabiegi</Button>
         </div>
       </div>
 
@@ -102,7 +107,7 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
       </div>
     </div>
 
-    <div class="border-t border-[var(--porcelain)] bg-white">
+    <div class="border-t border-[var(--porcelain)] bg-[var(--ivory)]">
       <ul class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4 px-6 py-8 text-center lg:justify-between lg:px-10">
         {trustBar.map((item, i) => (
           <li class:list={["text-[14px] text-[var(--ink-soft)]", i !== 0 && "sm:border-l sm:border-[var(--porcelain)] sm:pl-10"]}>
@@ -113,19 +118,41 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
     </div>
   </section>
 
-  <ProblemExplorer />
+  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="TWOJA ŚCIEŻKA" heading="Nie wiesz, jaki zabieg wybrać?" align="center" />
+      <p class="mx-auto mt-5 max-w-xl text-center text-[17px] text-[var(--ink-soft)]">
+        Zaznacz, co Ci przeszkadza — pokażemy dopasowane zabiegi i wytłumaczymy dokładnie, jak każdy z nich przebiega. Decyzję podejmiesz, gdy będziesz wiedzieć wszystko.
+      </p>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        {pathPills.map((pill) => (
+          <a
+            href={`/dobierz-zabieg?problem=${pill.id}`}
+            class="border border-[var(--porcelain)] bg-[var(--ivory)] px-5 py-2.5 text-[14px] font-medium text-[var(--ink)] transition-colors hover:border-[var(--gold-soft)] hover:text-[var(--gold)]"
+          >
+            {pill.label}
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button href="/dobierz-zabieg" variant="primary">Dobierz zabieg dla siebie →</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="NASZE SPECJALIZACJE" heading="Zabiegi, z których jesteśmy znani" />
 
-      <div class="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {flagship.map((treatment) => (
           <TreatmentCard treatment={treatment} class="bg-white" />
         ))}
       </div>
 
-      <div class="mt-12 text-center">
+      <div class="mt-8 text-center">
         <a
           href="/cennik"
           class="inline-flex items-center gap-2 text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
@@ -136,11 +163,11 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
     </div>
   </section>
 
-  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-24 lg:px-10 lg:py-32">
+  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="EFEKTY" heading="Zobacz zmianę na własne oczy" align="center" />
 
-      <div class="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-3">
+      <div class="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-3">
         <BeforeAfter
           beforeSrc="/images/meta-usta-przed.webp"
           afterSrc="/images/meta-usta-po.webp"
@@ -164,14 +191,14 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
         />
       </div>
 
-      <p class="mx-auto mt-10 max-w-2xl text-center text-[13px] text-[var(--ink-soft)]">
+      <p class="mx-auto mt-8 max-w-2xl text-center text-[13px] text-[var(--ink-soft)]">
         Zdjęcia opublikowane za zgodą pacjentek. Efekt zabiegu jest zawsze kwestią indywidualną i może się różnić.
       </p>
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
       <div class="aspect-[3/2] w-full overflow-hidden">
         <Image
           src="/images/wnetrze-recepcja.webp"
@@ -208,29 +235,11 @@ const flagship = [treatments["modelowanie-ust"], treatments["toksyna-botulinowa"
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-24 lg:px-10 lg:py-32">
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="ZAUFANIE" heading="Pacjentki mówią same" align="center" />
-      <div class="mt-14">
+      <div class="mt-10">
         <Testimonials />
-      </div>
-    </div>
-  </section>
-
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 lg:px-10 lg:py-32">
-    <div class="mx-auto max-w-7xl">
-      <SectionHeading overline="OBSŁUGUJEMY OKOLICĘ" heading="Docieramy do pacjentek w całym regionie" align="center" />
-
-      <div class="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {cityNavLinks.map((item) => (
-          <a
-            href={item.href}
-            class="group flex items-center justify-between gap-4 border border-[var(--porcelain)] bg-white px-6 py-5 transition-colors hover:border-[var(--gold-soft)]"
-          >
-            <span class="text-[16px] font-medium text-[var(--ink)]">{item.label}</span>
-            <span class="text-[15px] text-[var(--gold)] transition-transform group-hover:translate-x-1">→</span>
-          </a>
-        ))}
       </div>
     </div>
   </section>

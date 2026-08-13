@@ -369,6 +369,20 @@ const description =
     document.getElementById("back-to-step1")?.addEventListener("click", () => {
       scrollToEl(krok1Section);
     });
+
+    // Wejście z "pigułki" problemu na stronie głównej (?problem=id) — zaznacza
+    // dany problem od razu, żeby nie trzeba było go szukać w katalogu.
+    const preselectId = new URLSearchParams(window.location.search).get("problem");
+    if (preselectId) {
+      const preselectCheckbox = checkboxes.find((cb) => cb.value === preselectId);
+      if (preselectCheckbox) {
+        preselectCheckbox.checked = true;
+        const row = preselectCheckbox.closest<HTMLElement>(".concern-row");
+        const categoryEl = row?.closest<HTMLElement>(".concern-category");
+        if (categoryEl) setCategoryState(categoryEl, true);
+        updateCount();
+      }
+    }
   </script>
 
   <style>
