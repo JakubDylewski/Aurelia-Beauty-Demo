@@ -21,6 +21,7 @@ const starPath = "M8 0.8l2.1 4.6 5 .6-3.7 3.5.9 5-4.3-2.4-4.3 2.4.9-5L.9 6l5-.6L
 const systemLayers = [
   "Strona premium, która buduje zaufanie od pierwszego kliknięcia",
   "Strony pod każdy zabieg",
+  "System konsultacji online — prowadzi pacjentkę od problemu do zapisanej wizyty",
   "Podstrony pod okoliczne miejscowości",
   "Zoptymalizowana wizytówka Google",
   "Prosty raport z wynikami co miesiąc",
@@ -61,8 +62,25 @@ const systemLayers = [
   </section>
 
   <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="WARSTWA · DZIAŁA" heading="System konsultacji online" />
+      <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
+        Pacjentka rzadko wie, jak nazywa się zabieg, którego potrzebuje — wie tylko, co jej przeszkadza. Nasz system
+        zamienia jej problem w konkretny zabieg, tłumaczy dokładnie jak przebiega, ile kosztuje i czego się
+        spodziewać — a dopiero potem pozwala się zapisać. Do Waszej rejestracji trafia zgłoszenie z pełnym
+        kontekstem: kto, z jakim problemem i na jaki zabieg.
+      </p>
+
+      <div class="mt-8 flex flex-col items-start gap-3">
+        <Button href="/dobierz-zabieg" variant="primary">Zobacz, jak działa →</Button>
+        <p class="text-[13px] text-[var(--ink-soft)]">Kliknij — to prawdziwe, działające narzędzie.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-6xl">
-      <SectionHeading overline="WARSTWA 2 · DZIAŁA" heading="Podstrony pod okoliczne miejscowości" />
+      <SectionHeading overline="WARSTWA 3 · DZIAŁA" heading="Podstrony pod okoliczne miejscowości" />
       <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
         Tworzymy osobne strony pod okoliczne miasta, żebyś pojawiał się w Google, gdy pacjentka z Ciechocinka, Chełmży czy Aleksandrowa szuka zabiegu u siebie.
       </p>
@@ -83,9 +101,9 @@ const systemLayers = [
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-4xl">
-      <SectionHeading overline="WARSTWA 3 · MAKIETA" heading="Wizytówka Google" />
+      <SectionHeading overline="WARSTWA 4 · MAKIETA" heading="Wizytówka Google" />
       <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
         Optymalizujemy Twój profil Google i wdrażamy system zbierania opinii, żebyś był pierwszym wyborem na mapie.
       </p>
@@ -151,9 +169,9 @@ const systemLayers = [
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-4xl">
-      <SectionHeading overline="WARSTWA 4 · MAKIETA" heading="Panel z wynikami" />
+      <SectionHeading overline="WARSTWA 5 · MAKIETA" heading="Panel z wynikami" />
       <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
         Co miesiąc dostajesz prosty raport: ile osób weszło, ile zadzwoniło, ile wypełniło formularz. Wiesz dokładnie, za co płacisz.
       </p>
@@ -196,9 +214,9 @@ const systemLayers = [
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-4xl">
-      <SectionHeading overline="WARSTWA 5 · MAKIETA" heading="Reklamy Google" />
+      <SectionHeading overline="WARSTWA 6 · MAKIETA" heading="Reklamy Google" />
       <p class="mt-5 max-w-2xl text-[17px] text-[var(--ink-soft)]">
         W razie potrzeby uruchamiamy precyzyjne reklamy Google, które pokazują Twoją klinikę dokładnie wtedy, gdy ktoś szuka Twojego zabiegu.
       </p>
@@ -225,7 +243,7 @@ const systemLayers = [
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] px-6 py-24 text-center lg:px-10 lg:py-32">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 text-center lg:px-10 lg:py-32">
     <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
       <GoldArc size={56} />
       <h2 class="text-[var(--ink)]">Tyle pracuje dla Ciebie, zanim pacjentka do Ciebie zadzwoni.</h2>

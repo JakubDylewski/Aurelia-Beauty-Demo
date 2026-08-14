@@ -24,7 +24,9 @@
       "Bash(npx --yes lighthouse http://localhost:4322/ --preset=perf --form-factor=mobile --screenEmulation.mobile --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=simulate --output=json --output-path=./lighthouse-report2.json --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance,accessibility,best-practices,seo)",
       "Bash(npx --yes lighthouse http://localhost:4322/ --preset=perf --form-factor=mobile --screenEmulation.mobile --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=devtools --output=json --output-path=./lighthouse-report3.json --chrome-flags=\"--headless=new --no-sandbox\" --only-categories=performance)",
       "Bash(netstat -ano)",
-      "Bash(taskkill *)"
+      "Bash(taskkill *)",
+      "Bash(npx lighthouse *)",
+      "Bash(echo \"---EXIT $?---\")"
     ]
   }
 }

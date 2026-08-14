@@ -115,7 +115,7 @@ const description =
       <button
         type="button"
         id="back-to-step1"
-        class="mt-6 text-[14px] font-medium text-[var(--gold)] transition-colors hover:text-[var(--ink)]"
+        class="mt-6 inline-flex min-h-11 items-center py-2 text-[14px] font-medium text-[var(--gold)] transition-colors hover:text-[var(--ink)]"
       >
         ← Zmień wybór
       </button>
@@ -133,7 +133,7 @@ const description =
   </section>
 
   <div id="sticky-bar" class="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--porcelain)] bg-white/95 backdrop-blur-sm">
-    <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-6 py-3.5 lg:px-10">
+    <div class="mx-auto flex max-w-4xl flex-col gap-2 px-6 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-3.5 lg:px-10">
       <span id="selection-count" class="text-[14px] text-[var(--ink-soft)]" aria-live="polite">
         Nie zaznaczono żadnego problemu
       </span>
@@ -141,7 +141,7 @@ const description =
         type="button"
         id="show-results-btn"
         disabled
-        class="inline-flex min-h-11 shrink-0 items-center justify-center border border-[var(--ink)] bg-[var(--porcelain)] px-6 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--ink)] disabled:hover:bg-[var(--porcelain)] disabled:hover:text-[var(--ink)]"
+        class="inline-flex min-h-11 w-full shrink-0 items-center justify-center border border-[var(--ink)] bg-[var(--porcelain)] px-6 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--ink)] disabled:hover:bg-[var(--porcelain)] disabled:hover:text-[var(--ink)] sm:w-auto"
       >
         Zobacz dopasowane zabiegi (0)
       </button>
