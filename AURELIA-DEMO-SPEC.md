@@ -887,3 +887,102 @@ Obecne odstępy są za duże — treść „pływa". Nowe wartości:
 ---
 
 *Sekcja 17 — układ konwersyjny oparty na aktualnych wzorcach stron klinik estetycznych. Zmieniamy strukturę i proporcje, nie styl marki.*
+
+
+
+
+
+---
+
+## 18.8 (POPRAWIONE) PODSTRONY MIEJSCOWOŚCI — LEKKIE LĄDOWISKA SEO
+
+> **ZASTĘPUJE poprzednią wersję sekcji 18.8.**
+>
+> **Podstawa:** analiza realnego wdrożenia na rynku — klinika Aestetic Clinic (dr Rosiński, Poznań) prowadzi kilkadziesiąt podstron pod miasta, w tym Chełmżę, Toruń, Ciechocinek i Aleksandrów Kujawski. Ich model: strona pod miasto to **krótkie lądowisko**, którego jedynym zadaniem jest złapać ruch z Google i przekierować go na główną ofertę kliniki. Bez hero, bez metamorfoz, bez zespołu, bez opinii, bez cennika.
+>
+> **Zasada:** podstrona miejscowości NIE jest drugą stroną główną. To są drzwi, nie dom.
+
+---
+
+### A. LISTA MIEJSCOWOŚCI (15)
+
+Ścieżka: `/medycyna-estetyczna-[slug]` — bez polskich znaków, małymi literami.
+
+| # | Miasto | slug | dystans |
+|---|---|---|---|
+| 1 | Toruń | `torun` | miasto kliniki |
+| 2 | Toruń – Podgórz | `torun-podgorz` | dzielnica |
+| 3 | Toruń – Rubinkowo | `torun-rubinkowo` | dzielnica |
+| 4 | Lubicz | `lubicz` | ~12 km |
+| 5 | Łysomice | `lysomice` | ~12 km |
+| 6 | Chełmża | `chelmza` | ~20 km |
+| 7 | Ciechocinek | `ciechocinek` | ~25 km |
+| 8 | Aleksandrów Kujawski | `aleksandrow-kujawski` | ~25 km |
+| 9 | Kowalewo Pomorskie | `kowalewo-pomorskie` | ~30 km |
+| 10 | Chełmno | `chelmno` | ~40 km |
+| 11 | Golub-Dobrzyń | `golub-dobrzyn` | ~40 km |
+| 12 | Inowrocław | `inowroclaw` | ~40 km |
+| 13 | Wąbrzeźno | `wabrzezno` | ~45 km |
+| 14 | Bydgoszcz | `bydgoszcz` | ~50 km |
+| 15 | Włocławek | `wloclawek` | ~55 km |
+
+---
+
+### B. SZABLON PODSTRONY — LEKKI (max ~1,5 ekranu)
+
+Ten sam nagłówek (header) i stopka co reszta strony. Zawartość między nimi — tylko to:
+
+1. **Breadcrumb:** `Strona główna / Obsługiwane miejscowości / [Miasto]`
+2. **H1:** `Medycyna estetyczna [Miasto]`
+3. **Lead — 2–3 zdania, UNIKALNE dla każdego miasta.** Musi zawierać realny dystans/czas dojazdu i jedno zdanie lokalnego kontekstu. Przykłady różnicowania:
+   - Ciechocinek: uzdrowisko, kuracjuszki, ~30 minut drogi
+   - Bydgoszcz: duże miasto, pacjentki wybierające kameralną klinikę zamiast sieciowej
+   - Lubicz: praktycznie przedmieścia Torunia, kwadrans jazdy
+   - Toruń-Rubinkowo: dzielnica, dojazd komunikacją miejską
+4. **Jeden krótki akapit o klinice** (3–4 zdania, ten sam dla wszystkich miast — to normalne, tak robi rynek): kim jesteśmy, że zabiegi wykonuje lekarz, że przed każdym zabiegiem jest konsultacja.
+5. **Lista zabiegów jako proste linki tekstowe** (nie kafelki ze zdjęciami — to ma być lekkie): 12 zabiegów w jednej kolumnie lub dwóch, każdy linkuje do swojej strony zabiegu.
+6. **PRZYCISK GŁÓWNY:** `Zobacz pełną ofertę kliniki →` prowadzący na **stronę główną** (`/`). To jest najważniejszy element strony — kieruje ruch tam, gdzie ma trafić.
+7. **Drugi przycisk:** `Umów konsultację` → `/kontakt`
+8. **Mapa z dojazdem** — mała, z podpisem `Dojazd z [Miasto]` i jednym zdaniem o trasie.
+9. **Lista pozostałych miejscowości** — wszystkie 14 pozostałych jako linki tekstowe pod nagłówkiem `Obsługujemy również:`. To wzajemne linkowanie wzmacnia SEO (wzorzec z rynku).
+
+**Czego NIE MA na tej stronie:** hero ze zdjęciem, sekcja metamorfoz, zespół, opinie, cennik, moduł „Dobierz zabieg", sekcja „Dlaczego my". Te rzeczy są na stronie głównej — i po to jest przycisk w punkcie 6.
+
+---
+
+### C. DANE (`src/data/cities.ts`)
+
+Każde miasto: `nazwa`, `slug`, `dystans`, `czasDojazdu`, `trasa` (którą drogą), `lead` (unikalny, 2–3 zdania), `metaTitle`, `metaDescription` (unikalny).
+
+**Wspólne dla wszystkich** (nie duplikujemy w danych): akapit o klinice, lista zabiegów, przyciski.
+
+---
+
+### D. SEO
+
+- `title`: `Medycyna estetyczna [Miasto] | Klinika Aurelia`
+- `meta description`: unikalny dla każdego miasta, do 155 znaków, z frazą lokalną
+- JSON-LD `MedicalClinic` z `areaServed` = dane miasto
+- `robots: index, follow` — strony MAJĄ być indeksowane
+- Wszystkie w `sitemap.xml`
+
+**Ukrycie w nawigacji:** brak linków z menu głównego, stopki i strony głównej. Jedyne linki wewnętrzne to wzajemne linkowanie między miastami (punkt B.9).
+
+---
+
+### E. DLACZEGO TAK, A NIE INACZEJ
+
+- **Lekka strona** — bo to lądowisko, nie oferta. Pacjentka ma w 5 sekund zobaczyć „tak, obsługują moją okolicę" i kliknąć dalej.
+- **Przycisk na stronę główną jako element główny** — bo tam jest prawdziwa oferta, zdjęcia, metamorfozy i zaufanie. Podstrona ma tam kierować, a nie udawać, że sama jest ofertą.
+- **Unikalny lead dla każdego miasta** — bo Google karze za identyczne strony (doorway pages). Reszta treści może się powtarzać; wystarczy, że nagłówek, lead i meta są własne. Tak robi rynek.
+- **Wzajemne linkowanie** — wzmacnia indeksowanie bez wystawiania stron w nawigacji.
+
+---
+
+### F. ETAP
+
+**ETAP 20 (poprawiony) — Podstrony miejscowości:** przebuduj istniejące 5 podstron na lekki szablon wg B, rozbuduj `cities.ts` do 15 miast wg tabeli A z unikalnym leadem i meta dla każdego, dobuduj brakujące 10 stron, dodaj wzajemne linkowanie. Usuń z tych stron wszystko, czego nie ma w szablonie B (hero, metamorfozy, zespół, opinie, cennik). Sprawdź, że żadna nie jest linkowana z menu/stopki/strony głównej i że wszystkie są w sitemapie. Build, wypisz listę adresów 15 stron. STOP.
+
+---
+
+*Sekcja 18.8 poprawiona — model lądowiska SEO wzorowany na realnym wdrożeniu rynkowym. Podstrona miejscowości kieruje ruch na stronę główną, nie zastępuje jej.*
