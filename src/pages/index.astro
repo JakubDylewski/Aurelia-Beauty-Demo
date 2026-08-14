@@ -27,11 +27,13 @@ const featuredSlugs = [
   "peeling-medyczny",
 ];
 
-const pathPills = [
-  { id: "opadajacy-owal-twarzy", label: "Opadający owal twarzy" },
-  { id: "zbyt-waskie-usta", label: "Zbyt wąskie usta" },
-  { id: "zmarszczki-poprzeczne-czola", label: "Zmarszczki poprzeczne czoła" },
-  { id: "cienie-pod-oczami", label: "Cienie pod oczami" },
+const modulePreviewLabels = ["Opadający owal twarzy", "Zbyt wąskie usta", "Zmarszczki poprzeczne czoła"];
+
+const pricingHighlights = [
+  { name: "Modelowanie ust", price: "od 1 100 zł" },
+  { name: "Toksyna botulinowa", price: "od 600 zł" },
+  { name: "Lifting HIFU", price: "od 2 900 zł" },
+  { name: "Mezoterapia", price: "od 450 zł" },
 ];
 
 const medicalClinicSchema = {
@@ -130,11 +132,11 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="ZABIEGI" heading="Czym się zajmujemy" />
 
-      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {featured.map((treatment) => (
           <TreatmentCard treatment={treatment} class="border border-[var(--porcelain)]" compact />
         ))}
@@ -157,65 +159,72 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
-    <div class="mx-auto max-w-4xl">
-      <SectionHeading overline="TWOJA ŚCIEŻKA" heading="Nie wiesz, jaki zabieg wybrać?" align="center" />
-      <p class="mx-auto mt-5 max-w-xl text-center text-[17px] text-[var(--ink-soft)]">
-        Zaznacz, co Ci przeszkadza — pokażemy dopasowane zabiegi i wytłumaczymy dokładnie, jak każdy z nich przebiega. Decyzję podejmiesz, gdy będziesz wiedzieć wszystko.
-      </p>
-
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        {pathPills.map((pill) => (
-          <a
-            href={`/dobierz-zabieg?problem=${pill.id}`}
-            class="inline-flex min-h-11 items-center border border-[var(--porcelain)] bg-[var(--ivory)] px-5 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors hover:border-[var(--gold-soft)] hover:text-[var(--gold)]"
-          >
-            {pill.label}
-          </a>
-        ))}
+  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="flex flex-col items-start gap-5">
+        <SectionHeading overline="TWOJA ŚCIEŻKA" heading="Nie wiesz, jaki zabieg wybrać?" />
+        <p class="max-w-[65ch] text-[17px] text-[var(--ink-soft)]">
+          Zaznacz, co Ci przeszkadza — pokażemy dopasowane zabiegi i wytłumaczymy, jak każdy przebiega.
+        </p>
+        <Button href="/dobierz-zabieg" variant="primary">Dobierz zabieg dla siebie →</Button>
       </div>
 
-      <div class="mt-8 text-center">
-        <Button href="/dobierz-zabieg" variant="primary">Dobierz zabieg dla siebie →</Button>
+      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-[var(--ivory)] p-6 sm:p-8" aria-hidden="true">
+        <div class="border border-[var(--porcelain)] bg-white px-4 py-3 text-[14px] text-[var(--ink-soft)]">
+          Wpisz, co Cię niepokoi…
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2.5">
+          {modulePreviewLabels.map((label) => (
+            <span class="border border-[var(--porcelain)] bg-white px-4 py-2 text-[13px] font-medium text-[var(--ink)]">
+              {label}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
+  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="EFEKTY" heading="Zobacz zmianę na własne oczy" align="center" />
 
-      <div class="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-3">
-        <BeforeAfter
-          beforeSrc="/images/meta-usta-przed.webp"
-          afterSrc="/images/meta-usta-po.webp"
-          beforeAlt="Usta przed zabiegiem modelowania kwasem hialuronowym"
-          afterAlt="Usta po zabiegu modelowania kwasem hialuronowym"
-          label="Usta"
-        />
-        <BeforeAfter
-          beforeSrc="/images/meta-czolo-przed.webp"
-          afterSrc="/images/meta-czolo-po.webp"
-          beforeAlt="Czoło przed zabiegiem toksyny botulinowej"
-          afterAlt="Czoło po zabiegu toksyny botulinowej"
-          label="Czoło"
-        />
-        <BeforeAfter
-          beforeSrc="/images/meta-owal-przed.webp"
-          afterSrc="/images/meta-owal-po.webp"
-          beforeAlt="Owal twarzy przed zabiegiem liftingu HIFU"
-          afterAlt="Owal twarzy po zabiegu liftingu HIFU"
-          label="Owal twarzy"
-        />
+      <div class="mx-auto mt-8 flex max-w-4xl snap-x snap-mandatory gap-6 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0">
+        <div class="w-[70vw] shrink-0 snap-start sm:w-auto">
+          <BeforeAfter
+            beforeSrc="/images/meta-usta-przed.webp"
+            afterSrc="/images/meta-usta-po.webp"
+            beforeAlt="Usta przed zabiegiem modelowania kwasem hialuronowym"
+            afterAlt="Usta po zabiegu modelowania kwasem hialuronowym"
+            label="Usta"
+          />
+        </div>
+        <div class="w-[70vw] shrink-0 snap-start sm:w-auto">
+          <BeforeAfter
+            beforeSrc="/images/meta-czolo-przed.webp"
+            afterSrc="/images/meta-czolo-po.webp"
+            beforeAlt="Czoło przed zabiegiem toksyny botulinowej"
+            afterAlt="Czoło po zabiegu toksyny botulinowej"
+            label="Czoło"
+          />
+        </div>
+        <div class="w-[70vw] shrink-0 snap-start sm:w-auto">
+          <BeforeAfter
+            beforeSrc="/images/meta-owal-przed.webp"
+            afterSrc="/images/meta-owal-po.webp"
+            beforeAlt="Owal twarzy przed zabiegiem liftingu HIFU"
+            afterAlt="Owal twarzy po zabiegu liftingu HIFU"
+            label="Owal twarzy"
+          />
+        </div>
       </div>
 
-      <p class="mx-auto mt-8 max-w-2xl text-center text-[13px] text-[var(--ink-soft)]">
+      <p class="mx-auto mt-8 max-w-[65ch] text-center text-[13px] text-[var(--ink-soft)]">
         Zdjęcia opublikowane za zgodą pacjentek. Efekt zabiegu jest zawsze kwestią indywidualną i może się różnić.
       </p>
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
       <div class="aspect-[3/2] w-full overflow-hidden">
         <Image
@@ -230,7 +239,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
 
       <div class="flex flex-col gap-6">
         <SectionHeading overline="POZNAJMY SIĘ" heading="Miejsce, w którym możesz odetchnąć" />
-        <p class="text-[17px] text-[var(--ink-soft)]">
+        <p class="max-w-[65ch] text-[17px] text-[var(--ink-soft)]">
           Klinika Aurelia powstała z przekonania, że medycyna estetyczna to przede wszystkim medycyna. U nas każdy zabieg poprzedza rzetelna konsultacja lekarska, pracujemy wyłącznie na oryginalnych, certyfikowanych preparatach, a plan zabiegowy układamy pod Ciebie — nie pod promocję miesiąca.
         </p>
 
@@ -253,11 +262,33 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-16 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="ZAUFANIE" heading="Pacjentki mówią same" align="center" />
-      <div class="mt-10">
+      <div class="mt-8">
         <Testimonials />
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-5xl">
+      <SectionHeading overline="CENNIK" heading="Ile to kosztuje" align="center" />
+      <p class="mx-auto mt-5 max-w-[65ch] text-center text-[17px] text-[var(--ink-soft)]">
+        Ceny obejmują konsultację w dniu zabiegu, preparat i wizytę kontrolną. Konsultacja lekarska (150 zł) jest odliczana od ceny zabiegu.
+      </p>
+
+      <div class="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
+        {pricingHighlights.map((item) => (
+          <div class="flex flex-col items-center gap-1.5 border border-[var(--porcelain)] px-4 py-6 text-center">
+            <span class="text-[15px] text-[var(--ink)]">{item.name}</span>
+            <span class="text-[14px] text-[var(--ink-soft)]">{item.price}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button href="/cennik" variant="primary">Zobacz pełny cennik →</Button>
       </div>
     </div>
   </section>
