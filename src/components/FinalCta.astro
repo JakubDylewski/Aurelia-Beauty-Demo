@@ -1,9 +1,19 @@
 ---
 import Button from "./Button.astro";
 import GoldArc from "./GoldArc.astro";
+
+interface Props {
+  background?: "ivory" | "white";
+  compact?: boolean;
+}
+
+const { background = "ivory", compact = false } = Astro.props;
+
+const bgClass = background === "white" ? "bg-white" : "bg-[var(--ivory)]";
+const paddingClass = compact ? "px-6 py-14 lg:px-10 lg:py-20" : "px-6 py-24 lg:px-10 lg:py-32";
 ---
 
-<section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-24 text-center lg:px-10 lg:py-32">
+<section class:list={["reveal border-t border-[var(--porcelain)] text-center", bgClass, paddingClass]}>
   <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
     <GoldArc size={56} />
     <h2 class="text-[var(--ink)]">Zacznij od rozmowy</h2>

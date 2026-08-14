@@ -159,7 +159,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div class="flex flex-col items-start gap-5">
         <SectionHeading overline="TWOJA ŚCIEŻKA" heading="Nie wiesz, jaki zabieg wybrać?" />
@@ -169,13 +169,13 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
         <Button href="/dobierz-zabieg" variant="primary">Dobierz zabieg dla siebie →</Button>
       </div>
 
-      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-[var(--ivory)] p-6 sm:p-8" aria-hidden="true">
-        <div class="border border-[var(--porcelain)] bg-white px-4 py-3 text-[14px] text-[var(--ink-soft)]">
+      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-white p-6 sm:p-8" aria-hidden="true">
+        <div class="border border-[var(--porcelain)] bg-[var(--ivory)] px-4 py-3 text-[14px] text-[var(--ink-soft)]">
           Wpisz, co Cię niepokoi…
         </div>
         <div class="mt-5 flex flex-wrap gap-2.5">
           {modulePreviewLabels.map((label) => (
-            <span class="border border-[var(--porcelain)] bg-white px-4 py-2 text-[13px] font-medium text-[var(--ink)]">
+            <span class="border border-[var(--porcelain)] bg-[var(--ivory)] px-4 py-2 text-[13px] font-medium text-[var(--ink)]">
               {label}
             </span>
           ))}
@@ -184,7 +184,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
+  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="EFEKTY" heading="Zobacz zmianę na własne oczy" align="center" />
 
@@ -224,7 +224,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
       <div class="aspect-[3/2] w-full overflow-hidden">
         <Image
@@ -262,7 +262,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="ZAUFANIE" heading="Pacjentki mówią same" align="center" />
       <div class="mt-8">
@@ -271,7 +271,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-5xl">
       <SectionHeading overline="CENNIK" heading="Ile to kosztuje" align="center" />
       <p class="mx-auto mt-5 max-w-[65ch] text-center text-[17px] text-[var(--ink-soft)]">
@@ -293,7 +293,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <FinalCta />
+  <FinalCta background="white" compact />
 </Base>
 
 <style>
