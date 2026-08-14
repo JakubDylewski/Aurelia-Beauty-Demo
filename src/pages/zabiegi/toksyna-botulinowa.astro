@@ -4,6 +4,7 @@ import QuickFacts from "../../components/QuickFacts.astro";
 import BeforeAfter from "../../components/BeforeAfter.astro";
 import FaqAccordion from "../../components/FaqAccordion.astro";
 import DecisionSection from "../../components/DecisionSection.astro";
+import CompactDecisionCta from "../../components/CompactDecisionCta.astro";
 import FinalCta from "../../components/FinalCta.astro";
 import { treatmentPages, treatments } from "../../data/treatments";
 
@@ -97,6 +98,8 @@ const breadcrumbSchema = {
       </div>
     </div>
   </section>
+
+  <CompactDecisionCta treatmentName={treatmentName} />
 
   <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-4xl">

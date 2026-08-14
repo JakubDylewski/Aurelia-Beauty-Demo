@@ -27,6 +27,8 @@
   --porcelain: #F4E8E4;
   --gold: #B08D57;
   --gold-soft: #D8C39A;
+  /* Przyciemniony wariant --gold wyłącznie do tekstu etykiet overline — spełnia kontrast 4.5:1 na białym i ivory. Złoto w liniach/łukach/detalach zostaje bez zmian. */
+  --gold-label: #8A6A3B;
   --ink: #221E1A;
   --ink-soft: #6E6660;
 
@@ -71,7 +73,7 @@ h1 {
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--gold-label);
 }
 
 a {

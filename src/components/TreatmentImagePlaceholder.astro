@@ -1,0 +1,15 @@
+---
+import GoldArc from "./GoldArc.astro";
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = "" } = Astro.props;
+---
+
+<div class={`flex h-full w-full flex-col items-center justify-center gap-2.5 bg-[var(--porcelain)] px-4 text-center ${className}`}>
+  <GoldArc size={40} />
+  <span class="font-display text-lg font-normal text-[var(--ink)]">{name}</span>
+</div>

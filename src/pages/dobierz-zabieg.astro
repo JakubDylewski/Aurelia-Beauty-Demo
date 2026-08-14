@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import Button from "../components/Button.astro";
 import GoldArc from "../components/GoldArc.astro";
 import { concernCategories } from "../data/concerns";
-import { treatments } from "../data/treatments";
+import { treatments, PLACEHOLDER_IMAGE } from "../data/treatments";
 
 const title = "Dobierz zabieg — Klinika Aurelia | Medycyna estetyczna Toruń";
 const description =
@@ -152,6 +152,8 @@ const description =
   <script type="application/json" id="treatments-data" set:html={JSON.stringify(treatments)} />
 
   <script>
+    import { PLACEHOLDER_IMAGE } from "../data/treatments";
+
     interface TreatmentData {
       slug: string;
       name: string;
@@ -275,9 +277,19 @@ const description =
       a.href = `/zabiegi/${treatment.slug}?problem=${encodeURIComponent(problemId)}`;
       a.className =
         "group flex flex-col overflow-hidden border border-[var(--porcelain)] bg-white transition-transform duration-300 hover:-translate-y-1";
+      const imageMarkup =
+        treatment.image === PLACEHOLDER_IMAGE
+          ? `<div class="flex h-full w-full flex-col items-center justify-center gap-2.5 bg-[var(--porcelain)] px-4 text-center">
+              <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false">
+                <path d="M 16.0589 83.9411 A 48 48 0 1 1 83.9411 83.9411" stroke="var(--gold-soft)" stroke-width="1" stroke-linecap="round" />
+              </svg>
+              <span class="font-display text-lg font-normal text-[var(--ink)]">${escapeHtml(treatment.name)}</span>
+            </div>`
+          : `<img src="${treatment.image}" alt="${escapeHtml(treatment.imageAlt)}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />`;
+
       a.innerHTML = `
         <div class="aspect-[16/10] w-full overflow-hidden bg-[var(--porcelain)]">
-          <img src="${treatment.image}" alt="${escapeHtml(treatment.imageAlt)}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          ${imageMarkup}
         </div>
         <div class="flex flex-1 flex-col gap-2 p-6">
           <h4 class="font-display text-xl font-normal text-[var(--ink)]">${escapeHtml(treatment.name)}</h4>

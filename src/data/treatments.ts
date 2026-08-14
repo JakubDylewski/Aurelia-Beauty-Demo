@@ -1,3 +1,6 @@
+/** Zabiegi bez własnej fotografii dzielą ten placeholder — komponenty rozpoznają go po tej ścieżce i renderują grafikę zastępczą zamiast zdjęcia gabinetu. */
+export const PLACEHOLDER_IMAGE = "/images/wnetrze-gabinet.webp";
+
 export interface Treatment {
   slug: string;
   name: string;
@@ -50,7 +53,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Głęboko odżywia i nawilża skórę, przywracając jej blask.",
     price: "450 zł",
     duration: "30 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywana jest mezoterapia igłowa",
     href: "/zabiegi/mezoterapia-iglowa",
     ctaLabel: "Zobacz zabieg →",
@@ -61,7 +64,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Pobudza skórę do odbudowy kolagenu na długie miesiące.",
     price: "od 1 400 zł",
     duration: "45–60 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywane są zabiegi ze stymulatorem tkankowym",
     href: "/zabiegi/stymulator-tkankowy",
     ctaLabel: "Zobacz zabieg →",
@@ -72,7 +75,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Rozświetla spojrzenie, redukując cienie i zapadnięcia pod oczami.",
     price: "1 200 zł",
     duration: "20–30 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywane jest wypełnienie doliny łez",
     href: "/zabiegi/wypelnienie-doliny-lez",
     ctaLabel: "Zobacz zabieg →",
@@ -83,7 +86,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Wyrównuje koloryt i redukuje przebarwienia pod kontrolą lekarza.",
     price: "od 350 zł",
     duration: "20–30 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywany jest peeling medyczny",
     href: "/zabiegi/peeling-medyczny",
     ctaLabel: "Zobacz zabieg →",
@@ -105,7 +108,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Uzupełnia objętość i wygładza bruzdy, przywracając kontur twarzy.",
     price: "od 1 200 zł",
     duration: "30–45 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywany jest zabieg wypełniaczem kwasem hialuronowym",
     href: "/zabiegi/wypelniacz-kwas-hialuronowy",
     ctaLabel: "Zobacz zabieg →",
@@ -127,7 +130,7 @@ export const treatments: Record<string, Treatment> = {
     description: "Redukuje miejscową tkankę tłuszczową pod brodą, bez operacji i cięcia.",
     price: "od 900 zł",
     duration: "30 min",
-    image: "/images/wnetrze-gabinet.webp",
+    image: PLACEHOLDER_IMAGE,
     imageAlt: "Gabinet zabiegowy kliniki Aurelia, w którym wykonywana jest lipoliza iniekcyjna",
     href: "/zabiegi/lipoliza-iniekcyjna",
     ctaLabel: "Zobacz zabieg →",

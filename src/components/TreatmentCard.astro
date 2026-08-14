@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import type { Treatment } from "../data/treatments";
+import TreatmentImagePlaceholder from "./TreatmentImagePlaceholder.astro";
+import { PLACEHOLDER_IMAGE, type Treatment } from "../data/treatments";
 
 interface Props {
   treatment: Treatment;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const { treatment, class: className = "", compact = false } = Astro.props;
+const hasOwnPhoto = treatment.image !== PLACEHOLDER_IMAGE;
 ---
 
 <a
@@ -17,14 +19,18 @@ const { treatment, class: className = "", compact = false } = Astro.props;
   class={`group flex flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1 ${className}`}
 >
   <div class="aspect-[16/10] w-full overflow-hidden bg-[var(--porcelain)]">
-    <Image
-      src={treatment.image}
-      alt={treatment.imageAlt}
-      width={800}
-      height={500}
-      loading="lazy"
-      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-    />
+    {hasOwnPhoto ? (
+      <Image
+        src={treatment.image}
+        alt={treatment.imageAlt}
+        width={800}
+        height={500}
+        loading="lazy"
+        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    ) : (
+      <TreatmentImagePlaceholder name={treatment.name} />
+    )}
   </div>
   {compact ? (
     <div class="flex items-center justify-between gap-3 border border-t-0 border-[var(--porcelain)] px-4 py-3.5">

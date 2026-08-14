@@ -1,0 +1,47 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  treatmentName: string;
+}
+
+const { treatmentName } = Astro.props;
+const encodedName = encodeURIComponent(treatmentName);
+---
+
+<section class="reveal border-t border-[var(--porcelain)] px-6 py-10 lg:px-10 lg:py-12">
+  <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-4">
+    <Button
+      id="compact-decision-consult-link"
+      href={`/kontakt?cel=konsultacja&zabieg=${encodedName}`}
+      variant="primary"
+    >
+      Umów konsultację lekarską
+    </Button>
+    <Button
+      id="compact-decision-book-link"
+      href={`/kontakt?cel=zapis&zabieg=${encodedName}`}
+      variant="ghost"
+    >
+      Zapisz się na ten zabieg
+    </Button>
+    <a href="tel:512340218" class="text-[14px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]">
+      lub zadzwoń: 512 340 218
+    </a>
+  </div>
+</section>
+
+<script>
+  const problemId = new URLSearchParams(window.location.search).get("problem");
+
+  if (problemId) {
+    ["compact-decision-consult-link", "compact-decision-book-link"].forEach((id) => {
+      const link = document.getElementById(id);
+      if (link instanceof HTMLAnchorElement) {
+        const url = new URL(link.href);
+        url.searchParams.set("problem", problemId);
+        link.href = url.toString();
+      }
+    });
+  }
+</script>

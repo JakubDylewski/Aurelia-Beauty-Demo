@@ -29,7 +29,9 @@
       "Bash(echo \"---EXIT $?---\")",
       "Bash(mkdir -p src/assets)",
       "Bash(cp public/images/hero-main.webp src/assets/hero-main.webp)",
-      "Bash(rm public/images/hero-main.webp)"
+      "Bash(rm public/images/hero-main.webp)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4321/)",
+      "Bash(powershell -Command \"Stop-Process -Id 36152 -Force\")"
     ]
   }
 }

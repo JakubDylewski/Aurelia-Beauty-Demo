@@ -6,6 +6,7 @@ import FinalCta from "./FinalCta.astro";
 import TreatmentCard from "./TreatmentCard.astro";
 import ContextBar from "./ContextBar.astro";
 import DecisionSection from "./DecisionSection.astro";
+import CompactDecisionCta from "./CompactDecisionCta.astro";
 import { treatments, type TreatmentPageContent } from "../data/treatments";
 
 interface Props {
@@ -89,6 +90,8 @@ const treatmentName = treatments[data.slug]?.name ?? data.h1;
     </div>
   </section>
 )}
+
+<CompactDecisionCta treatmentName={treatmentName} />
 
 <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
   <div class="mx-auto max-w-4xl">
