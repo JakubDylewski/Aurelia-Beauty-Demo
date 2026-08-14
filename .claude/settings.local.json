@@ -31,7 +31,10 @@
       "Bash(cp public/images/hero-main.webp src/assets/hero-main.webp)",
       "Bash(rm public/images/hero-main.webp)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4321/)",
-      "Bash(powershell -Command \"Stop-Process -Id 36152 -Force\")"
+      "Bash(powershell -Command \"Stop-Process -Id 36152 -Force\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:4322/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://[::1]:4322/\")",
+      "Bash(powershell -Command \"Stop-Process -Id 12156 -Force\")"
     ]
   }
 }

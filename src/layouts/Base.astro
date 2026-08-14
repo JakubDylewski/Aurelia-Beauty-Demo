@@ -1,8 +1,10 @@
 ---
+import TopBar from "../components/TopBar.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import DemoNoticeModal from "../components/DemoNoticeModal.astro";
+import FloatingBookButton from "../components/FloatingBookButton.astro";
 import "../styles/global.css";
 
 // Preload wag fontów użytych w treści widocznej bez przewijania (nagłówek hero,
@@ -47,6 +49,7 @@ const absoluteOgImage = new URL(ogImage, Astro.site);
   </head>
   <body>
     <a href="#main" class="skip-link">Przejdź do treści głównej</a>
+    <TopBar />
     <Header />
     <main id="main">
       <slot />
@@ -54,6 +57,7 @@ const absoluteOgImage = new URL(ogImage, Astro.site);
     <Footer />
     <CookieBanner />
     <DemoNoticeModal />
+    <FloatingBookButton />
 
     <script>
       const revealElements = document.querySelectorAll<HTMLElement>(".reveal");
