@@ -26,7 +26,10 @@
       "Bash(netstat -ano)",
       "Bash(taskkill *)",
       "Bash(npx lighthouse *)",
-      "Bash(echo \"---EXIT $?---\")"
+      "Bash(echo \"---EXIT $?---\")",
+      "Bash(mkdir -p src/assets)",
+      "Bash(cp public/images/hero-main.webp src/assets/hero-main.webp)",
+      "Bash(rm public/images/hero-main.webp)"
     ]
   }
 }

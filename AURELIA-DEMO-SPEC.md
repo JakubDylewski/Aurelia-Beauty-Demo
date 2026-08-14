@@ -723,3 +723,167 @@ Nowa warstwa (jako pierwsza po sekcji A):
 ---
 
 *Sekcja 16 v2 — system konsultacji online. Pacjentka nigdy nie zapisuje się na zabieg, którego nie rozumie. Merytoryka zgodna z rzeczywistymi wskazaniami medycyny estetycznej.*
+
+
+
+
+---
+
+## 17. NOWY SZABLON STRONY GŁÓWNEJ — UKŁAD KONWERSYJNY
+
+> **Diagnoza:** obecna strona popełnia najczęstszy błąd stron klinik — hero z dużym zdjęciem i aspiracyjnym hasłem, a lista zabiegów dopiero kilka ekranów niżej. Pacjentka nie widzi w pierwszych sekundach, czy klinika robi zabieg, którego szuka, więc wraca do Google.
+>
+> **Zasada nowego układu:** w pierwszych 3 sekundach pacjentka ma wiedzieć trzy rzeczy — (1) gdzie jest, (2) że można tej klinice zaufać, (3) że robią to, czego szuka. Wszystko inne schodzi niżej.
+>
+> **Co NIE ulega zmianie:** paleta kolorów, typografia (Cormorant + Instrument Sans), złoty łuk, ogólny charakter marki. Zmieniamy układ, proporcje i kolejność — nie styl.
+
+---
+
+### 17.1 NOWY HERO (typograficzny, ze zdjęciem jako wsparciem)
+
+**Problem obecnego:** zdjęcie zajmuje ~50% szerokości i całą wysokość ekranu, dwa równorzędne przyciski konkurują ze sobą, serwowany plik 1845×1152 px w slot 404×228 (psuje wydajność).
+
+**Nowy układ (desktop):**
+- Siatka **3:2** — lewa kolumna (60%) to typografia, prawa (40%) to zdjęcie. Zdjęcie NIE sięga krawędzi ekranu; ma zaokrąglony róg (8px) i oddycha marginesem.
+- Wysokość hero: **max 75vh** (nie 100vh) — dzięki temu widać, że pod spodem coś jest, i pacjentka scrolluje.
+- Złoty łuk zostaje, ale mniejszy i subtelniejszy (nie może przecinać tekstu).
+
+**Zawartość lewej kolumny (kolejność):**
+1. Overline: `KLINIKA MEDYCYNY ESTETYCZNEJ · TORUŃ`
+2. H1: `Naturalne piękno.` / `Medyczna *precyzja*.` (bez zmian — działa)
+3. Sub: skrócić do **jednego zdania**: `Zabiegi dobiera lekarz — indywidualnie, bez szablonu i bez przesady.`
+4. **JEDEN główny przycisk:** `Umów konsultację` (primary). Drugi przycisk („Poznaj zabiegi") **usuwamy** — jego rolę przejmuje sekcja zabiegów tuż pod hero.
+5. Pod przyciskiem, drobnym drukiem: `lub zadzwoń: 512 340 218`
+
+**Zdjęcie:**
+- Format **4:5 (pionowe)** zamiast obecnego — lepiej współgra z kolumną tekstu i mniej dominuje.
+- **Obowiązkowo `srcset` + `sizes`** (warianty 480 / 720 / 1080 px szerokości) oraz `loading="eager"` i `fetchpriority="high"`. To naprawia wynik Performance (obecnie 84).
+- Na mobile: zdjęcie **pod** tekstem, wysokość max 45vh, nie zasłania nagłówka.
+
+---
+
+### 17.2 PASEK ZAUFANIA — bezpośrednio pod hero, bez odstępu
+
+Sygnały zaufania mają być widoczne od razu, nie kilka przewinięć niżej.
+
+- Tło `--ivory`, wąski pas (padding pionowy max 48px desktop / 32px mobile).
+- Cztery pozycje w linii, oddzielone cienkimi złotymi separatorami: `12 lat doświadczenia` · `9 000+ wykonanych zabiegów` · `4,9/5 — 214 opinii Google` · `Zabiegi wykonują wyłącznie lekarze`
+- Na mobile: siatka 2×2, nie przewijanie poziome.
+
+---
+
+### 17.3 ZABIEGI — WYSOKO, zaraz po pasku zaufania
+
+**To jest najważniejsza zmiana strukturalna.** Pacjentka musi zobaczyć zabiegi bez scrollowania w nieskończoność.
+
+- Overline: `ZABIEGI` · H2: `Czym się zajmujemy`
+- **Siatka 6 kafelków** (3×2 desktop, 2×3 tablet, 1 kolumna mobile) — nie 3 duże karty, tylko więcej mniejszych, żeby od razu widać było zakres:
+  Modelowanie ust · Toksyna botulinowa · Lifting HIFU · Mezoterapia igłowa · Stymulator tkankowy · Peeling medyczny
+- Każdy kafelek: małe zdjęcie (16:10), nazwa, `od X zł`, cała karta klikalna → strona zabiegu.
+- Pod siatką dwa linki obok siebie: `Zobacz wszystkie zabiegi →` (do cennika) oraz `Nie wiesz, co wybrać? Dobierz zabieg →` (do modułu).
+- **Zwarte odstępy** — sekcja ma mieścić się w jednym ekranie na desktopie.
+
+---
+
+### 17.4 MODUŁ „DOBIERZ ZABIEG" — zajawka (pozostaje, ale niżej)
+
+Przenieść pod sekcję zabiegów (obecnie jest wyżej i konkuruje z nią).
+- Tło `--white`, układ dwukolumnowy: lewa — tekst i przycisk, prawa — wizualna „symulacja" modułu (statyczna makieta: pole wyszukiwania + 3 pigułki problemów, niekliknalna, wyłącznie jako podgląd).
+- Overline `TWOJA ŚCIEŻKA` · H2 `Nie wiesz, jaki zabieg wybrać?`
+- Tekst (jedno zdanie): `Zaznacz, co Ci przeszkadza — pokażemy dopasowane zabiegi i wytłumaczymy, jak każdy przebiega.`
+- Przycisk: `Dobierz zabieg dla siebie →`
+
+---
+
+### 17.5 METAMORFOZY — bez zmian w treści, zwarciej
+
+- Tło `--ivory`.
+- Trzy suwaki przed/po w rzędzie (desktop), przewijana karuzela (mobile).
+- Zmniejszyć pionowy padding sekcji o 30%.
+- Adnotacja o indywidualności efektu zostaje.
+
+---
+
+### 17.6 O KLINICE — skrót, nie esej
+
+- Tło `--white`, układ 50/50: zdjęcie wnętrza | tekst.
+- **Maksymalnie 2 akapity** + cytat założycielki + link `Poznaj nasz zespół →`.
+- Usunąć nadmiarowe akapity, jeśli są — reszta jest na `/o-nas`.
+
+---
+
+### 17.7 OPINIE — zwarciej
+
+- Tło `--ivory`.
+- Siatka 3×2 (desktop), karuzela (mobile).
+- Zmniejszyć wysokość kart — obecnie zajmują za dużo pionu.
+
+---
+
+### 17.8 CENNIK — NOWA SEKCJA (zajawka)
+
+Pacjentka chce znać cenę zanim zadzwoni. Obecnie musi szukać w menu.
+- Tło `--white`. Overline `CENNIK` · H2 `Ile to kosztuje`
+- Tekst: `Ceny obejmują konsultację w dniu zabiegu, preparat i wizytę kontrolną. Konsultacja lekarska (150 zł) jest odliczana od ceny zabiegu.`
+- Cztery pozycje w rzędzie (najczęstsze): Modelowanie ust `od 1 100 zł` · Toksyna botulinowa `od 600 zł` · Lifting HIFU `od 2 900 zł` · Mezoterapia `od 450 zł`
+- Przycisk: `Zobacz pełny cennik →`
+
+---
+
+### 17.9 CTA KOŃCOWE
+
+- Tło `--ivory`, wyśrodkowane, złoty łuk nad nagłówkiem.
+- H2 `Zacznij od rozmowy` + tekst o konsultacji (bez zmian).
+- Jeden przycisk `Umów konsultację` + telefon obok.
+
+---
+
+### 17.10 KOLEJNOŚĆ SEKCJI — PODSUMOWANIE
+
+```
+1. Hero (typograficzny, zdjęcie 40%, 1 CTA)     — white
+2. Pasek zaufania                                — ivory
+3. Zabiegi (6 kafelków)                          — white
+4. Dobierz zabieg (zajawka modułu)               — ivory
+5. Metamorfozy przed/po                          — white
+6. O klinice (skrót)                             — ivory
+7. Opinie pacjentek                              — white
+8. Cennik (zajawka)                              — ivory
+9. CTA końcowe                                   — white
+```
+
+Naprzemienne tła obowiązkowe — dają rytm i rozdzielają sekcje.
+
+---
+
+### 17.11 ZASADY ODSTĘPÓW (globalne, dla całej strony)
+
+Obecne odstępy są za duże — treść „pływa". Nowe wartości:
+- Padding pionowy sekcji: **desktop 80px, mobile 56px** (obecnie ~120/96)
+- Odstęp między nagłówkiem sekcji a treścią: **32px** (obecnie ~64)
+- Odstęp między elementami w siatce: **24px**
+- Maksymalna szerokość treści tekstowej: **65ch** (żeby wiersze nie były za długie)
+
+---
+
+### 17.12 POZOSTAŁE POPRAWKI (z listy)
+
+**A. Sekcja decyzji na stronach zabiegowych — wyżej.** Obecnie jest na samym dole. Dodać **drugi, skrócony blok CTA zaraz po sekcji „Czego się spodziewać"** (jeden rząd: dwa przyciski + telefon). Pełna sekcja decyzji zostaje na dole.
+
+**B. Powtórzone zdjęcia w module.** Zabiegi bez własnego zdjęcia (9 nowych) NIE mogą używać `wnetrze-gabinet.webp`. Zamiast tego: elegancki placeholder generowany z kodu — tło `--porcelain`, wyśrodkowany złoty łuk (GoldArc), pod nim nazwa zabiegu w Cormorant. Wygląda celowo, nie jak brak zdjęcia.
+
+**C. Kontrast etykiet overline.** Przyciemnić `--gold` używane w etykietach overline do wartości spełniającej kontrast 4.5:1 na białym i ivory (ok. `#8A6A3B`). Złoto w liniach, łukach i detalach graficznych **zostaje bez zmian** — zmieniamy wyłącznie kolor tekstu etykiet.
+
+---
+
+### 17.13 ETAPY
+
+**ETAP 14 — Nowy hero + pasek zaufania + zabiegi wysoko:** przebuduj hero wg 17.1 (typograficzny, zdjęcie 4:5 z srcset, jeden CTA), pasek zaufania wg 17.2, nową sekcję zabiegów z 6 kafelkami wg 17.3. Build, podsumuj, STOP.
+
+**ETAP 15 — Reszta sekcji i rytm:** przenieś moduł wg 17.4, zwarcie metamorfoz/o klinice/opinii wg 17.5–17.7, dodaj sekcję cennika wg 17.8, ustaw kolejność i naprzemienne tła wg 17.10, zastosuj globalne odstępy wg 17.11. Build, podsumuj, STOP.
+
+**ETAP 16 — Poprawki pozostałe + audyt:** wykonaj 17.12 A/B/C, potem audyt desktop + mobile całej strony, Lighthouse (cel: Performance ≥90 na stronie głównej). Build, raport. STOP.
+
+---
+
+*Sekcja 17 — układ konwersyjny oparty na aktualnych wzorcach stron klinik estetycznych. Zmieniamy strukturę i proporcje, nie styl marki.*
