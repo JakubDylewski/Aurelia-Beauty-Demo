@@ -6,8 +6,10 @@ import SectionHeading from "../components/SectionHeading.astro";
 import TreatmentCard from "../components/TreatmentCard.astro";
 import BeforeAfter from "../components/BeforeAfter.astro";
 import Testimonials from "../components/Testimonials.astro";
+import TeamCard from "../components/TeamCard.astro";
 import FinalCta from "../components/FinalCta.astro";
 import { treatments } from "../data/treatments";
+import { team } from "../data/team";
 import { Image } from "astro:assets";
 import heroImage from "../assets/hero-main.webp";
 
@@ -34,6 +36,31 @@ const pricingHighlights = [
   { name: "Toksyna botulinowa", price: "od 600 zł" },
   { name: "Lifting HIFU", price: "od 2 900 zł" },
   { name: "Mezoterapia", price: "od 450 zł" },
+];
+
+const pillars = [
+  {
+    title: "Zabieg wykonuje wyłącznie lekarz",
+    description:
+      "Żadnych zabiegów w rękach niewykwalifikowanego personelu — iniekcje i procedury medyczne prowadzi u nas lekarz medycyny estetycznej.",
+  },
+  {
+    title: "Konsultacja przed każdym zabiegiem",
+    description:
+      "Bez wyjątków. Oceniamy skórę, słuchamy oczekiwań i szczerze mówimy, co ma sens — czasem to „jeszcze nie teraz”.",
+  },
+  {
+    title: "Wyłącznie oryginalne preparaty",
+    description:
+      "Pracujemy na certyfikowanych preparatach z udokumentowanym pochodzeniem. Opakowanie otwieramy przy Tobie.",
+  },
+];
+
+const firstVisitPreview = [
+  { number: "01", title: "Umówienie terminu" },
+  { number: "02", title: "Ankieta zdrowotna" },
+  { number: "03", title: "Rozmowa i badanie" },
+  { number: "04", title: "Plan i, jeśli chcesz, zabieg" },
 ];
 
 const medicalClinicSchema = {
@@ -159,7 +186,22 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="DLACZEGO MY" heading="Trzy filary, na których stoi Aurelia" align="center" />
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {pillars.map((pillar) => (
+          <div class="flex flex-col items-center gap-4 text-center">
+            <GoldArc size={32} />
+            <h3 class="text-lg font-medium text-[var(--ink)]">{pillar.title}</h3>
+            <p class="text-[15px] text-[var(--ink-soft)]">{pillar.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="dobierz-zabieg-teaser" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div class="flex flex-col items-start gap-5">
         <SectionHeading overline="TWOJA ŚCIEŻKA" heading="Nie wiesz, jaki zabieg wybrać?" />
@@ -169,13 +211,13 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
         <Button href="/dobierz-zabieg" variant="primary">Dobierz zabieg dla siebie →</Button>
       </div>
 
-      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-white p-6 sm:p-8" aria-hidden="true">
-        <div class="border border-[var(--porcelain)] bg-[var(--ivory)] px-4 py-3 text-[14px] text-[var(--ink-soft)]">
+      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-[var(--ivory)] p-6 sm:p-8" aria-hidden="true">
+        <div class="border border-[var(--porcelain)] bg-white px-4 py-3 text-[14px] text-[var(--ink-soft)]">
           Wpisz, co Cię niepokoi…
         </div>
         <div class="mt-5 flex flex-wrap gap-2.5">
           {modulePreviewLabels.map((label) => (
-            <span class="border border-[var(--porcelain)] bg-[var(--ivory)] px-4 py-2 text-[13px] font-medium text-[var(--ink)]">
+            <span class="border border-[var(--porcelain)] bg-white px-4 py-2 text-[13px] font-medium text-[var(--ink)]">
               {label}
             </span>
           ))}
@@ -184,7 +226,7 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
-  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+  <section id="metamorfozy" class="reveal scroll-mt-24 border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
     <div class="mx-auto max-w-7xl">
       <SectionHeading overline="EFEKTY" heading="Zobacz zmianę na własne oczy" align="center" />
 
@@ -224,40 +266,40 @@ const featured = featuredSlugs.map((slug) => treatments[slug]);
     </div>
   </section>
 
+  <section class="reveal border-t border-[var(--porcelain)] bg-white px-6 py-14 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="ZESPÓŁ" heading="Poznaj osoby, które się Tobą zajmą" />
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {team.map((member) => <TeamCard {...member} />)}
+      </div>
+      <a
+        href="/o-nas"
+        class="mt-8 inline-flex items-center gap-2 text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
+      >
+        Poznaj cały zespół →
+      </a>
+    </div>
+  </section>
+
   <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-14 lg:px-10 lg:py-20">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
-      <div class="aspect-[3/2] w-full overflow-hidden">
-        <Image
-          src="/images/wnetrze-recepcja.webp"
-          alt="Recepcja kliniki Aurelia — jasne, minimalistyczne wnętrze z ciepłymi złotymi akcentami"
-          width={1800}
-          height={1200}
-          loading="lazy"
-          class="h-full w-full object-cover"
-        />
+    <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="flex flex-col items-start gap-5">
+        <SectionHeading overline="ZACZNIJ TUTAJ" heading="Tak wygląda Twoja pierwsza wizyta" />
+        <p class="max-w-[65ch] text-[17px] text-[var(--ink-soft)]">
+          Umówienie terminu, krótka ankieta zdrowotna i szczera rozmowa z lekarzem — bez presji i bez zobowiązań. Sprawdź krok po kroku, czego się spodziewać.
+        </p>
+        <Button href="/pierwsza-wizyta" variant="primary">Zobacz, jak wygląda pierwsza wizyta →</Button>
       </div>
 
-      <div class="flex flex-col gap-6">
-        <SectionHeading overline="POZNAJMY SIĘ" heading="Miejsce, w którym możesz odetchnąć" />
-        <p class="max-w-[65ch] text-[17px] text-[var(--ink-soft)]">
-          Klinika Aurelia powstała z przekonania, że medycyna estetyczna to przede wszystkim medycyna. U nas każdy zabieg poprzedza rzetelna konsultacja lekarska, pracujemy wyłącznie na oryginalnych, certyfikowanych preparatach, a plan zabiegowy układamy pod Ciebie — nie pod promocję miesiąca.
-        </p>
-
-        <div class="flex items-start gap-4 border-l border-[var(--gold-soft)] pl-6">
-          <div class="flex flex-col gap-3">
-            <p class="font-display text-xl italic text-[var(--ink)]">
-              „Najlepszy komplement, jaki możemy usłyszeć? »Nikt nie widzi, że coś robiłam — wszyscy mówią, że świetnie wyglądam.«"
-            </p>
-            <span class="text-[14px] text-[var(--ink-soft)]">dr n. med. Aurelia Zawadzka, założycielka</span>
-          </div>
+      <div class="pointer-events-none select-none border border-[var(--porcelain)] bg-white p-6 sm:p-8" aria-hidden="true">
+        <div class="flex flex-col gap-4">
+          {firstVisitPreview.map((step, i) => (
+            <div class:list={["flex items-center gap-4", i !== 0 && "border-t border-[var(--porcelain)] pt-4"]}>
+              <span class="font-display text-2xl font-light text-[var(--gold)]">{step.number}</span>
+              <span class="text-[15px] font-medium text-[var(--ink)]">{step.title}</span>
+            </div>
+          ))}
         </div>
-
-        <a
-          href="/o-nas"
-          class="inline-flex items-center gap-2 text-[15px] font-medium text-[var(--ink)] transition-colors hover:text-[var(--gold)]"
-        >
-          Poznaj nasz zespół →
-        </a>
       </div>
     </div>
   </section>

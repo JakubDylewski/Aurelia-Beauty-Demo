@@ -4,35 +4,12 @@ import TeamCard from "../components/TeamCard.astro";
 import GoldArc from "../components/GoldArc.astro";
 import FinalCta from "../components/FinalCta.astro";
 import { Image } from "astro:assets";
+import { team } from "../data/team";
 
 const intro = [
   "Klinika Aurelia powstała w 2014 roku z prostego założenia: dobra medycyna estetyczna częściej mówi „nie\", niż „tak\". Nie każdemu zabiegowi, nie każdej modzie, nie każdemu oczekiwaniu — jeśli stoi za nim krzywda dla naturalnego wyglądu.",
   "Przez dwanaście lat wykonaliśmy ponad dziewięć tysięcy zabiegów, ale największą wagę przykładamy do tych, których odradziliśmy. Zaufanie pacjentek to nasz jedyny marketing.",
   "Pracujemy wyłącznie na oryginalnych, certyfikowanych preparatach z udokumentowanym pochodzeniem, w gabinetach spełniających standardy podmiotu leczniczego.",
-];
-
-const team = [
-  {
-    image: "/images/zespol-aurelia.webp",
-    imageAlt: "dr n. med. Aurelia Zawadzka, założycielka Kliniki Aurelia",
-    name: "dr n. med. Aurelia Zawadzka",
-    description:
-      "Założycielka kliniki. Lekarka z 12-letnim doświadczeniem w medycynie estetycznej, szkoleniowiec technik iniekcyjnych. Prowadzi zabiegi z zakresu toksyny, wypełniaczy i stymulatorów.",
-  },
-  {
-    image: "/images/zespol-maja.webp",
-    imageAlt: "dr Maja Lewandowska, lekarka medycyny estetycznej w Klinice Aurelia",
-    name: "dr Maja Lewandowska",
-    description:
-      "Lekarka medycyny estetycznej. Specjalizuje się w modelowaniu ust i okolicy oka. Znana z lekkiej ręki i obsesji na punkcie symetrii.",
-  },
-  {
-    image: "/images/zespol-julia.webp",
-    imageAlt: "mgr Julia Nowicka, kosmetolog kliniczny w Klinice Aurelia",
-    name: "mgr Julia Nowicka",
-    description:
-      "Kosmetolog kliniczny. Prowadzi zabiegi HIFU, mezoterapię i terapie skóry problematycznej. Autorka protokołów pielęgnacji pozabiegowej Aurelii.",
-  },
 ];
 
 const standards = [
