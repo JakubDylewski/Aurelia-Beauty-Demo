@@ -76,8 +76,13 @@ h1 {
   color: var(--gold-label);
 }
 
-a {
-  color: inherit;
+/* @layer base: dzięki temu klasy koloru Tailwind (np. text-[var(--ink)]) w
+   @layer utilities nadal wygrywają z tym resetem na linkach — bez warstwy
+   ten prosty selektor "a" bije każdą klasę utility niezależnie od specyficzności. */
+@layer base {
+  a {
+    color: inherit;
+  }
 }
 
 /* Focus ring: złoty, widoczny na wszystkich elementach interaktywnych */

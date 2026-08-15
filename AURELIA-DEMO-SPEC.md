@@ -1,7 +1,18 @@
 # KLINIKA AURELIA — SPECYFIKACJA DEMO
 ### Flagowe demo Connectiva: strona-produkt dla kliniki medycyny estetycznej (pakiet SYSTEM, 8–10 tys. zł)
 
+
+> **STAN AKTUALNY (po Etapie 20):** sekcje pisane były przyrostowo.
+> W razie sprzeczności obowiązuje sekcja o WYŻSZYM numerze.
+> - Struktura strony głównej → obowiązuje 18.6 (nie 16.6 ani 17.10)
+> - Podstrony miejscowości → obowiązuje 18.8 POPRAWIONE na końcu pliku
+> - Etapy: 1-5 (sekcja 13), 6-8 (15.5), 9-13 (16.8), 14-16 (17.13), 17-21 (18.9)
+> - Zrobione: etapy 1-20. Zostało: etap 21 (audyt końcowy).
+
+
 > **Czym jest ten plik:** kompletna specyfikacja strony demo. Wrzucasz go do katalogu projektu i każesz Claude Code budować etapami (instrukcja w sekcji 0). Wszystkie teksty są gotowe — Claude Code ma je wklejać, nie wymyślać.
+
+
 
 ---
 
@@ -891,6 +902,179 @@ Obecne odstępy są za duże — treść „pływa". Nowe wartości:
 
 
 
+---
+
+
+
+
+
+
+
+---
+
+## 18. SZABLON KLINIKI — WZORCE OD LIDERÓW + LOKALNE SEO
+
+> **Podstawa:** analiza strony Kliniki Ambroziak (lider rankingów 2026) oraz aktualnych wzorców konwersyjnych. Bierzemy to, co realnie działa u najlepszych i da się wykonać w skali jednej kliniki — nie kopiujemy skali korporacyjnej (aplikacja lojalnościowa, sklep, wiele lokalizacji).
+
+---
+
+### 18.1 WNIOSKI Z ANALIZY LIDERA
+
+1. **„Wskazania" (problemy pacjentki) to osobna pozycja w menu głównym**, obok „Zabiegi". → U nas: moduł „Dobierz zabieg" awansuje do menu głównego.
+2. **Rezerwacja dostępna z każdego miejsca** — telefon i „Rezerwuj" w górnym pasku + pływający widget.
+3. **Osobna strona „Pierwsza wizyta"** — rozbraja lęk pacjentki, która nigdy nie była w klinice.
+4. **Liczby zaufania powtarzane kilkukrotnie**, nie raz.
+5. **Opinie z imieniem i inicjałem nazwiska**, w formie zbliżonej do Google.
+6. **Cennik w menu głównym**, nie schowany.
+
+---
+
+### 18.2 GÓRNY PASEK KONTAKTOWY (nowy)
+
+Wąski pas nad menu, na każdej stronie. Tło `--ink`, tekst jasny.
+- Lewa: `Pon–Pt 9:00–19:00 · Sob 9:00–14:00`
+- Prawa: klikalny telefon `512 340 218` · przycisk `Rezerwuj` → `/kontakt`
+- Mobile: tylko telefon + `Rezerwuj`. Wysokość max 40px.
+
+---
+
+### 18.3 MENU GŁÓWNE — nowa struktura
+
+```
+[LOGO]  Zabiegi ▾ | Dobierz zabieg | Metamorfozy | Pierwsza wizyta | O nas | Cennik | Kontakt  [Umów wizytę]
+```
+
+- `Dobierz zabieg` — pełnoprawna pozycja menu (odpowiednik „Wskazań" u lidera).
+- `Pierwsza wizyta` — nowa pozycja (18.5).
+- `Jak to działa` **znika z menu** → przenieść do stopki (to strona dla właściciela kliniki, nie dla pacjentki).
+- Dropdown „Zabiegi": na górze wyróżnione `Nie wiesz, co wybrać? Dobierz zabieg →`, pod spodem 12 zabiegów w kategoriach (Twarz / Usta / Skóra), na dole `Pełny cennik →`.
+
+---
+
+### 18.4 PŁYWAJĄCY PRZYCISK UMAWIANIA (nowy)
+
+- Prawy dolny róg, `position: fixed`, pojawia się po przewinięciu 400px.
+- Pastelowa pigułka, ciemny tekst `Umów wizytę`, delikatny cień, hover ze złotą obwódką.
+- Mobile: przyklejony na dole, pełna szerokość minus marginesy; dolny padding strony powiększony, żeby nie zasłaniał treści.
+- Ukryty na `/kontakt`. Respektuje `prefers-reduced-motion`.
+
+---
+
+### 18.5 NOWA PODSTRONA: „PIERWSZA WIZYTA" (`/pierwsza-wizyta`)
+
+1. H1 `Pierwsza wizyta — czego się spodziewać`
+2. Lead: `Jeśli nigdy nie byłaś w klinice medycyny estetycznej, prawdopodobnie masz więcej pytań niż odpowiedzi. Poniżej opisujemy dokładnie, jak wygląda wizyta u nas — krok po kroku, bez niedomówień.`
+3. **Kroki 01–05:** `Rozmowa` (oczekiwania, historia zdrowia, leki) · `Analiza twarzy` (skóra, proporcje, mimika w ruchu) · `Propozycja planu` (co robić, w jakiej kolejności i **czego nie robić**) · `Decyzja` (nie musisz decydować od razu) · `Zabieg, jeśli tego dnia`
+4. **Jak się przygotować:** lista leków, bez makijażu jeśli możliwe, 24h bez alkoholu, informacja o ciąży/karmieniu.
+5. **FAQ (6 pytań):** Ile trwa? · Ile kosztuje konsultacja? · Czy muszę od razu decydować? · Czy zabieg zrobicie tego samego dnia? · Czy mogę przyjść z osobą towarzyszącą? · Co jeśli odradzicie mi zabieg?
+6. **Blok zaufania:** `Konsultacja lekarska kosztuje 150 zł i jest w całości odliczana od ceny zabiegu. Jeśli uznamy, że zabieg Ci nie pomoże — powiemy to wprost.`
+7. CTA `Umów pierwszą wizytę` + telefon.
+
+---
+
+### 18.6 STRONA GŁÓWNA — struktura finalna
+
+```
+1. Górny pasek kontaktowy              — ink
+2. Hero (typograficzny, 1 CTA)          — white
+3. Pasek zaufania (4 liczby)            — ivory
+4. Zabiegi (6 kafelków)                 — white
+5. Dobierz zabieg (zajawka)             — ivory
+6. Metamorfozy przed/po                 — white
+7. Dlaczego my (3 filary) [NOWA]        — ivory
+8. Zespół (skrót, 3 osoby) [NOWA]       — white
+9. Opinie pacjentek                     — ivory
+10. Cennik (zajawka)                    — white
+11. Pierwsza wizyta (zajawka) [NOWA]    — ivory
+12. CTA końcowe                         — white
+```
+
+**7. „Dlaczego my":** Overline `DLACZEGO AURELIA` · H2 `Trzy rzeczy, które nas wyróżniają`. Trzy kolumny ze złotym łukiem jako ikoną:
+- `Zabiegi wykonuje lekarz` — `Nie kosmetolog, nie technik. Każdą iniekcję wykonuje lekarz medycyny estetycznej.`
+- `Konsultacja przed każdym zabiegiem` — `Bez wyjątków. Czasem najlepszą rekomendacją jest „jeszcze nie teraz".`
+- `Oryginalne preparaty` — `Opakowanie otwieramy przy Tobie. Zawsze możesz sprawdzić, co dostajesz.`
+
+**8. „Zespół":** Overline `ZESPÓŁ` · H2 `Ludzie, którym powierzasz twarz`. Trzy karty (zdjęcie 4:5, imię, tytuł, zdanie o specjalizacji), link `Poznaj cały zespół →`.
+
+**11. „Pierwsza wizyta" zajawka:** Overline `PIERWSZY RAZ?` · H2 `Nie wiesz, czego się spodziewać?` · przycisk `Zobacz, jak wygląda pierwsza wizyta →`.
+
+**Sekcja „O klinice" — USUŃ ze strony głównej** (zastępują ją 7 i 8, konkretniejsze). Pełna treść zostaje na `/o-nas`.
+
+---
+
+### 18.7 OPINIE — format jak u lidera
+
+Pięć złotych gwiazdek · treść opinii · **imię i inicjał nazwiska** (`Karolina M.`) · podpis `opinia Google`. Sześć opinii, siatka 3×2 desktop, karuzela mobile.
+
+---
+
+### 18.8 PODSTRONY MIEJSCOWOŚCI — ROZBUDOWA DO 15
+
+> **Cel:** klinika ma pojawiać się w Google, gdy ktoś w okolicy szuka „medycyna estetyczna [miasto]". Strony są UKRYTE w nawigacji (nie ma ich w menu, na stronie głównej ani w stopce), ale AKTYWNE — dostępne pod adresem, w sitemapie, indeksowane przez Google.
+>
+> **KRYTYCZNE — ryzyko kary od Google:** piętnaście stron różniących się tylko nazwą miasta to „doorway pages", za które Google karze. Każda strona MUSI mieć realnie własną treść. Poniżej narzucone są elementy, które muszą się różnić.
+
+**Lista 15 miejscowości** (ścieżka: `/medycyna-estetyczna-[slug]`, bez polskich znaków, małymi literami):
+
+| # | Miasto | slug | dystans od Torunia |
+|---|---|---|---|
+| 1 | Toruń | `torun` | 0 km (miasto kliniki) |
+| 2 | Toruń – Podgórz | `torun-podgorz` | dzielnica |
+| 3 | Toruń – Rubinkowo | `torun-rubinkowo` | dzielnica |
+| 4 | Lubicz | `lubicz` | ~12 km |
+| 5 | Łysomice | `lysomice` | ~12 km |
+| 6 | Chełmża | `chelmza` | ~20 km |
+| 7 | Ciechocinek | `ciechocinek` | ~25 km |
+| 8 | Aleksandrów Kujawski | `aleksandrow-kujawski` | ~25 km |
+| 9 | Kowalewo Pomorskie | `kowalewo-pomorskie` | ~30 km |
+| 10 | Chełmno | `chelmno` | ~40 km |
+| 11 | Golub-Dobrzyń | `golub-dobrzyn` | ~40 km |
+| 12 | Inowrocław | `inowroclaw` | ~40 km |
+| 13 | Wąbrzeźno | `wabrzezno` | ~45 km |
+| 14 | Bydgoszcz | `bydgoszcz` | ~50 km |
+| 15 | Włocławek | `wloclawek` | ~55 km |
+
+**Dane w `src/data/cities.ts`** — każde miasto ma pola: `nazwa`, `slug`, `dystans`, `czasDojazdu`, `lead` (unikalny), `kontekstLokalny` (unikalny), `powodyWyboru` (3 punkty, inaczej sformułowane dla każdego), `sasiednieMiasta` (2–3 slugi), `metaTitle`, `metaDescription`.
+
+**Obowiązkowy szablon podstrony miejscowości:**
+
+1. **H1:** `Medycyna estetyczna [Miasto] — Klinika Aurelia` (dla dzielnic: `Medycyna estetyczna Toruń [Dzielnica]`)
+2. **Lead — UNIKALNY dla każdego miasta**, 2–3 zdania. Musi zawierać: realny dystans/czas dojazdu ORAZ lokalny kontekst. Przykłady różnicowania:
+   - Ciechocinek: nawiązanie do uzdrowiska i kuracjuszek
+   - Bydgoszcz: duże miasto, pacjentki wybierające mniejszą, kameralną klinikę
+   - Lubicz: bliskość, „praktycznie przedmieścia Torunia"
+   - Inowrocław: dojazd drogą krajową, kwadrans dłużej niż z Ciechocinka
+   - Toruń-Rubinkowo: dzielnica, dojazd komunikacją miejską
+3. **Sekcja „Zabiegi dla pacjentek z [Miasto]"** — 6 kafelków zabiegów (te same co na głównej), ale z jednozdaniowym wprowadzeniem lokalnym, innym dla każdego miasta.
+4. **Blok „Dlaczego pacjentki z [Miasto] wybierają Aurelię"** — 3 punkty, **przeformułowane inaczej dla każdego miasta** (nie kopie). Rotuj akcenty: raz lekarz zamiast kosmetologa, raz brak pośpiechu, raz oryginalne preparaty, raz konsultacja przed zabiegiem, raz naturalne efekty.
+5. **Dojazd** — osadzona mapa z podpisem `Dojazd z [Miasto]` + jedno zdanie o trasie (którą drogą, ile minut).
+6. **Sekcja „Przyjeżdżają do nas także z"** — 2–3 linki do sąsiednich podstron miejscowości. To wzajemne linkowanie wzmacnia SEO, a jednocześnie nie wystawia stron w nawigacji głównej.
+7. **CTA** — `Umów konsultację` + klikalny telefon.
+8. **SEO:** unikalny `title` (`Medycyna estetyczna [Miasto] | Klinika Aurelia`) i `meta description` (do 155 znaków, z frazą lokalną, INNA dla każdego miasta). JSON-LD `MedicalClinic` z `areaServed` = dane miasto.
+
+**Ukrycie w nawigacji:** żadnych linków do tych stron z menu głównego, stopki ani strony głównej. Jedyne linki wewnętrzne to wzajemne linkowanie między samymi miastami (punkt 6). Strony pozostają w `sitemap.xml` i są indeksowalne (`robots: index, follow`).
+
+---
+
+### 18.9 ETAPY
+
+**ETAP 17 — Nawigacja i dostępność rezerwacji:** górny pasek (18.2), przebudowa menu (18.3), pływający przycisk (18.4). Build, podsumuj, STOP.
+
+**ETAP 18 — Strona „Pierwsza wizyta":** zbuduj `/pierwsza-wizyta` wg 18.5. Build, podsumuj, STOP.
+
+**ETAP 19 — Nowe sekcje strony głównej:** „Dlaczego my", „Zespół", zajawka „Pierwsza wizyta", usunięcie „O klinice", finalna kolejność i tła wg 18.6, format opinii wg 18.7. Build, podsumuj, STOP.
+
+**ETAP 20 — Podstrony miejscowości (15 sztuk):** rozbuduj `cities.ts` do 15 miast wg tabeli 18.8 z UNIKALNĄ treścią dla każdego (lead, kontekst, powody wyboru, meta), zbuduj brakujące 10 podstron wg szablonu, dodaj wzajemne linkowanie „Przyjeżdżają do nas także z", upewnij się że żadna nie jest linkowana z menu/stopki/strony głównej i że wszystkie są w sitemapie. **Zweryfikuj, że treść realnie się różni między miastami — nie kopie z podmienioną nazwą.** Build, wypisz listę adresów wszystkich 15 stron. STOP.
+
+**ETAP 21 — Audyt końcowy:** desktop + mobile, sprawdzenie że pływający przycisk nie zasłania treści, że wszystkie 15 podstron działa i żadna nie jest widoczna w nawigacji, Lighthouse. Build, raport. STOP.
+
+---
+
+*Sekcja 18 v2 — szablon oparty na wzorcach lidera rynku plus rozbudowane lokalne SEO. Struktura i mechanizmy, nie kopiowanie treści.*
+
+
+
+
 
 ---
 
@@ -986,3 +1170,7 @@ Każde miasto: `nazwa`, `slug`, `dystans`, `czasDojazdu`, `trasa` (którą drog�
 ---
 
 *Sekcja 18.8 poprawiona — model lądowiska SEO wzorowany na realnym wdrożeniu rynkowym. Podstrona miejscowości kieruje ruch na stronę główną, nie zastępuje jej.*
+
+
+
+

@@ -34,7 +34,17 @@
       "Bash(powershell -Command \"Stop-Process -Id 36152 -Force\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:4322/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://[::1]:4322/\")",
-      "Bash(powershell -Command \"Stop-Process -Id 12156 -Force\")"
+      "Bash(powershell -Command \"Stop-Process -Id 12156 -Force\")",
+      "Bash(npx --yes lighthouse --version)",
+      "Bash(mkdir -p \"/c/Users/jakdy/AppData/Local/Temp/claude/C--Users-jakdy-Documents-Aurelia-Beauty-Demo/4f42ca6f-5cb0-40aa-8b05-d7d81a1d3ed9/scratchpad/lighthouse\")",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --output=json --output=html --output-path=/c/Users/jakdy/AppData/Local/Temp/claude/C--Users-jakdy-Documents-Aurelia-Beauty-Demo/4f42ca6f-5cb0-40aa-8b05-d7d81a1d3ed9/scratchpad/lighthouse/mobile --preset=perf --form-factor=mobile --screenEmulation.mobile=true --screenEmulation.width=390 --screenEmulation.height=844 --screenEmulation.deviceScaleFactor=3 --throttling-method=simulate '--chrome-flags=--headless=new --no-sandbox' --quiet)",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --output=json --output=html --output-path=/c/Users/jakdy/AppData/Local/Temp/claude/C--Users-jakdy-Documents-Aurelia-Beauty-Demo/4f42ca6f-5cb0-40aa-8b05-d7d81a1d3ed9/scratchpad/lighthouse/desktop --preset=perf --form-factor=desktop --screenEmulation.mobile=false --screenEmulation.width=1440 --screenEmulation.height=900 --screenEmulation.deviceScaleFactor=1 --throttling-method=simulate '--chrome-flags=--headless=new --no-sandbox' --quiet)",
+      "Bash(npx --yes lighthouse http://localhost:4322/ --output=json --output=html --output-path=/c/Users/jakdy/AppData/Local/Temp/claude/C--Users-jakdy-Documents-Aurelia-Beauty-Demo/4f42ca6f-5cb0-40aa-8b05-d7d81a1d3ed9/scratchpad/lighthouse/mobile --only-categories=performance,accessibility,best-practices,seo '--chrome-flags=--headless=new --no-sandbox' --quiet)",
+      "Bash(grep -v \"^$\")",
+      "Bash(LHDIR=\"$LHDIR\" node *)",
+      "Bash(pkill -f \"astro preview\")",
+      "Bash(pkill -f \"4322\")",
+      "PowerShell(Get-NetTCPConnection *)"
     ]
   }
 }
