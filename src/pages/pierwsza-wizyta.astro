@@ -1,0 +1,166 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import GoldArc from "../components/GoldArc.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import FinalCta from "../components/FinalCta.astro";
+import type { FaqItem } from "../data/treatments";
+
+const quickFacts = [
+  { label: "Czas trwania", value: "20–30 min" },
+  { label: "Cena", value: "150 zł (odliczana od zabiegu)" },
+  { label: "Zabieg tego samego dnia", value: "możliwy" },
+  { label: "Do czego zobowiązuje", value: "do niczego" },
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "Umówienie terminu",
+    description: "Wybierasz dogodny termin online, telefonicznie lub przez formularz — bez kolejki i bez czekania tygodniami.",
+  },
+  {
+    number: "02",
+    title: "Krótka ankieta zdrowotna",
+    description: "Na miejscu wypełniasz kilka pytań o historię zdrowia i ewentualne wcześniejsze zabiegi — to podstawa bezpiecznej kwalifikacji.",
+  },
+  {
+    number: "03",
+    title: "Rozmowa i badanie",
+    description: "Lekarz wysłuchuje Twoich oczekiwań, ocenia stan skóry, mimikę i proporcje twarzy. To moment na wszystkie pytania.",
+  },
+  {
+    number: "04",
+    title: "Szczera rekomendacja",
+    description: "Dostajesz jasną odpowiedź, co ma sens, a co nie — łącznie z przeciwwskazaniami i realnym kosztem. Czasem to „jeszcze nie teraz”.",
+  },
+  {
+    number: "05",
+    title: "Plan i, jeśli chcesz, zabieg tego samego dnia",
+    description: "Ustalacie plan działania. Jeśli lekarz Cię zakwalifikuje i mamy wolny termin, zabieg może odbyć się od razu.",
+  },
+];
+
+const preparation = [
+  "Jeśli konsultacja dotyczy twarzy, przyjdź bez makijażu lub z lekkim — łatwiej ocenić stan skóry.",
+  "Zabierz ze sobą listę przyjmowanych leków i suplementów, jeśli je stosujesz.",
+  "Jeśli planujesz zabieg tego samego dnia, unikaj alkoholu i aspiryny przez 48 godzin przed wizytą.",
+  "Zarezerwuj sobie spokojne 30–45 minut — bez pośpiechu przed kolejnym spotkaniem.",
+  "Spisz pytania, które chcesz zadać — im więcej wiemy o Twoich oczekiwaniach, tym trafniejszy plan.",
+];
+
+const trustPoints = [
+  "Żaden zabieg nie jest wykonywany bez wcześniejszej konsultacji lekarskiej — bez wyjątków.",
+  "150 zł za konsultację jest w całości odliczane od ceny zabiegu wykonanego w ciągu 30 dni.",
+  "Wolimy powiedzieć „nie”, niż wykonać zabieg, który nie ma sensu — nawet jeśli oznacza to utratę klientki.",
+];
+
+const faq: FaqItem[] = [
+  {
+    question: "Ile trwa pierwsza wizyta?",
+    answer: "Sama konsultacja z lekarzem to 20–30 minut. Licząc formalności i ankietę zdrowotną, warto zarezerwować ok. 45 minut.",
+  },
+  {
+    question: "Czy podczas pierwszej wizyty mogę od razu mieć zabieg?",
+    answer: "Tak, jeśli lekarz Cię zakwalifikuje i mamy wolny termin tego samego dnia. Nie jest to jednak wymóg — możesz wyjść z samym planem i zdecydować się później.",
+  },
+  {
+    question: "Ile kosztuje pierwsza wizyta?",
+    answer: "150 zł. Kwota jest w całości odliczana od ceny zabiegu, jeśli zdecydujesz się go wykonać w ciągu 30 dni od konsultacji.",
+  },
+  {
+    question: "Czy muszę się na coś zdecydować podczas pierwszej wizyty?",
+    answer: "Nie, konsultacja niczego nie zobowiązuje. Możesz wyjść z samym planem i wrócić do niego w dowolnym momencie.",
+  },
+  {
+    question: "Co mam zabrać ze sobą?",
+    answer: "Dokument tożsamości oraz — jeśli je masz — listę przyjmowanych leków, wyniki badań lub dokumentację po wcześniejszych zabiegach.",
+  },
+  {
+    question: "Czy dostanę szczerą opinię, nawet jeśli będzie odradzająca zabieg?",
+    answer: "Tak, to fundament naszej pracy. Jeśli dany zabieg nie ma dla Ciebie sensu, powiemy to wprost — nawet jeśli oznacza to, że nic nie kupisz.",
+  },
+];
+---
+
+<Base
+  title="Pierwsza wizyta — Klinika Aurelia | Medycyna estetyczna Toruń"
+  description="Jak wygląda pierwsza wizyta w Klinice Aurelia w Toruniu: umówienie terminu, ankieta zdrowotna, konsultacja z lekarzem i szczery plan działania. Sprawdź, jak się przygotować."
+>
+  <section class="px-6 pt-[10.5rem] pb-16 lg:px-10 lg:pt-[12.5rem]">
+    <div class="mx-auto max-w-4xl">
+      <span class="overline">ZACZNIJ TUTAJ</span>
+      <h1 class="mt-4 text-[var(--ink)]">Pierwsza wizyta w Klinice Aurelia</h1>
+      <p class="mt-6 max-w-2xl text-[18px] text-[var(--ink-soft)]">
+        Zanim zaproponujemy Ci jakikolwiek zabieg, poznajemy Twoją skórę i Twoje oczekiwania. Tak wygląda spotkanie,
+        od którego zaczyna się każda współpraca z Aurelią.
+      </p>
+
+      <div class="mt-10">
+        <ul class="flex flex-wrap gap-x-10 gap-y-6 border-y border-[var(--porcelain)] py-8">
+          {quickFacts.map((fact, i) => (
+            <li class:list={["flex flex-col gap-1.5", i !== 0 && "sm:border-l sm:border-[var(--porcelain)] sm:pl-10"]}>
+              <span class="text-[13px] text-[var(--ink-soft)]">{fact.label}</span>
+              <span class="text-[16px] font-medium text-[var(--ink)]">{fact.value}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-6xl">
+      <SectionHeading overline="PRZEBIEG WIZYTY" heading="Jak wygląda pierwsza wizyta" />
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+        {steps.map((step) => (
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-4xl font-light text-[var(--gold)]">{step.number}</span>
+            <h3 class="text-lg font-medium text-[var(--ink)]">{step.title}</h3>
+            <p class="text-[15px] text-[var(--ink-soft)]">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <SectionHeading overline="PRZYGOTOWANIE" heading="Jak się przygotować" />
+      <ul class="mt-8 flex flex-col gap-4">
+        {preparation.map((item) => (
+          <li class="flex items-start gap-2.5 text-[16px] text-[var(--ink-soft)]">
+            <span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] bg-[var(--ivory)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl text-center">
+      <div class="mx-auto flex flex-col items-center gap-3">
+        <GoldArc size={40} />
+        <h2 class="text-[var(--ink)]">Konsultacja, której możesz zaufać</h2>
+      </div>
+      <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {trustPoints.map((point) => (
+          <p class="text-[16px] text-[var(--ink-soft)]">{point}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal border-t border-[var(--porcelain)] px-6 py-16 lg:px-10 lg:py-20">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-[var(--ink)]">Pytania i odpowiedzi</h2>
+      <div class="mt-8">
+        <FaqAccordion items={faq} idPrefix="pierwsza-wizyta" />
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

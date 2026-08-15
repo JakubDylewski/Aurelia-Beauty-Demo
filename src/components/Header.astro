@@ -36,15 +36,13 @@ const zabiegiUtility = [
 ];
 
 const navLinks = [
+  { label: "Pierwsza wizyta", href: "/pierwsza-wizyta" },
   { label: "Dobierz zabieg", href: "/dobierz-zabieg" },
   { label: "Metamorfozy", href: "/#metamorfozy" },
   { label: "O nas", href: "/o-nas" },
   { label: "Cennik", href: "/cennik" },
   { label: "Kontakt", href: "/kontakt" },
 ];
-
-// Treść jeszcze nie istnieje — pozycja widoczna w menu, ale bez aktywnego linku do czasu zbudowania strony.
-const upcomingNavLabel = "Pierwsza wizyta";
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-10 z-50 transition-all duration-300">
@@ -129,10 +127,6 @@ const upcomingNavLabel = "Pierwsza wizyta";
         </a>
       ))}
 
-      <span class="cursor-default text-[15px] font-medium text-[var(--ink-soft)]/50" aria-disabled="true">
-        {upcomingNavLabel} <span class="text-[11px]">(wkrótce)</span>
-      </span>
-
       <a
         href="/kontakt"
         class="inline-flex items-center border border-[var(--ink)] bg-[var(--porcelain)] px-6 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--gold)] hover:bg-[#EADDD7] hover:text-[var(--gold)]"
@@ -190,10 +184,6 @@ const upcomingNavLabel = "Pierwsza wizyta";
           {link.label}
         </a>
       ))}
-
-      <span class="cursor-default font-display text-3xl font-light text-[var(--ink-soft)]/50" aria-disabled="true">
-        {upcomingNavLabel} <span class="text-base">(wkrótce)</span>
-      </span>
     </nav>
     <a
       href="/kontakt"
